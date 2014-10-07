@@ -6,6 +6,7 @@
              mc:Ignorable="d" 
              Canvas.Left="{Binding X}" Canvas.Top="{Binding Y}" Width="{Binding Width}" Height="{Binding Height}" 
              d:DesignHeight="300" d:DesignWidth="300">
-        <Rectangle Fill="Black">
-        </Rectangle>
+    <StackPanel Background="AliceBlue">
+        <Label Content="{Binding Klass.Name}" HorizontalAlignment="Center" />
+    </StackPanel>
 </UserControl>

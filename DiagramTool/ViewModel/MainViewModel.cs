@@ -29,13 +29,13 @@ namespace DiagramTool.ViewModel
         {
             Klasses = new ObservableCollection<KlassViewModel>();
             KlassViewModel k = new KlassViewModel();
-            k.X = 400;
-            k.Y = 400;
+            k.X = 200;
+            k.Y = 200;
+            k.Klass = new Klass("Lel");
             Klasses.Add(k);
 
             k = new KlassViewModel();
-            k.Width = 300;
-            k.Height = 300;
+            k.Klass = new Klass("YourMom");
             Klasses.Add(k);
             
             ////if (IsInDesignMode)

@@ -10,7 +10,7 @@ namespace Diagram
     public class Klass
     {
         private string package { get; set; }
-        private string name {get;set;}
+        public string Name { get; set; }
 
         ArrayList attributes = new ArrayList();
         ArrayList operations = new ArrayList();
@@ -19,7 +19,7 @@ namespace Diagram
 
         public Klass(string name)
         {
-            this.name = name;
+            Name = name;
         }
 
         public void addAttribute(string attribute) {

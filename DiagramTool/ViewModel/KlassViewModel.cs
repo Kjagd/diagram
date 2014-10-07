@@ -1,4 +1,5 @@
-﻿using GalaSoft.MvvmLight;
+﻿using Diagram;
+using GalaSoft.MvvmLight;
 
 namespace DiagramTool.ViewModel
 {
@@ -22,6 +23,9 @@ namespace DiagramTool.ViewModel
 
         private float height;
         public float Height { get { return height; } set { height = value; } }
+
+        private Klass klass;
+        public Klass Klass { get { return klass; } set { klass = value; } }
 
         /// <summary>
         /// Initializes a new instance of the MvvmViewModel1 class.
