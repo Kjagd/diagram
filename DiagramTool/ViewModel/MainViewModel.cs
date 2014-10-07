@@ -1,4 +1,7 @@
+﻿using Diagram;
 using GalaSoft.MvvmLight;
+using System.Collections;
+using System.Collections.ObjectModel;
 
 namespace DiagramTool.ViewModel
 {
@@ -16,11 +19,25 @@ namespace DiagramTool.ViewModel
     /// </summary>
     public class MainViewModel : ViewModelBase
     {
+
+        public ObservableCollection<KlassViewModel> Klasses { get; set; }
+
         /// <summary>
         /// Initializes a new instance of the MainViewModel class.
         /// </summary>
         public MainViewModel()
         {
+            Klasses = new ObservableCollection<KlassViewModel>();
+            KlassViewModel k = new KlassViewModel();
+            k.X = 400;
+            k.Y = 400;
+            Klasses.Add(k);
+
+            k = new KlassViewModel();
+            k.Width = 300;
+            k.Height = 300;
+            Klasses.Add(k);
+            
             ////if (IsInDesignMode)
             ////{
             ////    // Code runs in Blend --> create design time data.
