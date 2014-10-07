@@ -1,7 +1,7 @@
 ﻿<Window x:Class="DiagramTool.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="MainWindow" Height="600" Width="800"
+        Title="Diagram tool" Height="600" Width="800"
         DataContext="{Binding Source={StaticResource vm}}">
     <Window.Resources>
         <ResourceDictionary Source="Resources/Dictionary1.xaml" />
@@ -9,21 +9,26 @@
     <StackPanel>
         <Ribbon x:Name="RibbonWin"  SelectedIndex="0">
             <Ribbon.ApplicationMenu>
-                <RibbonApplicationMenu KeyTip="F">
+                <RibbonApplicationMenu KeyTip="F" Label="File" LargeImageSource="images/folder32.png">
                     <RibbonApplicationMenuItem Header="Load" ImageSource="images/folder64.png" />
                     <RibbonSeparator></RibbonSeparator>
                     <RibbonApplicationMenuItem Header="Save" ImageSource="images/save64.png" />
                 </RibbonApplicationMenu>
             </Ribbon.ApplicationMenu>
-            <RibbonTab Header="Home">
-                <RibbonGroup>
-                    <RibbonSplitButton LargeImageSource="images/clipboard64.png" Label="Paste">
-                        
-                    </RibbonSplitButton>
+            <RibbonTab Header="Edit">
+                <RibbonGroup Header="Clipboard &amp; history">
+                    <RibbonButton LargeImageSource="images/clipboard32.png" Label="Paste" />
                     <StackPanel>
-                        <RibbonButton SmallImageSource="images/copy32.png" Label="Copy"/>
-                        <RibbonButton SmallImageSource="images/scissors32.png" Label="Cut"/>
+                        <RibbonButton SmallImageSource="images/scissors16.png" Label="Cut"/>
+                        <RibbonButton SmallImageSource="images/copy16.png" Label="Copy"/>
                     </StackPanel>
+                    <RibbonButton LargeImageSource="images/undo32.png" Label="Undo" />
+                    <RibbonButton LargeImageSource="images/redo32.png" Label="Redo" />
+                </RibbonGroup>
+                <RibbonGroup Header="Classes">
+                    <RibbonButton LargeImageSource="images/newclass32.png" Label="New Class"/>
+                    <RibbonButton LargeImageSource="images/deleteclass32.png" Label="Delete Class"/>
+
                 </RibbonGroup>
             </RibbonTab>
         </Ribbon>

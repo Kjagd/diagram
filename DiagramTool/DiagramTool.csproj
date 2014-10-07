@@ -149,6 +149,28 @@
     <Resource Include="View\images\scissors32.png" />
     <Resource Include="View\images\scissors64.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="View\images\deleteclass32.png" />
+    <Resource Include="View\images\deleteclass64.png" />
+    <Resource Include="View\images\new32.png" />
+    <Resource Include="View\images\new64.png" />
+    <Resource Include="View\images\newclass32.png" />
+    <Resource Include="View\images\newclass64.png" />
+    <Resource Include="View\images\redo32.png" />
+    <Resource Include="View\images\redo64.png" />
+    <Resource Include="View\images\redodisabled32.png" />
+    <Resource Include="View\images\redodisabled64.png" />
+    <Resource Include="View\images\undo32.png" />
+    <Resource Include="View\images\undo64.png" />
+    <Resource Include="View\images\undodisabled32.png" />
+    <Resource Include="View\images\undodisabled64.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="View\images\scissors16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="View\images\copy16.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
