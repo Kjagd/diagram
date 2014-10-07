@@ -8,9 +8,6 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
         <Ribbon x:Name="RibbonWin"  SelectedIndex="0">
-            <Ribbon.HelpPaneContent>
-                <RibbonButton SmallImageSource="images/Annotate_Help.ico" />
-            </Ribbon.HelpPaneContent>
             <Ribbon.QuickAccessToolBar>
                 <RibbonQuickAccessToolBar>
                     <RibbonButton x:Name="Save" SmallImageSource="images/Save.png" />
@@ -18,12 +15,25 @@
             </Ribbon.QuickAccessToolBar>
             <Ribbon.ApplicationMenu>
                 <RibbonApplicationMenu KeyTip="F">
+                    <RibbonApplicationMenuItem Header="Load" ImageSource="images/Save.png" />
+                    <RibbonSeparator></RibbonSeparator>
                     <RibbonApplicationMenuItem Header="Save" ImageSource="images/Save.png" />
                 </RibbonApplicationMenu>
             </Ribbon.ApplicationMenu>
+            <RibbonTab Header="Home">
+                <RibbonGroup>
+                    <RibbonSplitButton LargeImageSource="images/Save.png" Label="Paste">
+                        
+                    </RibbonSplitButton>
+                    <StackPanel>
+                        <RibbonButton SmallImageSource="images/Save.png" Label="Copy"/>
+                        <RibbonButton SmallImageSource="images/Save.png" Label="Cut"/>
+                    </StackPanel>
+                </RibbonGroup>
+            </RibbonTab>
         </Ribbon>
         <StackPanel >
-            
+
         </StackPanel>
     </Grid>
 </Window>
