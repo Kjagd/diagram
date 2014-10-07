@@ -18,12 +18,25 @@
             </Ribbon.QuickAccessToolBar>
             <Ribbon.ApplicationMenu>
                 <RibbonApplicationMenu KeyTip="F">
+                    <RibbonApplicationMenuItem Header="Load" ImageSource="../images/Save.png" />
+                    <RibbonSeparator></RibbonSeparator>
                     <RibbonApplicationMenuItem Header="Save" ImageSource="../images/Save.png" />
                 </RibbonApplicationMenu>
             </Ribbon.ApplicationMenu>
+            <RibbonTab Header="Home">
+                <RibbonGroup>
+                    <RibbonSplitButton LargeImageSource="../images/Save.png" Label="Paste">
+                        
+                    </RibbonSplitButton>
+                    <StackPanel>
+                        <RibbonButton SmallImageSource="../images/Save.png" Label="Copy"/>
+                        <RibbonButton SmallImageSource="../images/Save.png" Label="Cut"/>
+                    </StackPanel>
+                </RibbonGroup>
+            </RibbonTab>
         </Ribbon>
         <Grid>
             <ItemsControl ItemsSource="{Binding Klasses}"/>
         </Grid>
-    </StackPanel>
+        </StackPanel>
 </Window>
