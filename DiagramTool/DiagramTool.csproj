@@ -121,10 +121,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="images\Save.png" />
+    <Resource Include="View\images\Save.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="images\Annotate_Help.ico" />
+    <Resource Include="View\images\Annotate_Help.ico" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ClassLibrary1\Model.csproj">
@@ -134,6 +134,20 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="View\images\clipboard32.png" />
+    <Resource Include="View\images\clipboard64.png" />
+    <Resource Include="View\images\copy32.png" />
+    <Resource Include="View\images\copy64.png" />
+    <Resource Include="View\images\folder32.png" />
+    <Resource Include="View\images\folder64.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="View\images\save32.png" />
+    <Resource Include="View\images\save64.png" />
+    <Resource Include="View\images\scissors32.png" />
+    <Resource Include="View\images\scissors64.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

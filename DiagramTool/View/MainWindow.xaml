@@ -8,29 +8,21 @@
     </Window.Resources>
     <StackPanel>
         <Ribbon x:Name="RibbonWin"  SelectedIndex="0">
-            <Ribbon.HelpPaneContent>
-                <RibbonButton SmallImageSource="../images/Annotate_Help.ico" />
-            </Ribbon.HelpPaneContent>
-            <Ribbon.QuickAccessToolBar>
-                <RibbonQuickAccessToolBar>
-                    <RibbonButton x:Name="Save" SmallImageSource="../images/Save.png" />
-                </RibbonQuickAccessToolBar>
-            </Ribbon.QuickAccessToolBar>
             <Ribbon.ApplicationMenu>
                 <RibbonApplicationMenu KeyTip="F">
-                    <RibbonApplicationMenuItem Header="Load" ImageSource="../images/Save.png" />
+                    <RibbonApplicationMenuItem Header="Load" ImageSource="images/folder64.png" />
                     <RibbonSeparator></RibbonSeparator>
-                    <RibbonApplicationMenuItem Header="Save" ImageSource="../images/Save.png" />
+                    <RibbonApplicationMenuItem Header="Save" ImageSource="images/save64.png" />
                 </RibbonApplicationMenu>
             </Ribbon.ApplicationMenu>
             <RibbonTab Header="Home">
                 <RibbonGroup>
-                    <RibbonSplitButton LargeImageSource="../images/Save.png" Label="Paste">
+                    <RibbonSplitButton LargeImageSource="images/clipboard64.png" Label="Paste">
                         
                     </RibbonSplitButton>
                     <StackPanel>
-                        <RibbonButton SmallImageSource="../images/Save.png" Label="Copy"/>
-                        <RibbonButton SmallImageSource="../images/Save.png" Label="Cut"/>
+                        <RibbonButton SmallImageSource="images/copy32.png" Label="Copy"/>
+                        <RibbonButton SmallImageSource="images/scissors32.png" Label="Cut"/>
                     </StackPanel>
                 </RibbonGroup>
             </RibbonTab>

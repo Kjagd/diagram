@@ -7,6 +7,6 @@
              Canvas.Left="{Binding X}" Canvas.Top="{Binding Y}" Width="{Binding Width}" Height="{Binding Height}" 
              d:DesignHeight="300" d:DesignWidth="300">
     <StackPanel Background="AliceBlue">
-        <Label Content="{Binding Klass.Name}" HorizontalAlignment="Center" />
+        <Label Content="{Binding Klass.Name}" HorizontalAlignment="Center" FontSize="14" FontWeight="Bold" />
     </StackPanel>
 </UserControl>
