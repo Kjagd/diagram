@@ -3,12 +3,6 @@ using GalaSoft.MvvmLight;
 
 namespace DiagramTool.ViewModel
 {
-    /// <summary>
-    /// This class contains properties that a View can data bind to.
-    /// <para>
-    /// See http://www.galasoft.ch/mvvm
-    /// </para>
-    /// </summary>
     public class KlassViewModel : ViewModelBase
     {
 
@@ -27,9 +21,6 @@ namespace DiagramTool.ViewModel
         private Klass klass;
         public Klass Klass { get { return klass; } set { klass = value; } }
 
-        /// <summary>
-        /// Initializes a new instance of the MvvmViewModel1 class.
-        /// </summary>
         public KlassViewModel()
         {
             width = 150;

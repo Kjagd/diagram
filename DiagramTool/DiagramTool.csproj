@@ -129,9 +129,6 @@
     <Resource Include="View\images\Save.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="View\images\Annotate_Help.ico" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\ClassLibrary1\Model.csproj">
       <Project>{64ab4b7c-9f09-431f-bbfa-bf9130856247}</Project>
       <Name>Model</Name>
@@ -178,9 +175,6 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="icon.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Annotate_Help.ico" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="icon2.ico" />
