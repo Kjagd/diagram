@@ -13,8 +13,11 @@ namespace Diagram
         // View properties
         public float Width { get; set; }
         public float Height { get; set; }
+
         public float X { get; set; }
         public float Y { get; set; }
+        public float CenterX { get { return X + Width/2; } }
+        public float CenterY { get { return Y + Height/2; } }
 
         public string Package { get; set; }
         public string Name { get; set; }

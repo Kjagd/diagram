@@ -10,7 +10,7 @@ namespace Diagram
     {
         public Inheritance(Klass @from, Klass to) : base(@from, to)
         {
-
+            
         }
     }
 }

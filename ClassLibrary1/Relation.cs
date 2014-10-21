@@ -8,8 +8,8 @@ namespace Diagram
 {
     public class Relation
     {
-        private Klass From { get; set; }
-        private Klass To { get; set; }
+        public Klass From { get; set; }
+        public Klass To { get; set; }
         private RelationMultiplicity Multiplicity { get; set; }
 
 

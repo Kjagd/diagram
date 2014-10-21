@@ -6,7 +6,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
-        <Line X1="0" X2="600" Y1="0" Y2="600" Stroke="Black" StrokeThickness="2" />
+        <Line X1="{Binding From.CenterX}" X2="{Binding To.CenterX}" Y1="{Binding From.CenterY}" Y2="{Binding To.CenterY}" Stroke="Black" StrokeThickness="2" />
             
     </Grid>
 </UserControl>
