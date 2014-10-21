@@ -34,6 +34,7 @@
         </Ribbon>
         <Grid>
             <ItemsControl ItemsSource="{Binding Klasses}"/>
+            <ItemsControl ItemsSource="{Binding Relations}"/>
         </Grid>
         </StackPanel>
 </Window>
