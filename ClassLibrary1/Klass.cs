@@ -9,7 +9,8 @@ namespace Diagram
 {
     public class Klass
     {
-        private string package { get; set; }
+        private string package;
+        public string Package { get { return package; } set { package = value; } }
         public string Name { get; set; }
 
         ArrayList attributes = new ArrayList();
