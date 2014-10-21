@@ -73,9 +73,16 @@
     </ApplicationDefinition>
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\KlassViewModel.cs" />
+    <Compile Include="View\InheritanceUserControl.xaml.cs">
+      <DependentUpon>InheritanceUserControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\KlassUserControl.xaml.cs">
       <DependentUpon>KlassUserControl.xaml</DependentUpon>
     </Compile>
+    <Page Include="View\InheritanceUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

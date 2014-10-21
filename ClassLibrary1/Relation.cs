@@ -6,19 +6,17 @@ using System.Threading.Tasks;
 
 namespace Diagram
 {
-    class Relation
+    public class Relation
     {
         private Klass From { get; set; }
         private Klass To { get; set; }
-        private RelationType Type { get; set; }
         private RelationMultiplicity Multiplicity { get; set; }
 
 
-        public Relation(Klass from, Klass to, RelationType type)
+        public Relation(Klass from, Klass to)
         {
             this.From = from;
             this.To = to;
-            this.Type = type;
         }
     }
 }

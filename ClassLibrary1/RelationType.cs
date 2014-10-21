@@ -6,15 +6,15 @@ using System.Threading.Tasks;
 
 namespace Diagram
 {
-    class RelationType
+    public class RelationType
     {
-        private string name { get; set; }
-        private string description { get; set; }
+        private string Name { get; set; }
+        private string Description { get; set; }
 
         public RelationType(string name, string description)
         {
-            this.name = name;
-            this.description = description;
+            this.Name = name;
+            this.Description = description;
         }
     }
 }
