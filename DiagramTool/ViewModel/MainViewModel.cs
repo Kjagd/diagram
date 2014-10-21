@@ -22,6 +22,7 @@ namespace DiagramTool.ViewModel
  
             Relations = new ObservableCollection<Relation>();
             var r = new Inheritance(k.Klass, c.Klass);
+            Relations.Add(r);
         }
     }
 }
