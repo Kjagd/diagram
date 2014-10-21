@@ -72,7 +72,6 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="ViewModel\MainViewModel.cs" />
-    <Compile Include="ViewModel\KlassViewModel.cs" />
     <Compile Include="View\InheritanceUserControl.xaml.cs">
       <DependentUpon>InheritanceUserControl.xaml</DependentUpon>
     </Compile>
