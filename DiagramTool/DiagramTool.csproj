@@ -71,6 +71,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Command\ICommand.cs" />
+    <Compile Include="Command\IUndoCommand.cs" />
+    <Compile Include="Command\IUndoRedoCommand.cs" />
+    <Compile Include="Command\MoveCommand.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="View\InheritanceUserControl.xaml.cs">
       <DependentUpon>InheritanceUserControl.xaml</DependentUpon>
