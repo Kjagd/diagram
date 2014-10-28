@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -7,7 +8,7 @@ using System.Collections;
 
 namespace Diagram
 {
-    public class Klass
+    public class Klass : NotifyBase
     {
 
         // View properties
@@ -22,8 +23,8 @@ namespace Diagram
         public string Package { get; set; }
         public string Name { get; set; }
 
-        ArrayList attributes = new ArrayList();
-        ArrayList operations = new ArrayList();
+        public ObservableCollection<Field> Fields { get; set; }
+        //public ObservableCollection<Method> Methods { get; set; }
 
         // Visibility of attributes and operations
 
@@ -32,16 +33,18 @@ namespace Diagram
             Name = name;
             Width = 150;
             Height = 150;
+
+            Fields = new ObservableCollection<Field>();
         }
 
-        public void addAttribute(string attribute)
+        public void AddField(Field field)
         {
-            attributes.Add(attribute);
+            Fields.Add(field);
         }
 
-        public void addOperations(string operation)
+        public void AddMethod(string operation)
         {
-            operations.Add(operation);
+           // Methods.Add(operation);
         }
 
 
