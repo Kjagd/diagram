@@ -76,6 +76,7 @@
     <Compile Include="Command\IUndoRedoCommand.cs" />
     <Compile Include="Command\MoveCommand.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
+    <Compile Include="ViewModel\NodeViewModel.cs" />
     <Compile Include="View\InheritanceUserControl.xaml.cs">
       <DependentUpon>InheritanceUserControl.xaml</DependentUpon>
     </Compile>
@@ -139,7 +140,7 @@
     <Resource Include="View\images\Save.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ClassLibrary1\Model.csproj">
+    <ProjectReference Include="..\Model\Model.csproj">
       <Project>{64ab4b7c-9f09-431f-bbfa-bf9130856247}</Project>
       <Name>Model</Name>
     </ProjectReference>
