@@ -1,15 +1,25 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:view="clr-namespace:DiagramTool.View"
+                    xmlns:vm="clr-namespace:DiagramTool.ViewModel"
                     xmlns:model="clr-namespace:Diagram;assembly=Model">
     <DataTemplate DataType="{x:Type model:Klass}">
         <Canvas>
             <view:KlassUserControl/>
         </Canvas>
     </DataTemplate>
-    <DataTemplate  DataType="{x:Type model:Inheritance}">
+    <DataTemplate  DataType="{x:Type model:Relation}">
         <Canvas>
-            <view:InheritanceUserControl/>
+            <Path x:Name="line">
+            </Path>
         </Canvas>
+        
+        <DataTemplate.Triggers>
+            <DataTrigger Binding="{Binding Path=RelationType}" Value="{x:Static model:Relation+Type.Inheritance}">
+                <Setter TargetName="line" Property="Data"></Setter>
+            </DataTrigger>
+        </DataTemplate.Triggers>
+        
+        
     </DataTemplate>
 </ResourceDictionary>
