@@ -8,9 +8,18 @@
             <view:KlassUserControl/>
         </Canvas>
     </DataTemplate>
-    <DataTemplate  DataType="{x:Type model:Inheritance}">
+    <DataTemplate  DataType="{x:Type model:Relation}">
         <Canvas>
-            <view:InheritanceUserControl/>
+            <Path x:Name="line">
+            </Path>
         </Canvas>
+        
+        <DataTemplate.Triggers>
+            <DataTrigger Binding="{Binding Path=RelationType}" Value="{x:Static model:Relation+Type.Inheritance}">
+                <Setter TargetName="line" Property="Data"></Setter>
+            </DataTrigger>
+        </DataTemplate.Triggers>
+        
+        
     </DataTemplate>
 </ResourceDictionary>

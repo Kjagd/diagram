@@ -8,8 +8,15 @@ namespace Diagram
 {
     public class Relation
     {
+        public enum Type
+        {
+            Inheritance
+        };
         public Klass From { get; set; }
         public Klass To { get; set; }
+
+        public int RelationType { get; set; }
+
         private RelationMultiplicity Multiplicity { get; set; }
 
 
