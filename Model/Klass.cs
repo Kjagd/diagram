@@ -5,20 +5,43 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Collections;
+using GalaSoft.MvvmLight;
 
 namespace Diagram
 {
-    public class Klass : NotifyBase
+    public class Klass : ViewModelBase
     {
 
+        private float _x;
+        private float _y;
         // View properties
         public float Width { get; set; }
         public float Height { get; set; }
 
-        public float X { get; set; }
-        public float Y { get; set; }
-        public float CenterX { get { return X + Width/2; } }
-        public float CenterY { get { return Y + Height/2; } }
+        public float X
+        {
+            get { return _x; }
+            set
+            {
+                _x = value; RaisePropertyChanged();
+            }
+        }
+
+        public float Y
+        {
+            get { return _y; }
+            set { _y = value; RaisePropertyChanged(); }
+        }
+
+        public float CenterX
+        {
+            get { return X + Width / 2; }
+        }
+
+        public float CenterY
+        {
+            get { return Y + Height / 2; }
+        }
 
         public string Package { get; set; }
         public string Name { get; set; }
@@ -44,7 +67,7 @@ namespace Diagram
 
         public void AddMethod(string operation)
         {
-           // Methods.Add(operation);
+            // Methods.Add(operation);
         }
 
 

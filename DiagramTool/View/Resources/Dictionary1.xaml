@@ -16,7 +16,7 @@
         
         <DataTemplate.Triggers>
             <DataTrigger Binding="{Binding Path=RelationType}" Value="{x:Static model:Relation+Type.Inheritance}">
-                <Setter TargetName="line" Property="Data"></Setter>
+                <Setter TargetName="line" Property="Data" Value=""></Setter>
             </DataTrigger>
         </DataTemplate.Triggers>
         

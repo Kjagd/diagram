@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace Diagram
 {
@@ -11,7 +12,7 @@ namespace Diagram
         public event PropertyChangedEventHandler PropertyChanged;
 
         // Denne metode bruges til at smide PropertyChanged eventen og skal kaldes i alle set metoderne, for alle model klassernes attributer.
-        protected void NotifyPropertyChanged(String propertyName)
+        protected void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
         {
             if (PropertyChanged != null) PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
         }
