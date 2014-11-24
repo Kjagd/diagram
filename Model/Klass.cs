@@ -14,9 +14,25 @@ namespace Diagram
 
         private float _x;
         private float _y;
+        private bool _isSelected;
+        private float _borderThickness;
         // View properties
         public float Width { get; set; }
         public float Height { get; set; }
+
+        public bool IsSelected
+        {
+            get { return _isSelected; }
+            set { _isSelected = value;
+                BorderThickness = _isSelected ? 1 : 0;  
+            }
+        }
+
+        public float BorderThickness
+        {
+            get { return _borderThickness; }
+            set { _borderThickness = value; RaisePropertyChanged(); }
+        }
 
         public float X
         {

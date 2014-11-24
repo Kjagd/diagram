@@ -1,10 +1,12 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Security.Authentication.ExtendedProtection;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Effects;
 using Diagram;
 using DiagramTool.Command;
 using GalaSoft.MvvmLight;
@@ -18,7 +20,10 @@ namespace DiagramTool.ViewModel
     public class MainViewModel : ViewModelBase
     {
         private UndoRedoController undoRedoController = UndoRedoController.GetInstance();
-        public Point MoveKlassPoint;
+        private Point MoveKlassPoint;
+        private FrameworkElement movingElement;
+        private Klass selectedKlass;
+
         public ICommand MouseDownCommand { get; private set; }
         public ICommand MouseMoveCommand { get; private set; }
         public ICommand MouseUpCommand { get; private set; }
@@ -27,7 +32,7 @@ namespace DiagramTool.ViewModel
         public ICommand RedoCommand { get; set; }
 
         public ICommand NewClassCommand { get; set; }
-
+        public ICommand DeleteClassCommand { get; set; }
         public ObservableCollection<Klass> Klasses { get; set; }
         public ObservableCollection<Relation> Relations { get; set; }
 
@@ -58,6 +63,7 @@ namespace DiagramTool.ViewModel
             RedoCommand = new RelayCommand(undoRedoController.Redo, undoRedoController.CanRedo);
 
             NewClassCommand = new RelayCommand(CreateNewKlass);
+            DeleteClassCommand = new RelayCommand(DeleteKlass);
         }
         
         private void CreateNewKlass()
@@ -67,13 +73,17 @@ namespace DiagramTool.ViewModel
             undoRedoController.AddAndExecute(new NewKlassCommand(Klasses, newKlass));
         }
 
+        private void DeleteKlass()
+        {
+            undoRedoController.AddAndExecute(new DeleteKlassCommand(Klasses, selectedKlass));
+        }
+
         public void MouseMoveClass(MouseEventArgs e)
         {
             if (Mouse.Captured != null)
             {
-                FrameworkElement frameworkElement = (FrameworkElement) e.MouseDevice.Target;
-                Klass draggedKlass = (Klass) frameworkElement.DataContext;
-                Canvas canvas = FindParentOfType<Canvas>(frameworkElement);
+                Klass draggedKlass = (Klass) movingElement.DataContext;
+                Canvas canvas = FindParentOfType<Canvas>(movingElement);
                 Point mousePos = Mouse.GetPosition(canvas);
                 if (MoveKlassPoint == default(Point)) MoveKlassPoint = mousePos;
                 draggedKlass.X = (int) (mousePos.X-draggedKlass.Width/2);
@@ -83,9 +93,9 @@ namespace DiagramTool.ViewModel
 
         public void MouseUpClass(MouseButtonEventArgs e)
         {
-            FrameworkElement frameworkElement = (FrameworkElement) e.MouseDevice.Target;
-            Klass draggedKlass = (Klass) frameworkElement.DataContext;
-            Canvas canvas = FindParentOfType<Canvas>(frameworkElement);
+            movingElement.Effect = null;
+            Klass draggedKlass = (Klass) movingElement.DataContext;
+            Canvas canvas = FindParentOfType<Canvas>(movingElement);
             Point mousePos = Mouse.GetPosition(canvas);
             undoRedoController.AddAndExecute(new MoveCommand(draggedKlass, (float) mousePos.X-draggedKlass.Width/2,
                 (float) mousePos.Y-draggedKlass.Height/2, (float) MoveKlassPoint.X-draggedKlass.Width/2, (float) MoveKlassPoint.Y-draggedKlass.Height/2)); 
@@ -96,8 +106,21 @@ namespace DiagramTool.ViewModel
         public void MouseDownClass(MouseButtonEventArgs e)
         {
             //Capture for drag if it's a klass
-            if (((FrameworkElement) e.MouseDevice.Target).DataContext is Klass)
+            FrameworkElement frameworkElement = (FrameworkElement) e.MouseDevice.Target;
+            if (!(frameworkElement is StackPanel))
             {
+                frameworkElement = FindParentOfType<StackPanel>(frameworkElement);
+            }
+            if (frameworkElement.DataContext is Klass)
+            {
+                frameworkElement.Effect = new DropShadowEffect {BlurRadius = 20, Opacity = 0.5};
+                movingElement = frameworkElement;
+                if (selectedKlass != null)
+                {
+                    selectedKlass.IsSelected = false;
+                }
+                (frameworkElement.DataContext as Klass).IsSelected = true;
+                selectedKlass = (frameworkElement.DataContext as Klass);
                 e.MouseDevice.Target.CaptureMouse();
             }
         }
