@@ -2,6 +2,7 @@
 using System.Security.Authentication.ExtendedProtection;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using Diagram;
@@ -25,6 +26,8 @@ namespace DiagramTool.ViewModel
         public ICommand UndoCommand { get; set; }
         public ICommand RedoCommand { get; set; }
 
+        public ICommand NewClassCommand { get; set; }
+
         public ObservableCollection<Klass> Klasses { get; set; }
         public ObservableCollection<Relation> Relations { get; set; }
 
@@ -32,22 +35,20 @@ namespace DiagramTool.ViewModel
         public MainViewModel()
         {
             Klasses = new ObservableCollection<Klass>();
-            var k = new Klass("lel") {X = 200, Y = 200};
+            var k = new Klass("Persons") {X = 200, Y = 200};
 
             Klasses.Add(k);
 
-            k.AddField(new Field("test", "+"));
-            k.AddField(new Field("test2", "+"));
-            k.AddField(new Field("test3", "+"));
+            k.AddField(new Field("Jonas", "+"));
+            k.AddField(new Field("Peter", "+"));
+            k.AddField(new Field("Kristian", "+"));
 
-
-            var c = new Klass("You're mom");
+            var c = new Klass("Stuff");
             Klasses.Add(c);
 
             Relations = new ObservableCollection<Relation>();
             var r = new Inheritance(k, c);
             Relations.Add(r);
-
 
             MouseDownCommand = new RelayCommand<MouseButtonEventArgs>(MouseDownClass);
             MouseUpCommand = new RelayCommand<MouseButtonEventArgs>(MouseUpClass);
@@ -55,6 +56,15 @@ namespace DiagramTool.ViewModel
 
             UndoCommand = new RelayCommand(undoRedoController.Undo, undoRedoController.CanUndo);
             RedoCommand = new RelayCommand(undoRedoController.Redo, undoRedoController.CanRedo);
+
+            NewClassCommand = new RelayCommand(CreateNewKlass);
+        }
+        
+        private void CreateNewKlass()
+        {
+            var newKlass = new Klass("New Klass") {X = 300, Y = 300};
+            
+            undoRedoController.AddAndExecute(new NewKlassCommand(Klasses, newKlass));
         }
 
         public void MouseMoveClass(MouseEventArgs e)

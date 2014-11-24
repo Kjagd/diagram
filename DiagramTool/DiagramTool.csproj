@@ -71,6 +71,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Command\NewKlassCommand.cs" />
     <Compile Include="Command\UndoRedoController.cs" />
     <Compile Include="Command\ICommand.cs" />
     <Compile Include="Command\IUndoCommand.cs" />
