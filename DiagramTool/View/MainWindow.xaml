@@ -22,8 +22,8 @@
                         <RibbonButton SmallImageSource="images/scissors16.png" Label="Cut"/>
                         <RibbonButton SmallImageSource="images/copy16.png" Label="Copy"/>
                     </StackPanel>
-                    <RibbonButton LargeImageSource="images/undo32.png" Label="Undo" />
-                    <RibbonButton LargeImageSource="images/redo32.png" Label="Redo" />
+                    <RibbonButton LargeImageSource="images/undo32.png" Label="Undo" Command="{Binding UndoCommand}" />
+                    <RibbonButton LargeImageSource="images/redo32.png" Label="Redo" Command="{Binding RedoCommand}" />
                 </RibbonGroup>
                 <RibbonGroup Header="Classes">
                     <RibbonButton LargeImageSource="images/newclass32.png" Label="New Class"/>

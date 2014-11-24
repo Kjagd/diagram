@@ -17,7 +17,7 @@
                     <WrapPanel Margin="10 0 0 0">
                         <TextBlock Text="{Binding AccessModifier}"/>
 
-                        <TextBlock Text="{Binding FieldName}" FontSize="12" Foreground="#424242"/>
+                        <TextBlock Text="{Binding FieldName}" FontSize="12" Foreground="#424242" />
                     </WrapPanel>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
@@ -27,7 +27,7 @@
                 <cmd:EventToCommand Command="{Binding DataContext.MouseDownCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" PassEventArgsToCommand="True"/>
             </i:EventTrigger>
             <i:EventTrigger EventName="MouseMove">
-                <cmd:EventToCommand Command="{Binding DataContext.MouseMoveCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" PassEventArgsToCommand="True"/>
+                <cmd:EventToCommand Command="{Binding DataContext.MouseMoveCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window  }}}" PassEventArgsToCommand="True"/>
             </i:EventTrigger>
             <i:EventTrigger EventName="MouseUp">
                 <cmd:EventToCommand Command="{Binding DataContext.MouseUpCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" PassEventArgsToCommand="True"/>
