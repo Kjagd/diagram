@@ -7,6 +7,10 @@
         <ResourceDictionary Source="Resources/Dictionary1.xaml" />
     </Window.Resources>
     <StackPanel>
+        <Grid>
+            <ItemsControl ItemsSource="{Binding Relations}"/>
+            <ItemsControl ItemsSource="{Binding Klasses}"/>
+        </Grid>
         <Ribbon x:Name="RibbonWin"  SelectedIndex="0">
             <Ribbon.ApplicationMenu>
                 <RibbonApplicationMenu KeyTip="F" Label="File" LargeImageSource="images/folder32.png">
@@ -22,19 +26,15 @@
                         <RibbonButton SmallImageSource="images/scissors16.png" Label="Cut"/>
                         <RibbonButton SmallImageSource="images/copy16.png" Label="Copy"/>
                     </StackPanel>
-                    <RibbonButton LargeImageSource="images/undo32.png" Label="Undo" />
-                    <RibbonButton LargeImageSource="images/redo32.png" Label="Redo" />
+                    <RibbonButton LargeImageSource="images/undo32.png" Label="Undo" Command="{Binding UndoCommand}" />
+                    <RibbonButton LargeImageSource="images/redo32.png" Label="Redo" Command="{Binding RedoCommand}" />
                 </RibbonGroup>
                 <RibbonGroup Header="Classes">
-                    <RibbonButton LargeImageSource="images/newclass32.png" Label="New Class"/>
-                    <RibbonButton LargeImageSource="images/deleteclass32.png" Label="Delete Class"/>
+                    <RibbonButton LargeImageSource="images/newclass32.png" Label="New Class" Command="{Binding NewClassCommand}"/>
+                    <RibbonButton LargeImageSource="images/deleteclass32.png" Label="Delete Class" Command="{Binding DeleteClassCommand}" />
 
                 </RibbonGroup>
             </RibbonTab>
         </Ribbon>
-        <Grid>
-            <ItemsControl ItemsSource="{Binding Relations}"/>
-            <ItemsControl ItemsSource="{Binding Klasses}"/>
-        </Grid>
         </StackPanel>
 </Window>
