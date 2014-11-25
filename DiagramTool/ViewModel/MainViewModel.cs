@@ -1,18 +1,13 @@
-﻿using System;
-using System.ComponentModel;
-using System.Security.Authentication.ExtendedProtection;
+﻿using Diagram;
+using DiagramTool.Command;
+using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Command;
+using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Effects;
-using Diagram;
-using DiagramTool.Command;
-using GalaSoft.MvvmLight;
-using System.Collections;
-using System.Collections.ObjectModel;
-using GalaSoft.MvvmLight.Command;
 using ICommand = System.Windows.Input.ICommand;
 
 namespace DiagramTool.ViewModel
@@ -20,6 +15,8 @@ namespace DiagramTool.ViewModel
     public class MainViewModel : ViewModelBase
     {
         private UndoRedoController undoRedoController = UndoRedoController.GetInstance();
+        private Klass clipboard;
+
         private Point MoveKlassPoint;
         private FrameworkElement movingElement;
         private Klass selectedKlass;
@@ -33,6 +30,11 @@ namespace DiagramTool.ViewModel
 
         public ICommand NewClassCommand { get; set; }
         public ICommand DeleteClassCommand { get; set; }
+
+        public ICommand CopyClassCommand { get; set; }
+        public ICommand PasteClassCommand { get; set; }
+        public ICommand CutClassCommand { get; set; }
+
         public ObservableCollection<Klass> Klasses { get; set; }
         public ObservableCollection<Relation> Relations { get; set; }
 
@@ -63,7 +65,41 @@ namespace DiagramTool.ViewModel
             RedoCommand = new RelayCommand(undoRedoController.Redo, undoRedoController.CanRedo);
 
             NewClassCommand = new RelayCommand(CreateNewKlass);
-            DeleteClassCommand = new RelayCommand(DeleteKlass);
+            DeleteClassCommand = new RelayCommand(DeleteKlass, hasSelection);
+
+            CopyClassCommand = new RelayCommand(CopyKlass, hasSelection);
+            PasteClassCommand = new RelayCommand(PasteKlass, canPaste);
+            CutClassCommand = new RelayCommand(CutKlass, hasSelection);
+        }
+
+        private bool canPaste()
+        {
+            return clipboard != null;
+        }
+
+        private bool hasSelection()
+        {
+            return selectedKlass != null;
+        }
+
+        private void CopyKlass()
+        {
+            clipboard = (Klass)selectedKlass.Clone();
+        }
+
+        private void PasteKlass()
+        {
+            undoRedoController.AddAndExecute(new NewKlassCommand(Klasses, clipboard));
+            selectedKlass.IsSelected = false;
+            clipboard.IsSelected = true;
+            // Clear clipboard
+            clipboard = null;
+        }
+
+        private void CutKlass()
+        {
+            CopyKlass();
+            DeleteKlass();
         }
         
         private void CreateNewKlass()

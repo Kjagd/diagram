@@ -9,7 +9,7 @@ using GalaSoft.MvvmLight;
 
 namespace Diagram
 {
-    public class Klass : ViewModelBase
+    public class Klass : ViewModelBase, ICloneable
     {
 
         private float _x;
@@ -87,5 +87,11 @@ namespace Diagram
         }
 
 
+
+        public object Clone()
+        {
+            Klass newKlass = (Klass) this.MemberwiseClone();
+            return newKlass;
+        }
     }
 }

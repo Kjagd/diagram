@@ -21,10 +21,10 @@
             </Ribbon.ApplicationMenu>
             <RibbonTab Header="Edit">
                 <RibbonGroup Header="Clipboard &amp; history">
-                    <RibbonButton LargeImageSource="images/clipboard32.png" Label="Paste" />
+                    <RibbonButton LargeImageSource="images/clipboard32.png" Label="Paste" Command="{Binding PasteClassCommand}" />
                     <StackPanel>
-                        <RibbonButton SmallImageSource="images/scissors16.png" Label="Cut"/>
-                        <RibbonButton SmallImageSource="images/copy16.png" Label="Copy"/>
+                        <RibbonButton SmallImageSource="images/scissors16.png" Label="Cut" Command="{Binding CutClassCommand}" />
+                        <RibbonButton SmallImageSource="images/copy16.png" Label="Copy" Command="{Binding CopyClassCommand}" />
                     </StackPanel>
                     <RibbonButton LargeImageSource="images/undo32.png" Label="Undo" Command="{Binding UndoCommand}" />
                     <RibbonButton LargeImageSource="images/redo32.png" Label="Redo" Command="{Binding RedoCommand}" />
