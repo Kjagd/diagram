@@ -143,6 +143,10 @@
     <Resource Include="View\images\Save.png" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\LineCaps\LineCaps.csproj">
+      <Project>{3e45331e-fef4-43f2-b6eb-b55e3e501b03}</Project>
+      <Name>LineCaps</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Model\Model.csproj">
       <Project>{64ab4b7c-9f09-431f-bbfa-bf9130856247}</Project>
       <Name>Model</Name>
@@ -189,6 +193,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="icon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="View\images\add.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

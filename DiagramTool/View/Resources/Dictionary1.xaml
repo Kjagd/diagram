@@ -2,21 +2,39 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:view="clr-namespace:DiagramTool.View"
                     xmlns:vm="clr-namespace:DiagramTool.ViewModel"
-                    xmlns:model="clr-namespace:Diagram;assembly=Model">
+                    xmlns:model="clr-namespace:Diagram;assembly=Model"
+                    xmlns:line="clr-namespace:LineCaps;assembly=LineCaps">
     <DataTemplate DataType="{x:Type model:Klass}">
         <Canvas>
             <view:KlassUserControl/>
         </Canvas>
     </DataTemplate>
-    <DataTemplate  DataType="{x:Type model:Relation}">
+    <DataTemplate DataType="{x:Type model:Relation}">
         <Canvas>
-            <Path x:Name="line">
-            </Path>
+            
+            <line:CappedLine x:Name="Line" Stroke="Black" StrokeThickness="2" >
+                <line:CappedLine.LinePath>
+                    <PathGeometry>
+                        <PathGeometry.Figures>
+                            <PathFigure StartPoint="{Binding From.Position}">
+                                <PathFigure.Segments>
+                                    <LineSegment Point="{Binding To.Position}"/>
+                                </PathFigure.Segments>
+                            </PathFigure>
+                        </PathGeometry.Figures>
+                    </PathGeometry>
+                </line:CappedLine.LinePath>
+            </line:CappedLine>
+               
         </Canvas>
         
         <DataTemplate.Triggers>
             <DataTrigger Binding="{Binding Path=RelationType}" Value="{x:Static model:Relation+Type.Inheritance}">
-                <Setter TargetName="line" Property="Data" Value=""></Setter>
+                <Setter TargetName="Line" Property="EndCap">
+                    <Setter.Value>
+                        <PathGeometry Figures="M 10,10 L 0,0 10,-10 Z"/>
+                    </Setter.Value>
+                </Setter>
             </DataTrigger>
         </DataTemplate.Triggers>
         

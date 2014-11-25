@@ -27,18 +27,27 @@
             </DrawingBrush>
         </Border.BorderBrush>
         <StackPanel Background="AliceBlue">
-            <Label Content="{Binding Name}" HorizontalAlignment="Stretch" FontSize="14" FontWeight="Bold" Background="#424242" Foreground="#fff" />
+            <TextBox Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch" FontSize="14" FontWeight="Bold" Background="#424242" Foreground="#fff">
+                <i:Interaction.Triggers><i:EventTrigger EventName="TextChanged"><cmd:EventToCommand PassEventArgsToCommand="True" Command="{Binding DataContext.TitleTextChanged, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" ></cmd:EventToCommand></i:EventTrigger></i:Interaction.Triggers>
+            </TextBox>
             <ItemsControl Name="FieldList" ItemsSource="{Binding Fields}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <WrapPanel Margin="10 0 0 0">
                             <TextBlock Text="{Binding AccessModifier}"/>
 
-                            <TextBlock Text="{Binding FieldName}" FontSize="12" Foreground="#424242" />
+                            <TextBox Text="{Binding FieldName}" FontSize="12" Foreground="#424242" BorderThickness="0" />
                         </WrapPanel>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
+            <Image Source="images/add.png" Width="16" Height="16" HorizontalAlignment="Left" Margin="20 5 0 0">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="MouseDown">
+                        <cmd:EventToCommand Command="{Binding DataContext.NewFieldCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" PassEventArgsToCommand="True"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </Image>
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="MouseDown">
                     <cmd:EventToCommand Command="{Binding DataContext.MouseDownCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" PassEventArgsToCommand="True"/>

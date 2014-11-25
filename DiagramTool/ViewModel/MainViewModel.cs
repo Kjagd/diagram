@@ -37,7 +37,7 @@ namespace DiagramTool.ViewModel
 
         public ObservableCollection<Klass> Klasses { get; set; }
         public ObservableCollection<Relation> Relations { get; set; }
-
+        public ICommand TitleTextChanged { get; set; }
 
         public MainViewModel()
         {
@@ -54,7 +54,7 @@ namespace DiagramTool.ViewModel
             Klasses.Add(c);
 
             Relations = new ObservableCollection<Relation>();
-            var r = new Inheritance(k, c);
+            var r = new Relation(k, c) {RelationType = Relation.Type.Inheritance};
             Relations.Add(r);
 
             MouseDownCommand = new RelayCommand<MouseButtonEventArgs>(MouseDownClass);
@@ -102,6 +102,13 @@ namespace DiagramTool.ViewModel
             DeleteKlass();
         }
         
+
+
+        private void ChangeTitle()
+        {
+            System.Console.WriteLine("Changed");
+
+        }
         private void CreateNewKlass()
         {
             var newKlass = new Klass("New Klass") {X = 300, Y = 300};
@@ -116,7 +123,7 @@ namespace DiagramTool.ViewModel
 
         public void MouseMoveClass(MouseEventArgs e)
         {
-            if (Mouse.Captured != null)
+            if (Mouse.Captured != null && movingElement != null)
             {
                 Klass draggedKlass = (Klass) movingElement.DataContext;
                 Canvas canvas = FindParentOfType<Canvas>(movingElement);
@@ -130,13 +137,17 @@ namespace DiagramTool.ViewModel
         public void MouseUpClass(MouseButtonEventArgs e)
         {
             movingElement.Effect = null;
-            Klass draggedKlass = (Klass) movingElement.DataContext;
+            var klass = movingElement.DataContext as Klass;
+            if (klass != null)
+            {
+                Klass draggedKlass = klass;
             Canvas canvas = FindParentOfType<Canvas>(movingElement);
             Point mousePos = Mouse.GetPosition(canvas);
             undoRedoController.AddAndExecute(new MoveCommand(draggedKlass, (float) mousePos.X-draggedKlass.Width/2,
                 (float) mousePos.Y-draggedKlass.Height/2, (float) MoveKlassPoint.X-draggedKlass.Width/2, (float) MoveKlassPoint.Y-draggedKlass.Height/2)); 
             e.MouseDevice.Target.ReleaseMouseCapture();
             MoveKlassPoint = new Point();
+        }
         }
 
         public void MouseDownClass(MouseButtonEventArgs e)
