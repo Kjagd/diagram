@@ -50,7 +50,7 @@ namespace DiagramTool.ViewModel
 
             var c = new Klass("Stuff");
             Klasses.Add(c);
-
+            
             Relations = new ObservableCollection<Relation>();
             var r = new Relation(k, c) {RelationType = Relation.Type.Inheritance};
             Relations.Add(r);
