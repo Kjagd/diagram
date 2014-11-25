@@ -27,7 +27,9 @@
             </DrawingBrush>
         </Border.BorderBrush>
         <StackPanel Background="AliceBlue">
-            <Label Content="{Binding Name}" HorizontalAlignment="Stretch" FontSize="14" FontWeight="Bold" Background="#424242" Foreground="#fff" />
+            <TextBox Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch" FontSize="14" FontWeight="Bold" Background="#424242" Foreground="#fff">
+                <i:Interaction.Triggers><i:EventTrigger EventName="TextChanged"><cmd:EventToCommand Command="{Binding TitleTextChanged}"></cmd:EventToCommand></i:EventTrigger></i:Interaction.Triggers>
+            </TextBox>
             <ItemsControl Name="FieldList" ItemsSource="{Binding Fields}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
