@@ -94,13 +94,17 @@ namespace DiagramTool.ViewModel
         public void MouseUpClass(MouseButtonEventArgs e)
         {
             movingElement.Effect = null;
-            Klass draggedKlass = (Klass) movingElement.DataContext;
-            Canvas canvas = FindParentOfType<Canvas>(movingElement);
-            Point mousePos = Mouse.GetPosition(canvas);
-            undoRedoController.AddAndExecute(new MoveCommand(draggedKlass, (float) mousePos.X-draggedKlass.Width/2,
-                (float) mousePos.Y-draggedKlass.Height/2, (float) MoveKlassPoint.X-draggedKlass.Width/2, (float) MoveKlassPoint.Y-draggedKlass.Height/2)); 
-            e.MouseDevice.Target.ReleaseMouseCapture();
-            MoveKlassPoint = new Point();
+            var klass = movingElement.DataContext as Klass;
+            if (klass != null)
+            {
+                Klass draggedKlass = klass;
+                Canvas canvas = FindParentOfType<Canvas>(movingElement);
+                Point mousePos = Mouse.GetPosition(canvas);
+                undoRedoController.AddAndExecute(new MoveCommand(draggedKlass, (float) mousePos.X-draggedKlass.Width/2,
+                    (float) mousePos.Y-draggedKlass.Height/2, (float) MoveKlassPoint.X-draggedKlass.Width/2, (float) MoveKlassPoint.Y-draggedKlass.Height/2)); 
+                e.MouseDevice.Target.ReleaseMouseCapture();
+                MoveKlassPoint = new Point();
+            }
         }
 
         public void MouseDownClass(MouseButtonEventArgs e)
