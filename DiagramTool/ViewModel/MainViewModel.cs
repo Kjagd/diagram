@@ -48,7 +48,7 @@ namespace DiagramTool.ViewModel
             k.AddField(new Field("Peter", "+"));
             k.AddField(new Field("Kristian", "+"));
 
-            var c = new Klass("Stuff");
+            var c = new Klass("Stuff") {X = 400, Y = 350};
             Klasses.Add(c);
             
             Relations = new ObservableCollection<Relation>();
