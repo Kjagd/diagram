@@ -63,7 +63,7 @@ namespace LineCaps
             get { return (double)GetValue(StrokeThicknessProperty); }
             set { SetValue(StrokeThicknessProperty, value); }
         }
-
+        
         public static readonly DependencyProperty LinePathProperty =
             DependencyProperty.Register("LinePath", typeof(PathGeometry), typeof(CappedLine),
             new FrameworkPropertyMetadata(
