@@ -1,18 +1,13 @@
-﻿using System;
-using System.ComponentModel;
-using System.Security.Authentication.ExtendedProtection;
+﻿using Diagram;
+using DiagramTool.Command;
+using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Command;
+using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Effects;
-using Diagram;
-using DiagramTool.Command;
-using GalaSoft.MvvmLight;
-using System.Collections;
-using System.Collections.ObjectModel;
-using GalaSoft.MvvmLight.Command;
 using ICommand = System.Windows.Input.ICommand;
 
 namespace DiagramTool.ViewModel
@@ -20,6 +15,8 @@ namespace DiagramTool.ViewModel
     public class MainViewModel : ViewModelBase
     {
         private UndoRedoController undoRedoController = UndoRedoController.GetInstance();
+        private Klass clipboard;
+
         private Point MoveKlassPoint;
         private FrameworkElement movingElement;
         private Klass selectedKlass;
@@ -33,6 +30,11 @@ namespace DiagramTool.ViewModel
 
         public ICommand NewClassCommand { get; set; }
         public ICommand DeleteClassCommand { get; set; }
+
+        public ICommand CopyClassCommand { get; set; }
+        public ICommand PasteClassCommand { get; set; }
+        public ICommand CutClassCommand { get; set; }
+
         public ObservableCollection<Klass> Klasses { get; set; }
         public ObservableCollection<Relation> Relations { get; set; }
         public ICommand TitleTextChanged { get; set; }
@@ -50,7 +52,7 @@ namespace DiagramTool.ViewModel
 
             var c = new Klass("Stuff") {X = 400, Y = 350};
             Klasses.Add(c);
-            
+
             Relations = new ObservableCollection<Relation>();
             var r = new Relation(k, c) {RelationType = Relation.Type.Inheritance};
             Relations.Add(r);
@@ -63,12 +65,43 @@ namespace DiagramTool.ViewModel
             RedoCommand = new RelayCommand(undoRedoController.Redo, undoRedoController.CanRedo);
 
             NewClassCommand = new RelayCommand(CreateNewKlass);
-            DeleteClassCommand = new RelayCommand(DeleteKlass);
+            DeleteClassCommand = new RelayCommand(DeleteKlass, hasSelection);
 
-            TitleTextChanged = new RelayCommand(ChangeTitle);
-
+            CopyClassCommand = new RelayCommand(CopyKlass, hasSelection);
+            PasteClassCommand = new RelayCommand(PasteKlass, canPaste);
+            CutClassCommand = new RelayCommand(CutKlass, hasSelection);
         }
 
+        private bool canPaste()
+        {
+            return clipboard != null;
+        }
+
+        private bool hasSelection()
+        {
+            return selectedKlass != null;
+        }
+
+        private void CopyKlass()
+        {
+            clipboard = (Klass)selectedKlass.Clone();
+        }
+
+        private void PasteKlass()
+        {
+            undoRedoController.AddAndExecute(new NewKlassCommand(Klasses, clipboard));
+            selectedKlass.IsSelected = false;
+            clipboard.IsSelected = true;
+            // Clear clipboard
+            clipboard = null;
+        }
+
+        private void CutKlass()
+        {
+            CopyKlass();
+            DeleteKlass();
+        }
+        
 
 
         private void ChangeTitle()
@@ -108,13 +141,13 @@ namespace DiagramTool.ViewModel
             if (klass != null)
             {
                 Klass draggedKlass = klass;
-                Canvas canvas = FindParentOfType<Canvas>(movingElement);
-                Point mousePos = Mouse.GetPosition(canvas);
-                undoRedoController.AddAndExecute(new MoveCommand(draggedKlass, (float) mousePos.X-draggedKlass.Width/2,
-                    (float) mousePos.Y-draggedKlass.Height/2, (float) MoveKlassPoint.X-draggedKlass.Width/2, (float) MoveKlassPoint.Y-draggedKlass.Height/2)); 
-                e.MouseDevice.Target.ReleaseMouseCapture();
-                MoveKlassPoint = new Point();
-            }
+            Canvas canvas = FindParentOfType<Canvas>(movingElement);
+            Point mousePos = Mouse.GetPosition(canvas);
+            undoRedoController.AddAndExecute(new MoveCommand(draggedKlass, (float) mousePos.X-draggedKlass.Width/2,
+                (float) mousePos.Y-draggedKlass.Height/2, (float) MoveKlassPoint.X-draggedKlass.Width/2, (float) MoveKlassPoint.Y-draggedKlass.Height/2)); 
+            e.MouseDevice.Target.ReleaseMouseCapture();
+            MoveKlassPoint = new Point();
+        }
         }
 
         public void MouseDownClass(MouseButtonEventArgs e)

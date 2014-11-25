@@ -13,7 +13,7 @@ using GalaSoft.MvvmLight.Command;
 
 namespace Diagram
 {
-    public class Klass : ViewModelBase
+    public class Klass : ViewModelBase, ICloneable
     {
         private bool _isSelected;
         private float _borderThickness;
@@ -116,5 +116,11 @@ namespace Diagram
         }
 
 
+
+        public object Clone()
+        {
+            Klass newKlass = (Klass) this.MemberwiseClone();
+            return newKlass;
+        }
     }
 }
