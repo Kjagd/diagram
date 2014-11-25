@@ -15,7 +15,7 @@ namespace DiagramTool.ViewModel
         public MainViewModel()
         {
             Klasses = new ObservableCollection<Klass>();
-            var k = new Klass("lel") {X = 200, Y = 200};
+            var k = new Klass("Klass") {X = 200, Y = 200};
             
             Klasses.Add(k);
             
@@ -24,7 +24,7 @@ namespace DiagramTool.ViewModel
             k.AddField(new Field("test3", "+"));
 
 
-            var c = new Klass("You're mom");
+            var c = new Klass("SecondKlass");
             Klasses.Add(c);
  
             Relations = new ObservableCollection<Relation>();
