@@ -7,7 +7,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Collections;
 using System.Windows;
+using System.Windows.Input;
 using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Command;
 
 namespace Diagram
 {
@@ -15,16 +17,22 @@ namespace Diagram
     {
         private bool _isSelected;
         private float _borderThickness;
+        private float _height;
         private Point _position;
         // View properties
         public float Width { get; set; }
-        public float Height { get; set; }
+
+        public float Height
+        {
+            get { return _height; }
+            set { _height = value; RaisePropertyChanged(); }
+        }
 
         public bool IsSelected
         {
             get { return _isSelected; }
             set { _isSelected = value;
-                BorderThickness = _isSelected ? 1 : 0;
+                BorderThickness = _isSelected ? 1 : 0;  
             }
         }
 
@@ -70,16 +78,32 @@ namespace Diagram
         public ObservableCollection<Field> Fields { get; set; }
         //public ObservableCollection<Method> Methods { get; set; }
 
-        // Visibility of attributes and operations
+        public ICommand TitleTextChanged { get; set; }
 
+        public ICommand NewFieldCommand { get; set; }
         public Klass(string name)
         {
             Name = name;
             Width = 150;
-            Height = 150;
+            Height = 100;
 
             Fields = new ObservableCollection<Field>();
+
+            TitleTextChanged = new RelayCommand<EventArgs>(ChangeTitle);
+            NewFieldCommand = new RelayCommand(AddField);
+
         }
+        private void AddField()
+        {
+            Fields.Add(new Field("", "+"));
+            Height += 15;
+        }
+
+        public void ChangeTitle(EventArgs eventArgs)
+        {
+            Console.WriteLine("yoyo");
+        }
+
 
         public void AddField(Field field)
         {
