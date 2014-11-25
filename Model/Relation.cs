@@ -15,7 +15,7 @@ namespace Diagram
         public Klass From { get; set; }
         public Klass To { get; set; }
 
-        public int RelationType { get; set; }
+        public Type RelationType { get; set; }
 
         private RelationMultiplicity Multiplicity { get; set; }
 

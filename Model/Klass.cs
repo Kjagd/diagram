@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Collections;
@@ -13,9 +14,6 @@ namespace Diagram
 {
     public class Klass : ViewModelBase
     {
-
-        private float _x;
-        private float _y;
         private bool _isSelected;
         private float _borderThickness;
         private float _height;
@@ -44,17 +42,17 @@ namespace Diagram
 
         public float X
         {
-            get { return _x; }
+            get { return (float) _position.X; }
             set
             {
-                _x = value; RaisePropertyChanged();
+                _position.X = value; RaisePropertyChanged(); RaisePropertyChanged("Position");
             }
         }
 
         public float Y
         {
-            get { return _y; }
-            set { _y = value; RaisePropertyChanged(); }
+            get { return (float) _position.Y; }
+            set { _position.Y = value; RaisePropertyChanged(); RaisePropertyChanged("Position"); }
         }
 
         public float CenterX
@@ -65,6 +63,11 @@ namespace Diagram
         public float CenterY
         {
             get { return Y + Height / 2; }
+        }
+
+        public Point Position
+        {
+            get { return _position; }
         }
 
         public string Package { get; set; }
