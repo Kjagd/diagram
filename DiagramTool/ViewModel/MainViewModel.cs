@@ -35,7 +35,7 @@ namespace DiagramTool.ViewModel
         public ICommand DeleteClassCommand { get; set; }
         public ObservableCollection<Klass> Klasses { get; set; }
         public ObservableCollection<Relation> Relations { get; set; }
-
+        public ICommand TitleTextChanged { get; set; }
 
         public MainViewModel()
         {
@@ -64,8 +64,18 @@ namespace DiagramTool.ViewModel
 
             NewClassCommand = new RelayCommand(CreateNewKlass);
             DeleteClassCommand = new RelayCommand(DeleteKlass);
+
+            TitleTextChanged = new RelayCommand(ChangeTitle);
+
         }
-        
+
+
+
+        private void ChangeTitle()
+        {
+            System.Console.WriteLine("Changed");
+
+        }
         private void CreateNewKlass()
         {
             var newKlass = new Klass("New Klass") {X = 300, Y = 300};
@@ -80,7 +90,7 @@ namespace DiagramTool.ViewModel
 
         public void MouseMoveClass(MouseEventArgs e)
         {
-            if (Mouse.Captured != null)
+            if (Mouse.Captured != null && movingElement != null)
             {
                 Klass draggedKlass = (Klass) movingElement.DataContext;
                 Canvas canvas = FindParentOfType<Canvas>(movingElement);
