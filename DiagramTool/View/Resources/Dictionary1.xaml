@@ -8,15 +8,19 @@
             <view:KlassUserControl/>
         </Canvas>
     </DataTemplate>
-    <DataTemplate  DataType="{x:Type model:Relation}">
+    <DataTemplate DataType="{x:Type model:Relation}">
         <Canvas>
-            <Path x:Name="line">
+            <Path x:Name="line" Stroke="Black" StrokeThickness="5">
             </Path>
         </Canvas>
         
         <DataTemplate.Triggers>
             <DataTrigger Binding="{Binding Path=RelationType}" Value="{x:Static model:Relation+Type.Inheritance}">
-                <Setter TargetName="line" Property="Data" Value=""></Setter>
+                <Setter TargetName="line" Property="Data">
+                    <Setter.Value>
+                        <LineGeometry StartPoint="{Binding From.Position}" EndPoint="{Binding To.Position}"/>
+                    </Setter.Value>
+                </Setter>
             </DataTrigger>
         </DataTemplate.Triggers>
         

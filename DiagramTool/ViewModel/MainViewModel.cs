@@ -52,7 +52,7 @@ namespace DiagramTool.ViewModel
             Klasses.Add(c);
 
             Relations = new ObservableCollection<Relation>();
-            var r = new Inheritance(k, c);
+            var r = new Relation(k, c) {RelationType = Relation.Type.Inheritance};
             Relations.Add(r);
 
             MouseDownCommand = new RelayCommand<MouseButtonEventArgs>(MouseDownClass);
