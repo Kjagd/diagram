@@ -6,6 +6,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Collections;
+using System.Windows;
 using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
@@ -17,6 +18,7 @@ namespace Diagram
         private bool _isSelected;
         private float _borderThickness;
         private float _height;
+        private Point _position;
         // View properties
         public float Width { get; set; }
 
