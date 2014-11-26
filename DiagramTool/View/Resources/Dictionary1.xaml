@@ -16,9 +16,11 @@
                 <line:CappedLine.LinePath>
                     <PathGeometry>
                         <PathGeometry.Figures>
-                            <PathFigure StartPoint="{Binding From.Position}">
+                            <PathFigure StartPoint="{Binding FromPos}">
                                 <PathFigure.Segments>
-                                    <LineSegment Point="{Binding To.Position}"/>
+                                    <LineSegment Point="{Binding Knack1}"/>
+                                    <LineSegment Point="{Binding Knack2}"/>
+                                    <LineSegment Point="{Binding ToPos}"/>
                                 </PathFigure.Segments>
                             </PathFigure>
                         </PathGeometry.Figures>
