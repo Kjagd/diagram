@@ -40,11 +40,21 @@
                 </RibbonGroup>
                 <RibbonGroup Header="Classes">
                     <RibbonButton LargeImageSource="images/newclass32.png" Label="New Class" KeyTip="C" ToolTipTitle="Create a new Class" Command="{Binding NewClassCommand}"/>
-                    <RibbonButton LargeImageSource="images/deleteclass32.png" Label="Delete Class" KeyTip="D" ToolTipTitle="Delete the selected class or relation"
+                    <RibbonButton LargeImageSource="images/deleteclass32.png" Label="Delete Class" KeyTip="D" ToolTipTitle="Delete the selected class"
                                   Command="{Binding DeleteClassCommand}" />
-
+                </RibbonGroup>
+                <RibbonGroup Header="Relations" >
+                    <RibbonControlGroup>
+                    <RibbonButton LargeImageSource="images/relationarrow.png" Label="Inheritance" KeyTip="I"></RibbonButton>
+                    <RibbonButton LargeImageSource="images/relationarrow2.png" Label="Reference" KeyTip="R"></RibbonButton>
+                    <RibbonButton LargeImageSource="images/diamond.png" Label="Composition" KeyTip="C"></RibbonButton>
+                    </RibbonControlGroup>
+                    <RibbonButton LargeImageSource="images/deleteclass32.png" Label="Delete relation" KeyTip="T" ToolTipTitle="Delete a relation"
+                                  Command="{Binding DeleteClassCommand}" />
                 </RibbonGroup>
             </RibbonTab>
         </Ribbon>
         </StackPanel>
 </Window>
+
+    
