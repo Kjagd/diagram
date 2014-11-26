@@ -17,7 +17,8 @@ namespace DiagramTool.ViewModel
         private UndoRedoController undoRedoController = UndoRedoController.GetInstance();
         private Klass clipboard;
 
-        private Point MoveKlassPoint;
+        private Point moveKlassStartPoint;
+        private Point MoveKlassAnchorPoint;
         private FrameworkElement movingElement;
         private Klass selectedKlass;
 
@@ -126,14 +127,17 @@ namespace DiagramTool.ViewModel
             if (Mouse.Captured != null && movingElement != null)
             {
                 Klass draggedKlass = (Klass) movingElement.DataContext;
-                Canvas canvas = FindParentOfType<Canvas>(movingElement);
-                Point mousePos = Mouse.GetPosition(canvas);
-                if (MoveKlassPoint == default(Point)) MoveKlassPoint = mousePos;
-                draggedKlass.X = (int) (mousePos.X-draggedKlass.Width/2);
-                draggedKlass.Y = (int) (mousePos.Y-draggedKlass.Height/2);
+                Point relativePos = Mouse.GetPosition(movingElement);
+                if (MoveKlassAnchorPoint == default(Point))
+                {
+                    MoveKlassAnchorPoint.X = relativePos.X;
+                    MoveKlassAnchorPoint.Y = relativePos.Y;
+                }
+                draggedKlass.X += (int) (relativePos.X - MoveKlassAnchorPoint.X);
+                draggedKlass.Y += (int) (relativePos.Y - MoveKlassAnchorPoint.Y);
             }
         }
-
+        
         public void MouseUpClass(MouseButtonEventArgs e)
         {
             movingElement.Effect = null;
@@ -143,10 +147,10 @@ namespace DiagramTool.ViewModel
                 Klass draggedKlass = klass;
             Canvas canvas = FindParentOfType<Canvas>(movingElement);
             Point mousePos = Mouse.GetPosition(canvas);
-            undoRedoController.AddAndExecute(new MoveCommand(draggedKlass, (float) mousePos.X-draggedKlass.Width/2,
-                (float) mousePos.Y-draggedKlass.Height/2, (float) MoveKlassPoint.X-draggedKlass.Width/2, (float) MoveKlassPoint.Y-draggedKlass.Height/2)); 
+            undoRedoController.AddAndExecute(new MoveCommand(draggedKlass, draggedKlass.X,
+                 draggedKlass.Y, (float) moveKlassStartPoint.X, (float) moveKlassStartPoint.Y)); 
             e.MouseDevice.Target.ReleaseMouseCapture();
-            MoveKlassPoint = new Point();
+            MoveKlassAnchorPoint = new Point();
         }
         }
 
@@ -168,6 +172,8 @@ namespace DiagramTool.ViewModel
                 }
                 (frameworkElement.DataContext as Klass).IsSelected = true;
                 selectedKlass = (frameworkElement.DataContext as Klass);
+                moveKlassStartPoint.X = selectedKlass.X;
+                moveKlassStartPoint.Y = selectedKlass.Y;
                 e.MouseDevice.Target.CaptureMouse();
             }
         }
