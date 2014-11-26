@@ -55,7 +55,7 @@ namespace DiagramTool.ViewModel
             Klasses.Add(c);
 
             Relations = new ObservableCollection<Relation>();
-            var r = new Relation(k, c) {RelationType = Relation.Type.Inheritance};
+            var r = new Relation(k, c) {RelationType = Relation.Type.Composition};
             Relations.Add(r);
 
             MouseDownCommand = new RelayCommand<MouseButtonEventArgs>(MouseDownClass);

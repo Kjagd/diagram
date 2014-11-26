@@ -12,7 +12,7 @@ namespace Diagram
     {
         public enum Type
         {
-            Inheritance
+            Inheritance, Reference, Composition
         };
         public Klass From { get; set; }
         public Klass To { get; set; }

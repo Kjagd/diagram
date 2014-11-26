@@ -29,7 +29,7 @@ namespace LineCaps
                 LinePath.GetPointAtFractionLength(0.0d, out pos, out tangent);
                 tg.Children.Add(new TranslateTransform(pos.X, pos.Y));
                 dc.PushTransform(tg);
-                dc.DrawGeometry(Brushes.White, pen, BeginCap);
+                dc.DrawGeometry(Fill, pen, BeginCap);
                 dc.Pop();
             }
             if (EndCap != null)
@@ -42,7 +42,7 @@ namespace LineCaps
                 LinePath.GetPointAtFractionLength(1, out pos, out tangent);
                 tg.Children.Add(new TranslateTransform(pos.X, pos.Y));
                 dc.PushTransform(tg);
-                dc.DrawGeometry(Brushes.White, pen, EndCap);
+                dc.DrawGeometry(Fill, pen, EndCap);
             }         
         }
 
@@ -50,6 +50,14 @@ namespace LineCaps
         {
             //TODO: Consider creating the Pen once when Stroke and StrokeThickness are set
             return LinePath.GetRenderBounds(new Pen(Stroke, StrokeThickness)).Size;
+        }
+
+        public static readonly DependencyProperty FillProperty = Shape.FillProperty.AddOwner(typeof (CappedLine));
+
+        public Brush Fill
+        {
+            get { return (Brush) GetValue(FillProperty); }
+            set { SetValue(FillProperty, value); }
         }
         public static readonly DependencyProperty StrokeProperty = Shape.StrokeProperty.AddOwner(typeof(CappedLine));
         public Brush Stroke
