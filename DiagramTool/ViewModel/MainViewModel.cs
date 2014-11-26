@@ -66,19 +66,19 @@ namespace DiagramTool.ViewModel
             RedoCommand = new RelayCommand(undoRedoController.Redo, undoRedoController.CanRedo);
 
             NewClassCommand = new RelayCommand(CreateNewKlass);
-            DeleteClassCommand = new RelayCommand(DeleteKlass, hasSelection);
+            DeleteClassCommand = new RelayCommand(DeleteKlass, HasSelection);
 
-            CopyClassCommand = new RelayCommand(CopyKlass, hasSelection);
-            PasteClassCommand = new RelayCommand(PasteKlass, canPaste);
-            CutClassCommand = new RelayCommand(CutKlass, hasSelection);
+            CopyClassCommand = new RelayCommand(CopyKlass, HasSelection);
+            PasteClassCommand = new RelayCommand(PasteKlass, CanPaste);
+            CutClassCommand = new RelayCommand(CutKlass, HasSelection);
         }
 
-        private bool canPaste()
+        private bool CanPaste()
         {
             return clipboard != null;
         }
 
-        private bool hasSelection()
+        private bool HasSelection()
         {
             return selectedKlass != null;
         }
@@ -104,12 +104,6 @@ namespace DiagramTool.ViewModel
         }
         
 
-
-        private void ChangeTitle()
-        {
-            System.Console.WriteLine("Changed");
-
-        }
         private void CreateNewKlass()
         {
             var newKlass = new Klass("New Klass") {X = 300, Y = 300};
