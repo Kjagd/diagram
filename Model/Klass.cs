@@ -18,15 +18,30 @@ namespace Diagram
         private bool _isSelected;
         private float _borderThickness;
         private float _height;
+        private float _width;
         private Point _position;
+        public Collection<Relation> Relations { get; set; } 
         // View properties
-        public float Width { get; set; }
+        public float Width
+        {
+            get { return _width; }
+            set
+            {
+                _width = value;
+                NotifyRelations();
+            }
+        }
 
         public float Height
         {
             get { return _height; }
-            set { _height = value; RaisePropertyChanged(); }
+            set
+            {
+                _height = value; RaisePropertyChanged();
+                NotifyRelations();
+            }
         }
+
 
         public bool IsSelected
         {
@@ -47,14 +62,20 @@ namespace Diagram
             get { return (float) _position.X; }
             set
             {
-                _position.X = value; RaisePropertyChanged(); RaisePropertyChanged("Position");
+                _position.X = value; 
+                RaisePropertyChanged();
+                NotifyRelations();
             }
         }
 
         public float Y
         {
             get { return (float) _position.Y; }
-            set { _position.Y = value; RaisePropertyChanged(); RaisePropertyChanged("Position"); }
+            set
+            {
+                _position.Y = value; RaisePropertyChanged();
+                NotifyRelations();
+            }
         }
 
         public float CenterX
@@ -65,11 +86,6 @@ namespace Diagram
         public float CenterY
         {
             get { return Y + Height / 2; }
-        }
-
-        public Point Position
-        {
-            get { return _position; }
         }
 
         public string Package { get; set; }
@@ -121,6 +137,14 @@ namespace Diagram
         {
             Klass newKlass = (Klass) this.MemberwiseClone();
             return newKlass;
+        }
+
+        private void NotifyRelations()
+        {
+            foreach (Relation r in Relations)
+            {
+                r.Notify();
+            }
         }
     }
 }
