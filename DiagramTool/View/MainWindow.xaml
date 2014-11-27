@@ -6,6 +6,15 @@
     <Window.Resources>
         <ResourceDictionary Source="Resources/Dictionary1.xaml" />
     </Window.Resources>
+    <Window.InputBindings>
+        <KeyBinding Modifiers="Control" Key="Z" Command="{Binding UndoCommand}" />
+        <KeyBinding Modifiers="Control+Shift" Key="Z" Command="{Binding RedoCommand}" />
+        <KeyBinding Modifiers="Control" Key="N" Command="{Binding NewClassCommand}" />
+        <KeyBinding Modifiers="Control" Key="D" Command="{Binding DeleteClassCommand}" />
+        <KeyBinding Modifiers="Control" Key="C" Command="{Binding CopyClassCommand}" />
+        <KeyBinding Modifiers="Control" Key="X" Command="{Binding CutClassCommand}" />
+        <KeyBinding Modifiers="Control" Key="V" Command="{Binding PasteClassCommand}" />
+    </Window.InputBindings>
     <StackPanel>
         <Grid>
             <ItemsControl ItemsSource="{Binding Relations}"/>
@@ -19,22 +28,33 @@
                     <RibbonApplicationMenuItem Header="Save" ImageSource="images/save64.png" />
                 </RibbonApplicationMenu>
             </Ribbon.ApplicationMenu>
-            <RibbonTab Header="Edit">
+            <RibbonTab Header="Edit" KeyTip="E">
                 <RibbonGroup Header="Clipboard &amp; history">
-                    <RibbonButton LargeImageSource="images/clipboard32.png" Label="Paste" Command="{Binding PasteClassCommand}" />
+                    <RibbonButton LargeImageSource="images/clipboard32.png" Label="Paste" ToolTipTitle="Paste" Command="{Binding PasteClassCommand}" />
                     <StackPanel>
-                        <RibbonButton SmallImageSource="images/scissors16.png" Label="Cut" Command="{Binding CutClassCommand}" />
-                        <RibbonButton SmallImageSource="images/copy16.png" Label="Copy" Command="{Binding CopyClassCommand}" />
+                        <RibbonButton SmallImageSource="images/scissors16.png" Label="Cut" ToolTipTitle="Cut" Command="{Binding CutClassCommand}" />
+                        <RibbonButton SmallImageSource="images/copy16.png" Label="Copy" ToolTipTitle="Copy" Command="{Binding CopyClassCommand}" />
                     </StackPanel>
-                    <RibbonButton LargeImageSource="images/undo32.png" Label="Undo" Command="{Binding UndoCommand}" />
-                    <RibbonButton LargeImageSource="images/redo32.png" Label="Redo" Command="{Binding RedoCommand}" />
+                    <RibbonButton LargeImageSource="images/undo32.png" Label="Undo" KeyTip="Z" ToolTipTitle="Undo" Command="{Binding UndoCommand}" />
+                    <RibbonButton LargeImageSource="images/redo32.png" Label="Redo" KeyTip="Y" ToolTipTitle="Redo" Command="{Binding RedoCommand}" />
                 </RibbonGroup>
                 <RibbonGroup Header="Classes">
-                    <RibbonButton LargeImageSource="images/newclass32.png" Label="New Class" Command="{Binding NewClassCommand}"/>
-                    <RibbonButton LargeImageSource="images/deleteclass32.png" Label="Delete Class" Command="{Binding DeleteClassCommand}" />
-
+                    <RibbonButton LargeImageSource="images/newclass32.png" Label="New Class" KeyTip="C" ToolTipTitle="Create a new Class" Command="{Binding NewClassCommand}"/>
+                    <RibbonButton LargeImageSource="images/deleteclass32.png" Label="Delete Class" KeyTip="D" ToolTipTitle="Delete the selected class"
+                                  Command="{Binding DeleteClassCommand}" />
+                </RibbonGroup>
+                <RibbonGroup Header="Relations" >
+                    <RibbonControlGroup>
+                    <RibbonButton LargeImageSource="images/relationarrow.png" Label="Inheritance" KeyTip="I"></RibbonButton>
+                    <RibbonButton LargeImageSource="images/relationarrow2.png" Label="Reference" KeyTip="R"></RibbonButton>
+                    <RibbonButton LargeImageSource="images/diamond.png" Label="Composition" KeyTip="C"></RibbonButton>
+                    </RibbonControlGroup>
+                    <RibbonButton LargeImageSource="images/deleteclass32.png" Label="Delete relation" KeyTip="T" ToolTipTitle="Delete a relation"
+                                  Command="{Binding DeleteClassCommand}" />
                 </RibbonGroup>
             </RibbonTab>
         </Ribbon>
         </StackPanel>
 </Window>
+
+    

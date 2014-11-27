@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Diagram
 {
 
-    public class Field
+    public class Field : ICloneable
     {
         public String FieldName { get; set; }
         public String AccessModifier { get; set; }
@@ -16,6 +16,12 @@ namespace Diagram
         {
             FieldName = fieldName;
             AccessModifier = accessModifier;
+        }
+
+        public object Clone()
+        {
+            Field f = (Field)this.MemberwiseClone();
+            return f;
         }
     }
 }

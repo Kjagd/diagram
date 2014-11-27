@@ -12,13 +12,15 @@
     <DataTemplate DataType="{x:Type model:Relation}">
         <Canvas>
             
-            <line:CappedLine x:Name="Line" Stroke="Black" StrokeThickness="2" >
+            <line:CappedLine x:Name="Line" Stroke="Black" StrokeThickness="2" Fill="Black">
                 <line:CappedLine.LinePath>
                     <PathGeometry>
                         <PathGeometry.Figures>
-                            <PathFigure StartPoint="{Binding From.Position}">
+                            <PathFigure StartPoint="{Binding FromPos}">
                                 <PathFigure.Segments>
-                                    <LineSegment Point="{Binding To.Position}"/>
+                                    <LineSegment Point="{Binding Knack1}"/>
+                                    <LineSegment Point="{Binding Knack2}"/>
+                                    <LineSegment Point="{Binding ToPos}"/>
                                 </PathFigure.Segments>
                             </PathFigure>
                         </PathGeometry.Figures>
@@ -30,9 +32,26 @@
         
         <DataTemplate.Triggers>
             <DataTrigger Binding="{Binding Path=RelationType}" Value="{x:Static model:Relation+Type.Inheritance}">
+                <Setter TargetName="Line" Property="Fill" Value="White"/>
                 <Setter TargetName="Line" Property="EndCap">
                     <Setter.Value>
                         <PathGeometry Figures="M 10,10 L 0,0 10,-10 Z"/>
+                    </Setter.Value>
+                </Setter>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding Path=RelationType}" Value="{x:Static model:Relation+Type.Reference}">
+                <Setter TargetName="Line" Property="Fill" Value="Black"/>
+                <Setter TargetName="Line" Property="EndCap">
+                    <Setter.Value>
+                        <PathGeometry Figures="M 5,7 L 0,0 5,-7 Z"/>
+                    </Setter.Value>
+                </Setter>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding Path=RelationType}" Value="{x:Static model:Relation+Type.Composition}">
+                <Setter TargetName="Line" Property="Fill" Value="White"/>
+                <Setter TargetName="Line" Property="BeginCap">
+                    <Setter.Value>
+                        <PathGeometry Figures="M 0,0 L 10,8 20,0 10,-8 Z"/>
                     </Setter.Value>
                 </Setter>
             </DataTrigger>

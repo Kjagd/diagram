@@ -17,21 +17,62 @@ namespace Diagram
     {
         private bool _isSelected;
         private float _borderThickness;
-        private float _height;
+        private float _height;        
+        private float _width;
         private Point _position;
         // View properties
-        public float Width { get; set; }
+        public Collection<Relation> Relations { get; private set; }
+
+        public string Package { get; set; }
+        public string Name { get; set; }
+
+        public ObservableCollection<Field> Fields { get; set; }
+        //public ObservableCollection<Method> Methods { get; set; }
+
+        public ICommand TitleTextChanged { get; set; }
+        public ICommand NewFieldCommand { get; set; }
+
+        public Klass(string name)
+        {
+            Relations = new Collection<Relation>();
+            Name = name;
+            Width = 150;
+            Height = 100;
+
+            Fields = new ObservableCollection<Field>();
+
+            TitleTextChanged = new RelayCommand<EventArgs>(ChangeTitle);
+            NewFieldCommand = new RelayCommand(AddField);
+
+        }
+
+        public float Width
+        {
+            get { return _width; }
+            set
+            {
+                _width = value;
+                NotifyRelations();
+            }
+        }
 
         public float Height
         {
             get { return _height; }
-            set { _height = value; RaisePropertyChanged(); }
+            set
+            {
+                _height = value; 
+                RaisePropertyChanged();
+                NotifyRelations();
+            }
         }
 
         public bool IsSelected
         {
             get { return _isSelected; }
-            set { _isSelected = value;
+            set 
+            { 
+                _isSelected = value;
                 BorderThickness = _isSelected ? 1 : 0;  
             }
         }
@@ -39,7 +80,11 @@ namespace Diagram
         public float BorderThickness
         {
             get { return _borderThickness; }
-            set { _borderThickness = value; RaisePropertyChanged(); }
+            set 
+            { 
+                _borderThickness = value; 
+                RaisePropertyChanged();
+            }
         }
 
         public float X
@@ -47,14 +92,19 @@ namespace Diagram
             get { return (float) _position.X; }
             set
             {
-                _position.X = value; RaisePropertyChanged(); RaisePropertyChanged("Position");
+                _position.X = value; RaisePropertyChanged();
+                NotifyRelations();
             }
         }
 
         public float Y
         {
             get { return (float) _position.Y; }
-            set { _position.Y = value; RaisePropertyChanged(); RaisePropertyChanged("Position"); }
+            set
+            {
+                _position.Y = value; RaisePropertyChanged();
+                NotifyRelations();
+            }
         }
 
         public float CenterX
@@ -67,32 +117,6 @@ namespace Diagram
             get { return Y + Height / 2; }
         }
 
-        public Point Position
-        {
-            get { return _position; }
-        }
-
-        public string Package { get; set; }
-        public string Name { get; set; }
-
-        public ObservableCollection<Field> Fields { get; set; }
-        //public ObservableCollection<Method> Methods { get; set; }
-
-        public ICommand TitleTextChanged { get; set; }
-
-        public ICommand NewFieldCommand { get; set; }
-        public Klass(string name)
-        {
-            Name = name;
-            Width = 150;
-            Height = 100;
-
-            Fields = new ObservableCollection<Field>();
-
-            TitleTextChanged = new RelayCommand<EventArgs>(ChangeTitle);
-            NewFieldCommand = new RelayCommand(AddField);
-
-        }
         private void AddField()
         {
             Fields.Add(new Field("", "+"));
@@ -119,8 +143,24 @@ namespace Diagram
 
         public object Clone()
         {
-            Klass newKlass = (Klass) this.MemberwiseClone();
-            return newKlass;
+            Klass k = new Klass(this.Name) { X = 200, Y = 200 };
+
+            foreach (Field f in this.Fields)
+            {
+                k.AddField((Field)f.Clone());
+            }
+
+            k.Height = this.Height;
+            k.Width = this.Width;
+
+            return k;
+        }
+        private void NotifyRelations()
+        {
+            foreach (Relation r in Relations)
+            {
+                r.Notify();
+            }
         }
     }
 }
