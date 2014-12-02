@@ -55,7 +55,6 @@
   <ItemGroup>
     <Compile Include="Method.cs" />
     <Compile Include="Field.cs" />
-    <Compile Include="Inheritance.cs" />
     <Compile Include="Klass.cs" />
     <Compile Include="NotifyBase.cs" />
     <Compile Include="Properties\Annotations.cs" />

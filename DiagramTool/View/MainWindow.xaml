@@ -17,10 +17,6 @@
         <KeyBinding Key="Delete" Command="{Binding DeleteClassCommand}" />
     </Window.InputBindings>
     <StackPanel>
-        <Grid>
-            <ItemsControl ItemsSource="{Binding Relations}"/>
-            <ItemsControl ItemsSource="{Binding Klasses}"/>
-        </Grid>
         <Ribbon x:Name="RibbonWin"  SelectedIndex="0">
             <Ribbon.ApplicationMenu>
                 <RibbonApplicationMenu KeyTip="F" Label="File" LargeImageSource="images/folder32.png">
@@ -46,15 +42,19 @@
                 </RibbonGroup>
                 <RibbonGroup Header="Relations" >
                     <RibbonControlGroup>
-                    <RibbonButton LargeImageSource="images/relationarrow.png" Label="Inheritance" KeyTip="I"></RibbonButton>
-                    <RibbonButton LargeImageSource="images/relationarrow2.png" Label="Reference" KeyTip="R"></RibbonButton>
-                    <RibbonButton LargeImageSource="images/diamond.png" Label="Composition" KeyTip="C"></RibbonButton>
+                        <RibbonButton LargeImageSource="images/relationarrow.png" Label="Inheritance" KeyTip="I" Command="{Binding AddRelationCommand}"></RibbonButton>
+                        <RibbonButton LargeImageSource="images/relationarrow2.png" Label="Reference" KeyTip="R" Command="{Binding AddRelationCommand}"></RibbonButton>
+                        <RibbonButton LargeImageSource="images/diamond.png" Label="Composition" KeyTip="C" Command="{Binding AddRelationCommand}"></RibbonButton>
                     </RibbonControlGroup>
                     <RibbonButton LargeImageSource="images/deleteclass32.png" Label="Delete relation" KeyTip="T" ToolTipTitle="Delete a relation"
                                   Command="{Binding DeleteClassCommand}" />
                 </RibbonGroup>
             </RibbonTab>
         </Ribbon>
+        <Grid>
+            <ItemsControl ItemsSource="{Binding Relations}"/>
+            <ItemsControl ItemsSource="{Binding Klasses}"/>
+        </Grid>
         </StackPanel>
 </Window>
 
