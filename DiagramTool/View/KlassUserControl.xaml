@@ -30,6 +30,16 @@
             <TextBox Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch" FontSize="14" FontWeight="Bold" Background="#424242" Foreground="#fff">
                 <i:Interaction.Triggers><i:EventTrigger EventName="TextChanged"><cmd:EventToCommand PassEventArgsToCommand="True" Command="{Binding DataContext.TitleTextChanged, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" ></cmd:EventToCommand></i:EventTrigger></i:Interaction.Triggers>
             </TextBox>
+            <Grid HorizontalAlignment="Stretch">
+                <TextBlock HorizontalAlignment="Left" Text="Fields" FontWeight="DemiBold" Margin="5 0 0 0" />
+                <Image Source="images/add.png" Width="10" Height="10" HorizontalAlignment="Right" Margin="0 5 20 0">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="MouseDown">
+                            <cmd:EventToCommand Command="{Binding DataContext.NewFieldCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" PassEventArgsToCommand="True"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Image>
+            </Grid>
             <ItemsControl Name="FieldList" ItemsSource="{Binding Fields}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
@@ -41,13 +51,26 @@
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
-            <Image Source="images/add.png" Width="16" Height="16" HorizontalAlignment="Left" Margin="20 5 0 0">
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="MouseDown">
-                        <cmd:EventToCommand Command="{Binding DataContext.NewFieldCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" PassEventArgsToCommand="True"/>
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-            </Image>
+            <Grid HorizontalAlignment="Stretch">
+                <TextBlock HorizontalAlignment="Left" Text="Methods" FontWeight="DemiBold" Margin="5 0 0 0" />
+                <Image Source="images/add.png" Width="10" Height="10" HorizontalAlignment="Right" Margin="10 5 20 0">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="MouseDown">
+                            <cmd:EventToCommand Command="{Binding DataContext.NewMethodCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" PassEventArgsToCommand="True"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Image>
+            </Grid>
+            <ItemsControl Name="MethodList" ItemsSource="{Binding Methods}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <WrapPanel Margin="10 0 0 0">
+                            <TextBlock Text="{Binding AccessModifier}"/>
+                            <TextBox Text="{Binding MethodName}" FontSize="12" Foreground="#424242" BorderThickness="0" Width="120" />
+                        </WrapPanel>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="MouseDown">
                     <cmd:EventToCommand Command="{Binding DataContext.MouseDownCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" PassEventArgsToCommand="True"/>
