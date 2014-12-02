@@ -92,7 +92,8 @@ namespace Diagram
             get { return (float) _position.X; }
             set
             {
-                _position.X = value; RaisePropertyChanged();
+                _position.X = value >= 0 ? value : 0;
+                RaisePropertyChanged();
                 NotifyRelations();
             }
         }
@@ -102,7 +103,8 @@ namespace Diagram
             get { return (float) _position.Y; }
             set
             {
-                _position.Y = value; RaisePropertyChanged();
+                _position.Y = value >= 0 ? value : 0;
+                RaisePropertyChanged();
                 NotifyRelations();
             }
         }

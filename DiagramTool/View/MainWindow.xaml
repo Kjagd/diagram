@@ -17,10 +17,6 @@
         <KeyBinding Key="Delete" Command="{Binding DeleteClassCommand}" />
     </Window.InputBindings>
     <StackPanel>
-        <Grid>
-            <ItemsControl ItemsSource="{Binding Relations}"/>
-            <ItemsControl ItemsSource="{Binding Klasses}"/>
-        </Grid>
         <Ribbon x:Name="RibbonWin"  SelectedIndex="0">
             <Ribbon.ApplicationMenu>
                 <RibbonApplicationMenu KeyTip="F" Label="File" LargeImageSource="images/folder32.png">
@@ -55,6 +51,10 @@
                 </RibbonGroup>
             </RibbonTab>
         </Ribbon>
+        <Grid>
+            <ItemsControl ItemsSource="{Binding Relations}"/>
+            <ItemsControl ItemsSource="{Binding Klasses}"/>
+        </Grid>
         </StackPanel>
 </Window>
 
