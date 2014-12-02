@@ -116,8 +116,7 @@ namespace Diagram
 
         private RelationMultiplicity Multiplicity { get; set; }
 
-
-        public Relation(Klass from, Klass to)
+        public void Set(Klass from, Klass to)
         {
             this.From = from;
             this.To = to;
@@ -125,6 +124,7 @@ namespace Diagram
             from.Relations.Add(this);
             to.Relations.Add(this);
         }
+
         public void Notify()
         {
             RaisePropertyChanged("FromPos");
