@@ -136,7 +136,7 @@ namespace DiagramTool.ViewModel
 
         public void MouseMoveClass(MouseEventArgs e)
         {
-            if (Mouse.Captured != null && movingElement != null)
+            if (Mouse.Captured != null && movingElement != null && movingElement.DataContext is Klass)
             {
                 Klass draggedKlass = (Klass) movingElement.DataContext;
                 Point relativePos = Mouse.GetPosition(movingElement);
@@ -181,6 +181,7 @@ namespace DiagramTool.ViewModel
 
         public void MouseDownClass(MouseButtonEventArgs e)
         {
+            Keyboard.ClearFocus();
             //Capture for drag if it's a klass
             var frameworkElement = (FrameworkElement) e.MouseDevice.Target;
             if (!(frameworkElement is StackPanel))

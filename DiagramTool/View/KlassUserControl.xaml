@@ -46,7 +46,7 @@
                         <WrapPanel Margin="10 0 0 0">
                             <TextBlock Text="{Binding AccessModifier}"/>
 
-                            <TextBox Text="{Binding FieldName}" FontSize="12" Foreground="#424242" BorderThickness="0" />
+                            <TextBox Text="{Binding FieldName}" FontSize="12" Foreground="#424242" BorderThickness="0" MinWidth="20" MaxWidth="120" />
                         </WrapPanel>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
@@ -66,7 +66,7 @@
                     <DataTemplate>
                         <WrapPanel Margin="10 0 0 0">
                             <TextBlock Text="{Binding AccessModifier}"/>
-                            <TextBox Text="{Binding MethodName}" FontSize="12" Foreground="#424242" BorderThickness="0" Width="120" />
+                            <TextBox Text="{Binding MethodName}" FontSize="12" Foreground="#424242" BorderThickness="0" MinWidth="20" MaxWidth="120" />
                         </WrapPanel>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>

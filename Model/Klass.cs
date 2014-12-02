@@ -44,7 +44,6 @@ namespace Diagram
             Fields = new ObservableCollection<Field>();
             Methods = new ObservableCollection<Method>();
 
-            TitleTextChanged = new RelayCommand<EventArgs>(ChangeTitle);
             NewFieldCommand = new RelayCommand(AddField);
             NewMethodCommand = new RelayCommand(AddMethod);
 
@@ -134,24 +133,17 @@ namespace Diagram
             Height += 15;
         }
 
-        public void ChangeTitle(EventArgs eventArgs)
-        {
-            Console.WriteLine("yoyo");
-        }
-
-
         public void AddField(Field field)
         {
             Fields.Add(field);
             Height += 15;
         }
 
-        public void AddMethod(string operation)
+        public void AddMethod(Method method)
         {
-            // Methods.Add(operation);
+            Methods.Add(method);
+            Height += 15;
         }
-
-
 
         public object Clone()
         {
@@ -160,6 +152,11 @@ namespace Diagram
             foreach (Field f in this.Fields)
             {
                 k.AddField((Field)f.Clone());
+            }
+
+            foreach (Method m in this.Methods)
+            {
+                k.AddMethod((Method)m.Clone());
             }
 
             k.Height = this.Height;
