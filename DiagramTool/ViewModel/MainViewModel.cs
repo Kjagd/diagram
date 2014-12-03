@@ -29,6 +29,7 @@ namespace DiagramTool.ViewModel
         private FrameworkElement movingElement;
         private Klass _selectedKlass;
         private Klass _relation1Klass;
+        private Relation.Type _relationType;
 
         private bool _isAddingRelation;
 
@@ -43,6 +44,9 @@ namespace DiagramTool.ViewModel
         public ICommand DeleteClassCommand { get; set; }
 
         public ICommand AddRelationCommand { get; set; }
+        public ICommand AddInheritanceRelationCommand { get; set; }
+        public ICommand AddCompositionRelationCommand { get; set; }
+        public ICommand AddReferenceRelationCommand { get; set; }
 
         public ICommand CopyClassCommand { get; set; }
         public ICommand PasteClassCommand { get; set; }
@@ -82,6 +86,9 @@ namespace DiagramTool.ViewModel
             DeleteClassCommand = new RelayCommand(DeleteKlass, HasSelection);
 
             AddRelationCommand = new RelayCommand(AddRelation);
+            AddCompositionRelationCommand = new RelayCommand(AddCompostion);
+            AddInheritanceRelationCommand = new RelayCommand(AddInheritance);
+            AddReferenceRelationCommand = new RelayCommand(AddReference);
 
             CopyClassCommand = new RelayCommand(CopyKlass, HasSelection);
             PasteClassCommand = new RelayCommand(PasteKlass, CanPaste);
@@ -148,6 +155,24 @@ namespace DiagramTool.ViewModel
                     }
                 }
             }
+        }
+
+        private void AddReference()
+        {
+            _relationType = Relation.Type.Reference;
+            AddRelation();
+        }
+
+        private void AddInheritance()
+        {
+            _relationType = Relation.Type.Inheritance;
+            AddRelation();
+        }
+
+        private void AddCompostion()
+        {
+            _relationType = Relation.Type.Composition;
+            AddRelation();
         }
 
         private void AddRelation()
@@ -235,7 +260,7 @@ namespace DiagramTool.ViewModel
                 }
                 else
                 {
-                    undoRedoController.AddAndExecute(new AddRelationCommand(Relations, _selectedKlass, klass));
+                    undoRedoController.AddAndExecute(new AddRelationCommand(Relations, _selectedKlass, klass, _relationType));
                     _relation1Klass = null;
                     _isAddingRelation = false;
                 }

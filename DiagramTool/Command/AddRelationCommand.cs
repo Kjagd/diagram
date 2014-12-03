@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.ObjectModel;
 using Diagram;
 
 namespace DiagramTool.Command
@@ -13,13 +8,14 @@ namespace DiagramTool.Command
         private readonly Klass _klass1;
         private readonly Klass _klass2;
         private readonly Relation _relation;
-        private readonly ObservableCollection<Relation> _relations; 
+        private readonly ObservableCollection<Relation> _relations;
 
-        public AddRelationCommand(ObservableCollection<Relation> relations, Klass klass1, Klass klass2)
+        public AddRelationCommand(ObservableCollection<Relation> relations, Klass klass1, Klass klass2,
+            Relation.Type relationType)
         {
             _klass1 = klass1;
             _klass2 = klass2;
-            _relation = new Relation();
+            _relation = new Relation(relationType);
             _relations = relations;
         }
 

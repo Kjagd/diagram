@@ -142,6 +142,11 @@ namespace Diagram
 
 
 
+        public Relation(Type type)
+        {
+            RelationType = type;
+        }
+
         public void Set(Klass from, Klass to)
         {
             this.From = from;
