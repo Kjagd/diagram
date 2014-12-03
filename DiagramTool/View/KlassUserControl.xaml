@@ -43,11 +43,18 @@
             <ItemsControl Name="FieldList" ItemsSource="{Binding Fields}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <WrapPanel Margin="10 0 0 0">
+                        <Grid HorizontalAlignment="Stretch" Margin="10 0 0 0">
                             <TextBlock Text="{Binding AccessModifier}"/>
 
                             <TextBox Text="{Binding FieldName}" FontSize="12" Foreground="#424242" BorderThickness="0" MinWidth="20" MaxWidth="120" />
-                        </WrapPanel>
+                            <Image Source="images/delete.png" HorizontalAlignment="Right" Width="10" Height="10" Margin="0 5 20 0">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="MouseDown">
+                                        <cmd:EventToCommand Command="{Binding DataContext.DeleteFieldCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" PassEventArgsToCommand="True" />
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </Image>
+                        </Grid>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
@@ -64,10 +71,17 @@
             <ItemsControl Name="MethodList" ItemsSource="{Binding Methods}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <WrapPanel Margin="10 0 0 0">
+                        <Grid HorizontalAlignment="Stretch" Margin="10 0 0 0">
                             <TextBlock Text="{Binding AccessModifier}"/>
                             <TextBox Text="{Binding MethodName}" FontSize="12" Foreground="#424242" BorderThickness="0" MinWidth="20" MaxWidth="120" />
-                        </WrapPanel>
+                            <Image Source="images/delete.png" HorizontalAlignment="Right" Width="10" Height="10" Margin="0 5 20 0">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="MouseDown">
+                                        <cmd:EventToCommand Command="{Binding DataContext.DeleteFieldCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" PassEventArgsToCommand="True" />
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </Image>
+                        </Grid>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
