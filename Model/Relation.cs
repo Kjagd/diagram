@@ -116,6 +116,11 @@ namespace Diagram
 
         private RelationMultiplicity Multiplicity { get; set; }
 
+        public Relation(Type type)
+        {
+            RelationType = type;
+        }
+
         public void Set(Klass from, Klass to)
         {
             this.From = from;
