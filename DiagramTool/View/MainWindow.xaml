@@ -15,6 +15,9 @@
         <KeyBinding Modifiers="Control" Key="X" Command="{Binding CutClassCommand}" />
         <KeyBinding Modifiers="Control" Key="V" Command="{Binding PasteClassCommand}" />
         <KeyBinding Key="Delete" Command="{Binding DeleteClassCommand}" />
+        <KeyBinding Modifiers="Control+Shift" Key="N" Command="{Binding NewCommand}" />
+        <KeyBinding Modifiers="Control" Key="S" Command="{Binding SaveCommand}" />
+        <KeyBinding Modifiers="Control" Key="O" Command="{Binding LoadCommand}" />
     </Window.InputBindings>
     <StackPanel>
         <Ribbon x:Name="RibbonWin"  SelectedIndex="0">
@@ -24,8 +27,6 @@
                     <RibbonSeparator></RibbonSeparator>
                     <RibbonApplicationMenuItem Header="Load" ImageSource="images/folder64.png" Command="{Binding LoadCommand}" />
                     <RibbonApplicationMenuItem Header="Save" ImageSource="images/save64.png" Command="{Binding SaveCommand}" />
-                    <RibbonSeparator></RibbonSeparator>
-                    <RibbonApplicationMenuItem Header="Export PNG" ImageSource="images/save64.png" Command="{Binding ExportCommand}" />
                 </RibbonApplicationMenu>
             </Ribbon.ApplicationMenu>
             <RibbonTab Header="Edit" KeyTip="E">
