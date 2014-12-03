@@ -1,4 +1,6 @@
 ﻿using System;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 using Diagram;
 using DiagramTool.Command;
 using GalaSoft.MvvmLight;
@@ -9,7 +11,11 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Effects;
+using Microsoft.Win32;
 using ICommand = System.Windows.Input.ICommand;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.Runtime.Serialization.Formatters.Soap;
+using System.Runtime.Serialization;
 
 namespace DiagramTool.ViewModel
 {
@@ -23,6 +29,7 @@ namespace DiagramTool.ViewModel
         private FrameworkElement movingElement;
         private Klass _selectedKlass;
         private Klass _relation1Klass;
+        private Relation.Type _relationType;
 
         private bool _isAddingRelation;
 
@@ -37,10 +44,16 @@ namespace DiagramTool.ViewModel
         public ICommand DeleteClassCommand { get; set; }
 
         public ICommand AddRelationCommand { get; set; }
+        public ICommand AddInheritanceRelationCommand { get; set; }
+        public ICommand AddCompositionRelationCommand { get; set; }
+        public ICommand AddReferenceRelationCommand { get; set; }
 
         public ICommand CopyClassCommand { get; set; }
         public ICommand PasteClassCommand { get; set; }
         public ICommand CutClassCommand { get; set; }
+
+        public ICommand SaveCommand { get; set; }
+        public ICommand LoadCommand { get; set; }
 
         public ObservableCollection<Klass> Klasses { get; set; }
         public ObservableCollection<Relation> Relations { get; set; }
@@ -73,11 +86,93 @@ namespace DiagramTool.ViewModel
             DeleteClassCommand = new RelayCommand(DeleteKlass, HasSelection);
 
             AddRelationCommand = new RelayCommand(AddRelation);
+            AddCompositionRelationCommand = new RelayCommand(AddCompostion);
+            AddInheritanceRelationCommand = new RelayCommand(AddInheritance);
+            AddReferenceRelationCommand = new RelayCommand(AddReference);
 
             CopyClassCommand = new RelayCommand(CopyKlass, HasSelection);
             PasteClassCommand = new RelayCommand(PasteKlass, CanPaste);
             CutClassCommand = new RelayCommand(CutKlass, HasSelection);
 
+            SaveCommand = new RelayCommand(Save);
+            LoadCommand = new RelayCommand(Load);
+
+
+        }
+
+        private void Save()
+        {
+            SaveFileDialog dialog = new SaveFileDialog();
+            dialog.Title = "Save Diagram";
+            dialog.Filter = "Diagram files (*.dia)|*.dia";
+            dialog.RestoreDirectory = true;
+
+            if((bool)dialog.ShowDialog())
+            {
+                // Create an instance of the type and serialize it.
+                IFormatter formatter = new BinaryFormatter();
+
+                FileStream s = new FileStream(dialog.FileName, FileMode.Create);
+                formatter.Serialize(s, Klasses);
+                s.Close();
+            }
+
+
+
+        }
+
+        private void Load()
+        {
+            OpenFileDialog dialog = new OpenFileDialog();
+            dialog.Title = "Open Diagram";
+            dialog.Filter = "Diagram files (*.dia)|*.dia";
+            dialog.RestoreDirectory = true;
+
+            if ((bool) dialog.ShowDialog())
+            {
+                // Load data from file
+                IFormatter formatter = new BinaryFormatter();
+                FileStream s = new FileStream(dialog.FileName, FileMode.Open);
+                ObservableCollection<Klass> t = (ObservableCollection<Klass>) formatter.Deserialize(s);
+
+                // Clear existing Klasses and Relations
+                Klasses.Clear();
+                Relations.Clear();
+
+                // Add loaded data
+                foreach (Klass k in t)
+                {
+                    // Add Klass
+                    Klasses.Add(k);
+
+                    // Add Relations
+                    foreach (Relation r in k.Relations)
+                    {
+                        if (!Relations.Contains(r))
+                        {
+                            Relations.Add(r);
+                        }
+                    }
+                }
+            }
+        }
+
+        private void AddReference()
+        {
+            _relationType = Relation.Type.Reference;
+            AddRelation();
+        }
+
+        private void AddInheritance()
+        {
+            _relationType = Relation.Type.Inheritance;
+            AddRelation();
+        }
+
+        private void AddCompostion()
+        {
+            _relationType = Relation.Type.Composition;
+            AddRelation();
         }
 
         private void AddRelation()
@@ -165,7 +260,7 @@ namespace DiagramTool.ViewModel
                 }
                 else
                 {
-                    undoRedoController.AddAndExecute(new AddRelationCommand(Relations, _selectedKlass, klass));
+                    undoRedoController.AddAndExecute(new AddRelationCommand(Relations, _selectedKlass, klass, _relationType));
                     _relation1Klass = null;
                     _isAddingRelation = false;
                 }

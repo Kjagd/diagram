@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -8,7 +9,8 @@ using GalaSoft.MvvmLight;
 
 namespace Diagram
 {
-    public class Relation : ViewModelBase
+    [Serializable]
+    public class Relation : ViewModelBase, ISerializable
     {
         public enum Type
         {
@@ -18,6 +20,37 @@ namespace Diagram
         public Klass To { get; set; }
 
         private Point _from;
+        private Point _to;
+
+        private Point _knack1;
+        private Point _knack2;
+
+        public Type RelationType { get; set; }
+
+        private RelationMultiplicity Multiplicity { get; set; }
+
+
+        public void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            // Use the AddValue method to specify serialized values.
+            info.AddValue("type", RelationType, typeof(Type));
+            info.AddValue("From", From, typeof(Klass));
+            info.AddValue("To", To, typeof(Klass));
+
+        }
+
+        // Empty constructor
+        public Relation(){}
+
+        // The special constructor is used to deserialize values. 
+        public Relation(SerializationInfo info, StreamingContext context)
+        {
+            // Reset the property value using the GetValue method.
+            RelationType = (Type)info.GetValue("type", typeof(Type));
+            From = (Klass)info.GetValue("From", typeof(Klass));
+            To = (Klass)info.GetValue("To", typeof(Klass));
+        }
+
         public Point FromPos
         {
             get
@@ -40,7 +73,6 @@ namespace Diagram
             }
         }
 
-        private Point _to;
         public Point ToPos
         {
             get
@@ -63,8 +95,6 @@ namespace Diagram
             }
         }
 
-        private Point _knack1;
-
         public Point Knack1
         {
             get
@@ -82,8 +112,6 @@ namespace Diagram
                 return _knack1;
             }
         }
-
-        private Point _knack2;
 
         public Point Knack2
         {
@@ -112,9 +140,12 @@ namespace Diagram
             return ty + To.Height + 20 > fy && ty - 20 < fy + From.Height;
         }
 
-        public Type RelationType { get; set; }
 
-        private RelationMultiplicity Multiplicity { get; set; }
+
+        public Relation(Type type)
+        {
+            RelationType = type;
+        }
 
         public void Set(Klass from, Klass to)
         {

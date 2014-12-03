@@ -20,9 +20,9 @@
         <Ribbon x:Name="RibbonWin"  SelectedIndex="0">
             <Ribbon.ApplicationMenu>
                 <RibbonApplicationMenu KeyTip="F" Label="File" LargeImageSource="images/folder32.png">
-                    <RibbonApplicationMenuItem Header="Load" ImageSource="images/folder64.png" />
+                    <RibbonApplicationMenuItem Header="Load" ImageSource="images/folder64.png" Command="{Binding LoadCommand}" />
                     <RibbonSeparator></RibbonSeparator>
-                    <RibbonApplicationMenuItem Header="Save" ImageSource="images/save64.png" />
+                    <RibbonApplicationMenuItem Header="Save" ImageSource="images/save64.png" Command="{Binding SaveCommand}" />
                 </RibbonApplicationMenu>
             </Ribbon.ApplicationMenu>
             <RibbonTab Header="Edit" KeyTip="E">
@@ -42,9 +42,9 @@
                 </RibbonGroup>
                 <RibbonGroup Header="Relations" >
                     <RibbonControlGroup>
-                        <RibbonButton LargeImageSource="images/relationarrow.png" Label="Inheritance" KeyTip="I" Command="{Binding AddRelationCommand}"></RibbonButton>
-                        <RibbonButton LargeImageSource="images/relationarrow2.png" Label="Reference" KeyTip="R" Command="{Binding AddRelationCommand}"></RibbonButton>
-                        <RibbonButton LargeImageSource="images/diamond.png" Label="Composition" KeyTip="C" Command="{Binding AddRelationCommand}"></RibbonButton>
+                        <RibbonButton LargeImageSource="images/relationarrow.png" Label="Inheritance" KeyTip="I" Command="{Binding AddInheritanceRelationCommand}"></RibbonButton>
+                        <RibbonButton LargeImageSource="images/relationarrow2.png" Label="Reference" KeyTip="R" Command="{Binding AddReferenceRelationCommand}"></RibbonButton>
+                        <RibbonButton LargeImageSource="images/diamond.png" Label="Composition" KeyTip="C" Command="{Binding AddCompositionRelationCommand}"></RibbonButton>
                     </RibbonControlGroup>
                     <RibbonButton LargeImageSource="images/deleterelation.png" Label="Delete relation" KeyTip="T" ToolTipTitle="Delete a relation"
                                   Command="{Binding DeleteClassCommand}" />
