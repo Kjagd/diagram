@@ -247,9 +247,9 @@ namespace DiagramTool.ViewModel
 
         public void MouseUpClass(MouseButtonEventArgs e)
         {
-            movingElement.Effect = null;
+            if (movingElement == null) return;
             var klass = movingElement.DataContext as Klass;
-            if (klass == null) return;
+            movingElement.Effect = null;
             if (_isAddingRelation)
             {
                 if (_relation1Klass == null)
