@@ -95,7 +95,6 @@ namespace DiagramTool.ViewModel
             NewCommand = new RelayCommand(New);
             SaveCommand = new RelayCommand(Save);
             LoadCommand = new RelayCommand(Load);
-
         }
 
 
