@@ -74,6 +74,7 @@
     </ApplicationDefinition>
     <Compile Include="Command\AddRelationCommand.cs" />
     <Compile Include="Command\DeleteKlassCommand.cs" />
+    <Compile Include="Command\NewDiagramCommand.cs" />
     <Compile Include="Command\NewKlassCommand.cs" />
     <Compile Include="Command\UndoRedoController.cs" />
     <Compile Include="Command\ICommand.cs" />
@@ -81,7 +82,6 @@
     <Compile Include="Command\IUndoRedoCommand.cs" />
     <Compile Include="Command\MoveCommand.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
-    <Compile Include="ViewModel\NodeViewModel.cs" />
     <Compile Include="View\InheritanceUserControl.xaml.cs">
       <DependentUpon>InheritanceUserControl.xaml</DependentUpon>
     </Compile>
@@ -203,6 +203,18 @@
     <Resource Include="View\images\diamond.png" />
     <Resource Include="View\images\relationarrow.png" />
     <Resource Include="View\images\relationarrow2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="View\images\deleterelation.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="View\images\delete.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="View\images\newdiagram.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="View\images\export.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

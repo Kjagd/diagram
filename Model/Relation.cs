@@ -13,7 +13,7 @@ namespace Diagram
             Inheritance,
             Reference,
             Composition
-        };
+        }
 
         private Point _center;
 
@@ -23,10 +23,9 @@ namespace Diagram
         private Point _knack2;
         private Point _to;
 
-        // Empty constructor
-        public Relation()
-        {
-        }
+        public Type RelationType { get; set; }
+
+        private RelationMultiplicity Multiplicity { get; set; }
 
         // The special constructor is used to deserialize values. 
         public Relation(SerializationInfo info, StreamingContext context)
@@ -44,9 +43,6 @@ namespace Diagram
 
         public Klass From { get; set; }
         public Klass To { get; set; }
-        public Type RelationType { get; set; }
-
-        private RelationMultiplicity Multiplicity { get; set; }
 
         public Point FromPos
         {
@@ -59,17 +55,13 @@ namespace Diagram
                 float ty = To.Y;
 
                 _from.Y =
-                    IsSideways()
-                        ? fy + From.Height/2
-                        : ty < fy
-                            ? fy
-                            : fy + From.Height;
+                    IsSideways() ? fy + From.Height / 2 :
+                    ty < fy ? fy :
+                    fy + From.Height;
                 _from.X =
-                    !(IsSideways())
-                        ? fx + From.Width/2
-                        : tx > fx
-                            ? fx + From.Width
-                            : fx;
+                    !(IsSideways()) ? fx + From.Width / 2 :
+                    tx > fx ? fx + From.Width :
+                    fx;
                 return _from;
             }
         }
@@ -85,17 +77,13 @@ namespace Diagram
                 float ty = To.Y;
 
                 _to.Y =
-                    IsSideways()
-                        ? ty + To.Height/2
-                        : ty < fy
-                            ? ty + To.Height
-                            : ty;
+                    IsSideways() ? ty + To.Height / 2 :
+                    ty < fy ? ty + To.Height :
+                    ty;
                 _to.X =
-                    !(IsSideways())
-                        ? tx + To.Width/2
-                        : tx > fx
-                            ? tx
-                            : tx + To.Width;
+                    !(IsSideways()) ? tx + To.Width / 2 :
+                    tx > fx ? tx :
+                    tx + To.Width;
                 return _to;
             }
         }

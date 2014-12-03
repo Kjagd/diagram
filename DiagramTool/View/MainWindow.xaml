@@ -15,14 +15,23 @@
         <KeyBinding Modifiers="Control" Key="X" Command="{Binding CutClassCommand}" />
         <KeyBinding Modifiers="Control" Key="V" Command="{Binding PasteClassCommand}" />
         <KeyBinding Key="Delete" Command="{Binding DeleteClassCommand}" />
+        <KeyBinding Modifiers="Control+Shift" Key="N" Command="{Binding NewCommand}" />
+        <KeyBinding Modifiers="Control" Key="S" Command="{Binding SaveCommand}" />
+        <KeyBinding Modifiers="Control+Shift" Key="S" Command="{Binding SaveAsCommand}" />
+        <KeyBinding Modifiers="Control" Key="O" Command="{Binding LoadCommand}" />
+        <KeyBinding Modifiers="Control" Key="E" CommandParameter="{Binding ElementName=Canvas}" Command="{Binding ExportCommand}" />
     </Window.InputBindings>
     <StackPanel>
         <Ribbon x:Name="RibbonWin"  SelectedIndex="0">
             <Ribbon.ApplicationMenu>
                 <RibbonApplicationMenu KeyTip="F" Label="File" LargeImageSource="images/folder32.png">
-                    <RibbonApplicationMenuItem Header="Load" ImageSource="images/folder64.png" Command="{Binding LoadCommand}" />
+                    <RibbonApplicationMenuItem Header="New Diagram" ImageSource="images/newdiagram.png" Command="{Binding NewCommand}" />
                     <RibbonSeparator></RibbonSeparator>
+                    <RibbonApplicationMenuItem Header="Load" ImageSource="images/folder64.png" Command="{Binding LoadCommand}" />
                     <RibbonApplicationMenuItem Header="Save" ImageSource="images/save64.png" Command="{Binding SaveCommand}" />
+                    <RibbonApplicationMenuItem Header="Save As" ImageSource="images/save64.png" Command="{Binding SaveAsCommand}" />
+                    <RibbonSeparator></RibbonSeparator>
+                    <RibbonApplicationMenuItem Header="Export PNG" ImageSource="images/export.png" CommandParameter="{Binding ElementName=Canvas}" Command="{Binding ExportCommand}" />
                 </RibbonApplicationMenu>
             </Ribbon.ApplicationMenu>
             <RibbonTab Header="Edit" KeyTip="E">
@@ -46,15 +55,15 @@
                         <RibbonButton LargeImageSource="images/relationarrow2.png" Label="Reference" KeyTip="R" Command="{Binding AddReferenceRelationCommand}"></RibbonButton>
                         <RibbonButton LargeImageSource="images/diamond.png" Label="Composition" KeyTip="C" Command="{Binding AddCompositionRelationCommand}"></RibbonButton>
                     </RibbonControlGroup>
-                    <RibbonButton LargeImageSource="images/deleteclass32.png" Label="Delete relation" KeyTip="T" ToolTipTitle="Delete a relation"
+                    <RibbonButton LargeImageSource="images/deleterelation.png" Label="Delete relation" KeyTip="T" ToolTipTitle="Delete a relation"
                                   Command="{Binding DeleteClassCommand}" />
                 </RibbonGroup>
             </RibbonTab>
         </Ribbon>
-        <Grid>
+        <Canvas Name="Canvas">
             <ItemsControl ItemsSource="{Binding Relations}"/>
             <ItemsControl ItemsSource="{Binding Klasses}"/>
-        </Grid>
+        </Canvas>
         </StackPanel>
 </Window>
 

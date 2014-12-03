@@ -1,20 +1,19 @@
 ﻿using System;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Windows.Controls;
+using System.Windows.Media.Imaging;
 using Diagram;
 using DiagramTool.Command;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using System.Collections.ObjectModel;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Effects;
 using Microsoft.Win32;
 using ICommand = System.Windows.Input.ICommand;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.Runtime.Serialization.Formatters.Soap;
 using System.Runtime.Serialization;
 
 namespace DiagramTool.ViewModel
@@ -52,12 +51,17 @@ namespace DiagramTool.ViewModel
         public ICommand PasteClassCommand { get; set; }
         public ICommand CutClassCommand { get; set; }
 
+        public ICommand NewCommand { get; set; }
         public ICommand SaveCommand { get; set; }
+        public ICommand SaveAsCommand { get; set; }
         public ICommand LoadCommand { get; set; }
+        public ICommand ExportCommand { get; set; }
 
         public ObservableCollection<Klass> Klasses { get; set; }
         public ObservableCollection<Relation> Relations { get; set; }
         public ICommand TitleTextChanged { get; set; }
+
+        private string filepath;
 
         public MainViewModel()
         {
@@ -94,13 +98,77 @@ namespace DiagramTool.ViewModel
             PasteClassCommand = new RelayCommand(PasteKlass, CanPaste);
             CutClassCommand = new RelayCommand(CutKlass, HasSelection);
 
+            NewCommand = new RelayCommand(New);
             SaveCommand = new RelayCommand(Save);
+            SaveAsCommand = new RelayCommand(SaveAs);
             LoadCommand = new RelayCommand(Load);
+            ExportCommand = new RelayCommand<Canvas>(Export);
 
 
         }
 
+        private void Export(Canvas canvas)
+        {
+            SaveFileDialog dialog = new SaveFileDialog();
+            dialog.Title = "Export Diagram";
+            dialog.Filter = "Portable Networks Graphics files (*.png)|*.png";
+            dialog.RestoreDirectory = true;
+            if ((bool) dialog.ShowDialog())
+            {
+                Rect r = VisualTreeHelper.GetDescendantBounds(canvas);
+
+                var encoder = new PngBitmapEncoder();
+                RenderTargetBitmap bitmap = new RenderTargetBitmap((int) r.Right, (int) r.Bottom, 96, 96, PixelFormats.Default);
+                bitmap.Render(ClipImageToBounds(canvas));
+                BitmapFrame frame = BitmapFrame.Create(bitmap);
+                encoder.Frames.Add(frame);
+
+                using (var stream = File.Create(dialog.FileName))
+                {
+                    encoder.Save(stream);
+                }
+
+            }
+        }
+
+        private DrawingVisual ClipImageToBounds(Visual v)
+        {
+            DrawingVisual dv = new DrawingVisual();
+            DrawingContext dc = dv.RenderOpen();
+            VisualBrush vb = new VisualBrush(v);
+            Rect r = VisualTreeHelper.GetDescendantBounds(v);
+
+            dc.DrawRectangle(vb, null, new Rect(new Point(), new Point(r.Right, r.Bottom)));
+            dc.Close();
+
+            return dv;
+        }
+
+
+        private void New()
+        {
+            undoRedoController.AddAndExecute(new NewDiagramCommand(Klasses,Relations));
+        }
+
         private void Save()
+        {
+            if (filepath == null)
+            {
+                SaveAs();
+            }
+            else
+            {
+                // Create an instance of the type and serialize it.
+                IFormatter formatter = new BinaryFormatter();
+
+                FileStream s = new FileStream(filepath, FileMode.Create);
+                formatter.Serialize(s, Klasses);
+                s.Close();
+            }
+            
+        }
+
+        private void SaveAs()
         {
             SaveFileDialog dialog = new SaveFileDialog();
             dialog.Title = "Save Diagram";
@@ -109,15 +177,9 @@ namespace DiagramTool.ViewModel
 
             if((bool)dialog.ShowDialog())
             {
-                // Create an instance of the type and serialize it.
-                IFormatter formatter = new BinaryFormatter();
-
-                FileStream s = new FileStream(dialog.FileName, FileMode.Create);
-                formatter.Serialize(s, Klasses);
-                s.Close();
+                filepath = dialog.FileName;
+                Save();
             }
-
-
 
         }
 
@@ -133,27 +195,38 @@ namespace DiagramTool.ViewModel
                 // Load data from file
                 IFormatter formatter = new BinaryFormatter();
                 FileStream s = new FileStream(dialog.FileName, FileMode.Open);
-                ObservableCollection<Klass> t = (ObservableCollection<Klass>) formatter.Deserialize(s);
 
-                // Clear existing Klasses and Relations
-                Klasses.Clear();
-                Relations.Clear();
-
-                // Add loaded data
-                foreach (Klass k in t)
+                try
                 {
-                    // Add Klass
-                    Klasses.Add(k);
+                    ObservableCollection<Klass> t = (ObservableCollection<Klass>)formatter.Deserialize(s);
+                    // Clear existing Klasses and Relations
+                    Klasses.Clear();
+                    Relations.Clear();
 
-                    // Add Relations
-                    foreach (Relation r in k.Relations)
+                    // Add loaded data
+                    foreach (Klass k in t)
                     {
-                        if (!Relations.Contains(r))
+                        // Add Klass
+                        Klasses.Add(k);
+
+                        // Add Relations
+                        foreach (Relation r in k.Relations)
                         {
-                            Relations.Add(r);
+                            if (!Relations.Contains(r))
+                            {
+                                Relations.Add(r);
+                            }
                         }
                     }
+
+                    filepath = dialog.FileName;
+
                 }
+                catch (Exception)
+                {
+                    MessageBox.Show("Please choose a valid Diagram file.");
+                }
+
             }
         }
 
@@ -219,7 +292,7 @@ namespace DiagramTool.ViewModel
 
         private void CreateNewKlass()
         {
-            var newKlass = new Klass("New Klass") {X = 300, Y = 300};
+            var newKlass = new Klass("New Klass") {X = 300, Y = 200};
             
             undoRedoController.AddAndExecute(new NewKlassCommand(Klasses, newKlass));
         }
@@ -247,9 +320,9 @@ namespace DiagramTool.ViewModel
 
         public void MouseUpClass(MouseButtonEventArgs e)
         {
-            movingElement.Effect = null;
+            if (movingElement == null) return;
             var klass = movingElement.DataContext as Klass;
-            if (klass == null) return;
+            movingElement.Effect = null;
             if (_isAddingRelation)
             {
                 if (_relation1Klass == null)
@@ -279,10 +352,10 @@ namespace DiagramTool.ViewModel
             Keyboard.ClearFocus();
             //Capture for drag if it's a klass
             var frameworkElement = (FrameworkElement) e.MouseDevice.Target;
-            if (!(frameworkElement is StackPanel))
-            {
-                frameworkElement = FindParentOfType<StackPanel>(frameworkElement);
-            }
+            //if (!(frameworkElement is StackPanel))
+            //{
+                //frameworkElement = FindParentOfType<StackPanel>(frameworkElement);
+            //}
             if (frameworkElement.DataContext is Klass)
             {
                 frameworkElement.Effect = new DropShadowEffect {BlurRadius = 20, Opacity = 0.5};
