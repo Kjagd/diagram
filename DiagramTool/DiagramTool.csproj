@@ -81,7 +81,6 @@
     <Compile Include="Command\IUndoRedoCommand.cs" />
     <Compile Include="Command\MoveCommand.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
-    <Compile Include="ViewModel\NodeViewModel.cs" />
     <Compile Include="View\InheritanceUserControl.xaml.cs">
       <DependentUpon>InheritanceUserControl.xaml</DependentUpon>
     </Compile>
