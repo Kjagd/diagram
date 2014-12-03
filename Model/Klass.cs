@@ -31,20 +31,21 @@ namespace Diagram
         public ICommand NewFieldCommand { get; set; }
         public ICommand NewMethodCommand { get; set; }
 
-
+        public ICommand DeleteFieldCommand { get; set; }
 
         public Klass(string name)
         {
             Relations = new Collection<Relation>();
             Name = name;
             Width = 150;
-            Height = 100;
+            Height = 80;
 
             Fields = new ObservableCollection<Field>();
             Methods = new ObservableCollection<Method>();
 
             NewFieldCommand = new RelayCommand(AddField);
             NewMethodCommand = new RelayCommand(AddMethod);
+            DeleteFieldCommand = new RelayCommand<MouseButtonEventArgs>(DeleteField);
 
         }
 
@@ -81,6 +82,23 @@ namespace Diagram
 
             NewFieldCommand = new RelayCommand(AddField);
             NewMethodCommand = new RelayCommand(AddMethod);
+        }
+
+        private void DeleteField(MouseButtonEventArgs e)
+        {
+            var frameworkElement = (FrameworkElement) e.MouseDevice.Target;
+            if (frameworkElement.DataContext is Method)
+            {
+                Method m = (Method) frameworkElement.DataContext;
+                Methods.Remove(m);
+                Height -= 15;
+            }
+            if (frameworkElement.DataContext is Field)
+            {
+                Field f = (Field) frameworkElement.DataContext;
+                Fields.Remove(f);
+                Height -= 15;
+            }
         }
 
         public float Width

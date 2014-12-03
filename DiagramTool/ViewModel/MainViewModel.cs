@@ -218,7 +218,7 @@ namespace DiagramTool.ViewModel
 
         private void CreateNewKlass()
         {
-            var newKlass = new Klass("New Klass") {X = 300, Y = 300};
+            var newKlass = new Klass("New Klass") {X = 300, Y = 200};
             
             undoRedoController.AddAndExecute(new NewKlassCommand(Klasses, newKlass));
         }
@@ -278,10 +278,10 @@ namespace DiagramTool.ViewModel
             Keyboard.ClearFocus();
             //Capture for drag if it's a klass
             var frameworkElement = (FrameworkElement) e.MouseDevice.Target;
-            if (!(frameworkElement is StackPanel))
-            {
-                frameworkElement = FindParentOfType<StackPanel>(frameworkElement);
-            }
+            //if (!(frameworkElement is StackPanel))
+            //{
+                //frameworkElement = FindParentOfType<StackPanel>(frameworkElement);
+            //}
             if (frameworkElement.DataContext is Klass)
             {
                 frameworkElement.Effect = new DropShadowEffect {BlurRadius = 20, Opacity = 0.5};
