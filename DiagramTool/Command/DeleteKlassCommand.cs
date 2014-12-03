@@ -11,12 +11,14 @@ namespace DiagramTool.Command
     public class DeleteKlassCommand : IUndoRedoCommand
     {
         private readonly ObservableCollection<Klass> _klassList;
+        private readonly Collection<Relation> _relations; 
         private readonly Klass _classToDelete;
 
-        public DeleteKlassCommand(ObservableCollection<Klass> klassList, Klass klassToDelete)
+        public DeleteKlassCommand(ObservableCollection<Klass> klassList, Collection<Relation> relations, Klass klassToDelete)
         {
             _klassList = klassList;
             _classToDelete = klassToDelete;
+            _relations = relations;
         }
 
         public void Undo()
@@ -27,6 +29,10 @@ namespace DiagramTool.Command
         public void Execute()
         {
             _klassList.Remove(_classToDelete);
+            foreach (Relation r in _classToDelete.Relations)
+            {
+                _relations.Remove(r);
+            }
         }
     }
 }

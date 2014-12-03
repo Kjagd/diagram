@@ -226,7 +226,7 @@ namespace DiagramTool.ViewModel
 
         private void DeleteKlass()
         {
-            undoRedoController.AddAndExecute(new DeleteKlassCommand(Klasses, _selectedKlass));
+            undoRedoController.AddAndExecute(new DeleteKlassCommand(Klasses, Relations, _selectedKlass));
         }
 
         public void MouseMoveClass(MouseEventArgs e)
