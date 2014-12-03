@@ -36,7 +36,6 @@ namespace Diagram
             info.AddValue("type", RelationType, typeof(Type));
             info.AddValue("From", From, typeof(Klass));
             info.AddValue("To", To, typeof(Klass));
-
         }
 
         // Empty constructor

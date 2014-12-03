@@ -17,7 +17,9 @@
         <KeyBinding Key="Delete" Command="{Binding DeleteClassCommand}" />
         <KeyBinding Modifiers="Control+Shift" Key="N" Command="{Binding NewCommand}" />
         <KeyBinding Modifiers="Control" Key="S" Command="{Binding SaveCommand}" />
+        <KeyBinding Modifiers="Control+Shift" Key="S" Command="{Binding SaveAsCommand}" />
         <KeyBinding Modifiers="Control" Key="O" Command="{Binding LoadCommand}" />
+        <KeyBinding Modifiers="Control" Key="E" Command="{Binding ExportCommand}" />
     </Window.InputBindings>
     <StackPanel>
         <Ribbon x:Name="RibbonWin"  SelectedIndex="0">
@@ -27,6 +29,7 @@
                     <RibbonSeparator></RibbonSeparator>
                     <RibbonApplicationMenuItem Header="Load" ImageSource="images/folder64.png" Command="{Binding LoadCommand}" />
                     <RibbonApplicationMenuItem Header="Save" ImageSource="images/save64.png" Command="{Binding SaveCommand}" />
+                    <RibbonApplicationMenuItem Header="Save As" ImageSource="images/save64.png" Command="{Binding SaveAsCommand}" />
                     <RibbonSeparator></RibbonSeparator>
                     <RibbonApplicationMenuItem Header="Export PNG" ImageSource="images/export.png" CommandParameter="{Binding ElementName=Canvas}" Command="{Binding ExportCommand}" />
                 </RibbonApplicationMenu>
