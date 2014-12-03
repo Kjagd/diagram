@@ -25,7 +25,6 @@ namespace Diagram
 
         public ObservableCollection<Field> Fields { get; set; }
         public ObservableCollection<Method> Methods { get; set; }
-        //public ObservableCollection<Method> Methods { get; set; }
 
         public ICommand TitleTextChanged { get; set; }
         public ICommand NewFieldCommand { get; set; }
@@ -43,6 +42,7 @@ namespace Diagram
             Fields = new ObservableCollection<Field>();
             Methods = new ObservableCollection<Method>();
 
+            // All commands below should be added to serialization constructor as well
             NewFieldCommand = new RelayCommand(AddField);
             NewMethodCommand = new RelayCommand(AddMethod);
             DeleteFieldCommand = new RelayCommand<MouseButtonEventArgs>(DeleteField);
@@ -82,6 +82,7 @@ namespace Diagram
 
             NewFieldCommand = new RelayCommand(AddField);
             NewMethodCommand = new RelayCommand(AddMethod);
+            DeleteFieldCommand = new RelayCommand<MouseButtonEventArgs>(DeleteField);
         }
 
         private void DeleteField(MouseButtonEventArgs e)
