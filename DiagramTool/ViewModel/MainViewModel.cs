@@ -20,17 +20,19 @@ namespace DiagramTool.ViewModel
 {
     public class MainViewModel : ViewModelBase
     {
-        private UndoRedoController undoRedoController = UndoRedoController.GetInstance();
-        private Klass clipboard;
+        private readonly UndoRedoController _undoRedoController = UndoRedoController.GetInstance();
+        private Klass _clipboard;
 
-        private Point moveKlassStartPoint;
-        private Point MoveKlassAnchorPoint;
-        private FrameworkElement movingElement;
+        private Point _moveKlassStartPoint;
+        private Point _moveKlassAnchorPoint;
+        private FrameworkElement _movingElement;
         private Klass _selectedKlass;
         private Klass _relation1Klass;
         private Relation.Type _relationType;
 
         private bool _isAddingRelation;
+
+        private string _filepath;
 
         public ICommand MouseDownCommand { get; private set; }
         public ICommand MouseMoveCommand { get; private set; }
@@ -61,7 +63,6 @@ namespace DiagramTool.ViewModel
         public ObservableCollection<Relation> Relations { get; set; }
         public ICommand TitleTextChanged { get; set; }
 
-        private string filepath;
 
         public MainViewModel()
         {
@@ -83,8 +84,8 @@ namespace DiagramTool.ViewModel
             MouseUpCommand = new RelayCommand<MouseButtonEventArgs>(MouseUpClass);
             MouseMoveCommand = new RelayCommand<MouseEventArgs>(MouseMoveClass);
 
-            UndoCommand = new RelayCommand(undoRedoController.Undo, undoRedoController.CanUndo);
-            RedoCommand = new RelayCommand(undoRedoController.Redo, undoRedoController.CanRedo);
+            UndoCommand = new RelayCommand(_undoRedoController.Undo, _undoRedoController.CanUndo);
+            RedoCommand = new RelayCommand(_undoRedoController.Redo, _undoRedoController.CanRedo);
 
             NewClassCommand = new RelayCommand(CreateNewKlass);
             DeleteClassCommand = new RelayCommand(DeleteKlass, HasSelection);
@@ -109,18 +110,20 @@ namespace DiagramTool.ViewModel
 
         private void Export(Canvas canvas)
         {
-            SaveFileDialog dialog = new SaveFileDialog();
-            dialog.Title = "Export Diagram";
-            dialog.Filter = "Portable Networks Graphics files (*.png)|*.png";
-            dialog.RestoreDirectory = true;
+            var dialog = new SaveFileDialog
+            {
+                Title = "Export Diagram",
+                Filter = "Portable Networks Graphics files (*.png)|*.png",
+                RestoreDirectory = true
+            };
             if ((bool) dialog.ShowDialog())
             {
-                Rect r = VisualTreeHelper.GetDescendantBounds(canvas);
+                var r = VisualTreeHelper.GetDescendantBounds(canvas);
 
                 var encoder = new PngBitmapEncoder();
-                RenderTargetBitmap bitmap = new RenderTargetBitmap((int) r.Right, (int) r.Bottom, 96, 96, PixelFormats.Default);
+                var bitmap = new RenderTargetBitmap((int) r.Right, (int) r.Bottom, 96, 96, PixelFormats.Default);
                 bitmap.Render(ClipImageToBounds(canvas));
-                BitmapFrame frame = BitmapFrame.Create(bitmap);
+                var frame = BitmapFrame.Create(bitmap);
                 encoder.Frames.Add(frame);
 
                 using (var stream = File.Create(dialog.FileName))
@@ -133,10 +136,10 @@ namespace DiagramTool.ViewModel
 
         private DrawingVisual ClipImageToBounds(Visual v)
         {
-            DrawingVisual dv = new DrawingVisual();
-            DrawingContext dc = dv.RenderOpen();
-            VisualBrush vb = new VisualBrush(v);
-            Rect r = VisualTreeHelper.GetDescendantBounds(v);
+            var dv = new DrawingVisual();
+            var dc = dv.RenderOpen();
+            var vb = new VisualBrush(v);
+            var r = VisualTreeHelper.GetDescendantBounds(v);
 
             dc.DrawRectangle(vb, null, new Rect(new Point(), new Point(r.Right, r.Bottom)));
             dc.Close();
@@ -147,12 +150,12 @@ namespace DiagramTool.ViewModel
 
         private void New()
         {
-            undoRedoController.AddAndExecute(new NewDiagramCommand(Klasses,Relations));
+            _undoRedoController.AddAndExecute(new NewDiagramCommand(Klasses,Relations));
         }
 
         private void Save()
         {
-            if (filepath == null)
+            if (_filepath == null)
             {
                 SaveAs();
             }
@@ -161,7 +164,7 @@ namespace DiagramTool.ViewModel
                 // Create an instance of the type and serialize it.
                 IFormatter formatter = new BinaryFormatter();
 
-                FileStream s = new FileStream(filepath, FileMode.Create);
+                FileStream s = new FileStream(_filepath, FileMode.Create);
                 formatter.Serialize(s, Klasses);
                 s.Close();
             }
@@ -177,7 +180,7 @@ namespace DiagramTool.ViewModel
 
             if((bool)dialog.ShowDialog())
             {
-                filepath = dialog.FileName;
+                _filepath = dialog.FileName;
                 Save();
             }
 
@@ -219,7 +222,7 @@ namespace DiagramTool.ViewModel
                         }
                     }
 
-                    filepath = dialog.FileName;
+                    _filepath = dialog.FileName;
 
                 }
                 catch (Exception)
@@ -251,6 +254,7 @@ namespace DiagramTool.ViewModel
         private void AddRelation()
         {
             _isAddingRelation = true;
+            _relation1Klass = null;
             if (_selectedKlass != null)
             {
                 _selectedKlass.IsSelected = false;
@@ -261,7 +265,7 @@ namespace DiagramTool.ViewModel
 
         private bool CanPaste()
         {
-            return clipboard != null;
+            return _clipboard != null;
         }
 
         private bool HasSelection()
@@ -271,16 +275,16 @@ namespace DiagramTool.ViewModel
 
         private void CopyKlass()
         {
-            clipboard = (Klass)_selectedKlass.Clone();
+            _clipboard = (Klass)_selectedKlass.Clone();
         }
 
         private void PasteKlass()
         {
-            undoRedoController.AddAndExecute(new NewKlassCommand(Klasses, clipboard));
+            _undoRedoController.AddAndExecute(new NewKlassCommand(Klasses, _clipboard));
             _selectedKlass.IsSelected = false;
-            clipboard.IsSelected = true;
+            _clipboard.IsSelected = true;
             // Clear clipboard
-            clipboard = null;
+            _clipboard = null;
         }
 
         private void CutKlass()
@@ -294,35 +298,35 @@ namespace DiagramTool.ViewModel
         {
             var newKlass = new Klass("New Klass") {X = 300, Y = 200};
             
-            undoRedoController.AddAndExecute(new NewKlassCommand(Klasses, newKlass));
+            _undoRedoController.AddAndExecute(new NewKlassCommand(Klasses, newKlass));
         }
 
         private void DeleteKlass()
         {
-            undoRedoController.AddAndExecute(new DeleteKlassCommand(Klasses, Relations, _selectedKlass));
+            _undoRedoController.AddAndExecute(new DeleteKlassCommand(Klasses, Relations, _selectedKlass));
         }
 
         public void MouseMoveClass(MouseEventArgs e)
         {
-            if (Mouse.Captured != null && movingElement != null && movingElement.DataContext is Klass)
+            if (Mouse.Captured != null && _movingElement != null && _movingElement.DataContext is Klass)
             {
-                Klass draggedKlass = (Klass) movingElement.DataContext;
-                Point relativePos = Mouse.GetPosition(movingElement);
-                if (MoveKlassAnchorPoint == default(Point))
+                Klass draggedKlass = (Klass) _movingElement.DataContext;
+                Point relativePos = Mouse.GetPosition(_movingElement);
+                if (_moveKlassAnchorPoint == default(Point))
                 {
-                    MoveKlassAnchorPoint.X = relativePos.X;
-                    MoveKlassAnchorPoint.Y = relativePos.Y;
+                    _moveKlassAnchorPoint.X = relativePos.X;
+                    _moveKlassAnchorPoint.Y = relativePos.Y;
                 }
-                draggedKlass.X += (int) (relativePos.X - MoveKlassAnchorPoint.X);
-                draggedKlass.Y += (int) (relativePos.Y - MoveKlassAnchorPoint.Y);
+                draggedKlass.X += (int) (relativePos.X - _moveKlassAnchorPoint.X);
+                draggedKlass.Y += (int) (relativePos.Y - _moveKlassAnchorPoint.Y);
             }
         }
 
         public void MouseUpClass(MouseButtonEventArgs e)
         {
-            if (movingElement == null) return;
-            var klass = movingElement.DataContext as Klass;
-            movingElement.Effect = null;
+            if (_movingElement == null) return;
+            var klass = _movingElement.DataContext as Klass;
+            _movingElement.Effect = null;
             if (_isAddingRelation)
             {
                 if (_relation1Klass == null)
@@ -333,17 +337,17 @@ namespace DiagramTool.ViewModel
                 }
                 else
                 {
-                    undoRedoController.AddAndExecute(new AddRelationCommand(Relations, _selectedKlass, klass, _relationType));
+                    _undoRedoController.AddAndExecute(new AddRelationCommand(Relations, _selectedKlass, klass, _relationType));
                     _relation1Klass = null;
                     _isAddingRelation = false;
                 }
             }
             else
             {
-                undoRedoController.AddAndExecute(new MoveCommand(klass, klass.X,
-                    klass.Y, (float)moveKlassStartPoint.X, (float)moveKlassStartPoint.Y));
+                _undoRedoController.AddAndExecute(new MoveCommand(klass, klass.X,
+                    klass.Y, (float)_moveKlassStartPoint.X, (float)_moveKlassStartPoint.Y));
                 e.MouseDevice.Target.ReleaseMouseCapture();
-                MoveKlassAnchorPoint = new Point();
+                _moveKlassAnchorPoint = new Point();
             }
         }
 
@@ -359,7 +363,7 @@ namespace DiagramTool.ViewModel
             if (frameworkElement.DataContext is Klass)
             {
                 frameworkElement.Effect = new DropShadowEffect {BlurRadius = 20, Opacity = 0.5};
-                movingElement = frameworkElement;
+                _movingElement = frameworkElement;
                 if (_isAddingRelation) return;
                 if (_selectedKlass != null)
                 {
@@ -367,8 +371,8 @@ namespace DiagramTool.ViewModel
                 }
                 (frameworkElement.DataContext as Klass).IsSelected = true;
                 _selectedKlass = (frameworkElement.DataContext as Klass);
-                moveKlassStartPoint.X = _selectedKlass.X;
-                moveKlassStartPoint.Y = _selectedKlass.Y;
+                _moveKlassStartPoint.X = _selectedKlass.X;
+                _moveKlassStartPoint.Y = _selectedKlass.Y;
                 e.MouseDevice.Target.CaptureMouse();
             }
         }
