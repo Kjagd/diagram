@@ -132,8 +132,9 @@ namespace DiagramTool.ViewModel
             DrawingVisual dv = new DrawingVisual();
             DrawingContext dc = dv.RenderOpen();
             VisualBrush vb = new VisualBrush(v);
+            Rect r = VisualTreeHelper.GetDescendantBounds(v);
 
-            dc.DrawRectangle(vb, null, VisualTreeHelper.GetDescendantBounds(v));
+            dc.DrawRectangle(vb, null, new Rect(new Point(), new Point(r.Right, r.Bottom)));
             dc.Close();
 
             return dv;
