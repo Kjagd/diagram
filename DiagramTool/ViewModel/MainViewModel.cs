@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Windows.Media.Imaging;
 using Diagram;
 using DiagramTool.Command;
 using GalaSoft.MvvmLight;
@@ -116,8 +117,6 @@ namespace DiagramTool.ViewModel
                 formatter.Serialize(s, Klasses);
                 s.Close();
             }
-
-
 
         }
 
