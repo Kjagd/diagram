@@ -20,10 +20,12 @@
         <Ribbon x:Name="RibbonWin"  SelectedIndex="0">
             <Ribbon.ApplicationMenu>
                 <RibbonApplicationMenu KeyTip="F" Label="File" LargeImageSource="images/folder32.png">
-                    <RibbonApplicationMenuItem Header="New Diagram" ImageSource="images/folder64.png" Command="{Binding NewCommand}" />
+                    <RibbonApplicationMenuItem Header="New Diagram" ImageSource="images/newdiagram.png" Command="{Binding NewCommand}" />
                     <RibbonSeparator></RibbonSeparator>
                     <RibbonApplicationMenuItem Header="Load" ImageSource="images/folder64.png" Command="{Binding LoadCommand}" />
                     <RibbonApplicationMenuItem Header="Save" ImageSource="images/save64.png" Command="{Binding SaveCommand}" />
+                    <RibbonSeparator></RibbonSeparator>
+                    <RibbonApplicationMenuItem Header="Export PNG" ImageSource="images/save64.png" Command="{Binding ExportCommand}" />
                 </RibbonApplicationMenu>
             </Ribbon.ApplicationMenu>
             <RibbonTab Header="Edit" KeyTip="E">
