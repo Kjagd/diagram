@@ -27,10 +27,12 @@ namespace Diagram
         public string Name { get; set; }
 
         public ObservableCollection<Field> Fields { get; set; }
+        public ObservableCollection<Method> Methods { get; set; }
         //public ObservableCollection<Method> Methods { get; set; }
 
         public ICommand TitleTextChanged { get; set; }
         public ICommand NewFieldCommand { get; set; }
+        public ICommand NewMethodCommand { get; set; }
 
         public Klass(string name)
         {
@@ -40,9 +42,10 @@ namespace Diagram
             Height = 100;
 
             Fields = new ObservableCollection<Field>();
+            Methods = new ObservableCollection<Method>();
 
-            TitleTextChanged = new RelayCommand<EventArgs>(ChangeTitle);
             NewFieldCommand = new RelayCommand(AddField);
+            NewMethodCommand = new RelayCommand(AddMethod);
 
         }
 
@@ -119,29 +122,28 @@ namespace Diagram
             get { return Y + Height / 2; }
         }
 
+        private void AddMethod()
+        {
+            Methods.Add(new Method("", "+"));
+            Height += 15;
+        }
         private void AddField()
         {
             Fields.Add(new Field("", "+"));
             Height += 15;
         }
 
-        public void ChangeTitle(EventArgs eventArgs)
-        {
-            Console.WriteLine("yoyo");
-        }
-
-
         public void AddField(Field field)
         {
             Fields.Add(field);
+            Height += 15;
         }
 
-        public void AddMethod(string operation)
+        public void AddMethod(Method method)
         {
-            // Methods.Add(operation);
+            Methods.Add(method);
+            Height += 15;
         }
-
-
 
         public object Clone()
         {
@@ -150,6 +152,11 @@ namespace Diagram
             foreach (Field f in this.Fields)
             {
                 k.AddField((Field)f.Clone());
+            }
+
+            foreach (Method m in this.Methods)
+            {
+                k.AddMethod((Method)m.Clone());
             }
 
             k.Height = this.Height;

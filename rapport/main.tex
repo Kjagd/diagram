@@ -1,4 +1,4 @@
-\documentclass[10pt,a4paper]{report}
+\documentclass[10pt,a4paper]{article}
 \usepackage[utf8]{inputenc}
 \usepackage{amsmath}
 \usepackage{amsfonts}
@@ -11,10 +11,8 @@
 \usepackage{hyperref}
 \usepackage{todonotes}
 \usepackage{fancyvrb}
-\usepackage{csvsimple}
-\usepackage{rotating}
 \hypersetup{%
-    pdfborder = {0 0 0}
+	pdfborder = {0 0 0}
 }
 \newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
 
@@ -23,66 +21,60 @@
 \newcommand{\xmark}{\ding{55}}%
 
 \begin{document}
-\begin{titlepage}
-\begin{center}
-
-% Upper part of the page. The '~' is needed because \\
-% only works if a paragraph has started.
-
-\textsc{\Large 02350 Windows Programming using C# and .Net, 2014\\ 
-DTU Compute \\ 
-Technical University of Denmark}\\[1.5cm]
-
-% Title
-\HRule \\[0.4cm]
-{ \huge \bfseries A diagram tool for Windows .Net \\[0.4cm] }
-
-\HRule \\[1.5cm]
-
-% Author and supervisor
-\begin{center}
-\begin{minipage}{0.5\textwidth}
-\begin{flushleft} \large
-\emph{Authors:}\\
-Jonas \textsc{Pedersen} \\
-s123859 \\ ~ \\
-Peter \textsc{Gelsbo} \\
-s123397 \\ ~\\
-Kristian \textsc{Jagd} \\
-s123215
-\end{flushleft}
-\end{minipage}
-\end{center}
-
-
-
-\vfill
-
-% Bottom of the page
-{\large \today}
-
-\end{center}
-\end{titlepage}
-
-
-
-%\author{Jonas Pedersen\\s123859 \and Mathias T. Johansen\\s112625 \and 
-%Kristian Jagd\\s123215}
-    %\title{A Word Finding Game for Smartphones\\ Implementation}
-    
-
-\pagenumbering{gobble}
-\thispagestyle{empty}
-
-
-\cleardoublepage
-
-
-
-\pagenumbering{arabic}
-
-
-\include{abstract}
-\tableofcontents
-
+	\begin{titlepage}
+		\begin{center}
+			
+			% Upper part of the page. The '~' is needed because \\
+			% only works if a paragraph has started.
+			
+			\textsc{\Large 02350 Windows Programming \\ 
+				Autumn 2014 \\ 
+				Technical University of Denmark}\\[1.5cm]
+			
+			\textsc{\Large Project Group 04}\\[0.5cm]
+			
+			% Title
+			\HRule \\[0.4cm]
+			{ \huge \bfseries A .Net Application for UML diagrams \\[0.4cm] }
+			
+			\HRule \\[1.5cm]
+			
+			% Author and supervisor
+			\begin{center}
+				\begin{minipage}{0.5\textwidth}
+					\begin{flushleft} \large
+						\emph{Authors:}\\
+						Jonas \textsc{Pedersen} \\
+						s123859 \\ ~ \\
+						Peter \textsc{Gelsbo} \\
+						s123397 \\ ~\\
+						Kristian \textsc{Jagd} \\
+						s123215
+					\end{flushleft}
+				\end{minipage}
+			\end{center}
+			
+			
+			
+			\vfill
+			
+			% Bottom of the page
+			{\large \today}
+			
+		\end{center}
+	\end{titlepage}
+	
+	
+	\pagenumbering{gobble}
+	\thispagestyle{empty}
+	
+	
+	\cleardoublepage
+	
+	
+	
+	\pagenumbering{arabic}
+	
+	
+	\newpage
 \end{document}
