@@ -53,12 +53,15 @@ namespace DiagramTool.ViewModel
 
         public ICommand NewCommand { get; set; }
         public ICommand SaveCommand { get; set; }
+        public ICommand SaveAsCommand { get; set; }
         public ICommand LoadCommand { get; set; }
         public ICommand ExportCommand { get; set; }
 
         public ObservableCollection<Klass> Klasses { get; set; }
         public ObservableCollection<Relation> Relations { get; set; }
         public ICommand TitleTextChanged { get; set; }
+
+        private string filepath;
 
         public MainViewModel()
         {
@@ -97,6 +100,7 @@ namespace DiagramTool.ViewModel
 
             NewCommand = new RelayCommand(New);
             SaveCommand = new RelayCommand(Save);
+            SaveAsCommand = new RelayCommand(SaveAs);
             LoadCommand = new RelayCommand(Load);
             ExportCommand = new RelayCommand<Canvas>(Export);
 
@@ -145,7 +149,26 @@ namespace DiagramTool.ViewModel
         {
             undoRedoController.AddAndExecute(new NewDiagramCommand(Klasses,Relations));
         }
+
         private void Save()
+        {
+            if (filepath == null)
+            {
+                SaveAs();
+            }
+            else
+            {
+                // Create an instance of the type and serialize it.
+                IFormatter formatter = new BinaryFormatter();
+
+                FileStream s = new FileStream(filepath, FileMode.Create);
+                formatter.Serialize(s, Klasses);
+                s.Close();
+            }
+            
+        }
+
+        private void SaveAs()
         {
             SaveFileDialog dialog = new SaveFileDialog();
             dialog.Title = "Save Diagram";
@@ -154,12 +177,8 @@ namespace DiagramTool.ViewModel
 
             if((bool)dialog.ShowDialog())
             {
-                // Create an instance of the type and serialize it.
-                IFormatter formatter = new BinaryFormatter();
-
-                FileStream s = new FileStream(dialog.FileName, FileMode.Create);
-                formatter.Serialize(s, Klasses);
-                s.Close();
+                filepath = dialog.FileName;
+                Save();
             }
 
         }
@@ -176,27 +195,38 @@ namespace DiagramTool.ViewModel
                 // Load data from file
                 IFormatter formatter = new BinaryFormatter();
                 FileStream s = new FileStream(dialog.FileName, FileMode.Open);
-                ObservableCollection<Klass> t = (ObservableCollection<Klass>) formatter.Deserialize(s);
 
-                // Clear existing Klasses and Relations
-                Klasses.Clear();
-                Relations.Clear();
-
-                // Add loaded data
-                foreach (Klass k in t)
+                try
                 {
-                    // Add Klass
-                    Klasses.Add(k);
+                    ObservableCollection<Klass> t = (ObservableCollection<Klass>)formatter.Deserialize(s);
+                    // Clear existing Klasses and Relations
+                    Klasses.Clear();
+                    Relations.Clear();
 
-                    // Add Relations
-                    foreach (Relation r in k.Relations)
+                    // Add loaded data
+                    foreach (Klass k in t)
                     {
-                        if (!Relations.Contains(r))
+                        // Add Klass
+                        Klasses.Add(k);
+
+                        // Add Relations
+                        foreach (Relation r in k.Relations)
                         {
-                            Relations.Add(r);
+                            if (!Relations.Contains(r))
+                            {
+                                Relations.Add(r);
+                            }
                         }
                     }
+
+                    filepath = dialog.FileName;
+
                 }
+                catch (Exception)
+                {
+                    MessageBox.Show("Please choose a valid Diagram file.");
+                }
+
             }
         }
 
