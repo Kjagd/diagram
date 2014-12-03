@@ -53,6 +53,7 @@ namespace DiagramTool.ViewModel
         public ICommand PasteClassCommand { get; set; }
         public ICommand CutClassCommand { get; set; }
 
+        public ICommand NewCommand { get; set; }
         public ICommand SaveCommand { get; set; }
         public ICommand LoadCommand { get; set; }
 
@@ -95,12 +96,17 @@ namespace DiagramTool.ViewModel
             PasteClassCommand = new RelayCommand(PasteKlass, CanPaste);
             CutClassCommand = new RelayCommand(CutKlass, HasSelection);
 
+            NewCommand = new RelayCommand(New);
             SaveCommand = new RelayCommand(Save);
             LoadCommand = new RelayCommand(Load);
 
 
         }
 
+        private void New()
+        {
+            undoRedoController.AddAndExecute(new NewDiagramCommand(Klasses,Relations));
+        }
         private void Save()
         {
             SaveFileDialog dialog = new SaveFileDialog();
