@@ -195,29 +195,38 @@ namespace DiagramTool.ViewModel
                 // Load data from file
                 IFormatter formatter = new BinaryFormatter();
                 FileStream s = new FileStream(dialog.FileName, FileMode.Open);
-                ObservableCollection<Klass> t = (ObservableCollection<Klass>) formatter.Deserialize(s);
 
-                // Clear existing Klasses and Relations
-                Klasses.Clear();
-                Relations.Clear();
-
-                // Add loaded data
-                foreach (Klass k in t)
+                try
                 {
-                    // Add Klass
-                    Klasses.Add(k);
+                    ObservableCollection<Klass> t = (ObservableCollection<Klass>)formatter.Deserialize(s);
+                    // Clear existing Klasses and Relations
+                    Klasses.Clear();
+                    Relations.Clear();
 
-                    // Add Relations
-                    foreach (Relation r in k.Relations)
+                    // Add loaded data
+                    foreach (Klass k in t)
                     {
-                        if (!Relations.Contains(r))
+                        // Add Klass
+                        Klasses.Add(k);
+
+                        // Add Relations
+                        foreach (Relation r in k.Relations)
                         {
-                            Relations.Add(r);
+                            if (!Relations.Contains(r))
+                            {
+                                Relations.Add(r);
+                            }
                         }
                     }
+
+                    filepath = dialog.FileName;
+
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("Please choose a valid Diagram file.");
                 }
 
-                filepath = dialog.FileName;
             }
         }
 
