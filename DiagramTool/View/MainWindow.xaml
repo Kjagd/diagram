@@ -15,6 +15,9 @@
         <KeyBinding Modifiers="Control" Key="X" Command="{Binding CutClassCommand}" />
         <KeyBinding Modifiers="Control" Key="V" Command="{Binding PasteClassCommand}" />
         <KeyBinding Key="Delete" Command="{Binding DeleteClassCommand}" />
+        <KeyBinding Modifiers="Control+Shift" Key="N" Command="{Binding NewCommand}" />
+        <KeyBinding Modifiers="Control" Key="S" Command="{Binding SaveCommand}" />
+        <KeyBinding Modifiers="Control" Key="O" Command="{Binding LoadCommand}" />
     </Window.InputBindings>
     <StackPanel>
         <Ribbon x:Name="RibbonWin"  SelectedIndex="0">

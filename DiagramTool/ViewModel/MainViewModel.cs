@@ -1,5 +1,4 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows.Media.Imaging;
 using Diagram;
@@ -8,14 +7,11 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using System.Collections.ObjectModel;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Effects;
 using Microsoft.Win32;
 using ICommand = System.Windows.Input.ICommand;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.Runtime.Serialization.Formatters.Soap;
 using System.Runtime.Serialization;
 
 namespace DiagramTool.ViewModel
@@ -146,6 +142,7 @@ namespace DiagramTool.ViewModel
 
             return dv;
         }
+
 
         private void New()
         {
