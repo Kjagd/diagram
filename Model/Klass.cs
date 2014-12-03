@@ -1,19 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using System.Collections;
-using System.Windows;
-using System.Windows.Input;
+﻿using System.Collections.Generic;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using System;
+using System.Collections.ObjectModel;
+using System.Runtime.Serialization;
+using System.Windows;
+using System.Windows.Input;
 
 namespace Diagram
 {
-    public class Klass : ViewModelBase, ICloneable
+    [Serializable]
+    public class Klass : ViewModelBase, ICloneable, ISerializable
     {
         private bool _isSelected;
         private float _borderThickness;
@@ -34,6 +31,8 @@ namespace Diagram
         public ICommand NewFieldCommand { get; set; }
         public ICommand NewMethodCommand { get; set; }
 
+
+
         public Klass(string name)
         {
             Relations = new Collection<Relation>();
@@ -47,6 +46,41 @@ namespace Diagram
             NewFieldCommand = new RelayCommand(AddField);
             NewMethodCommand = new RelayCommand(AddMethod);
 
+        }
+
+        public void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            // Use the AddValue method to specify serialized values.
+            info.AddValue("Name", Name, typeof(string));
+            info.AddValue("Package", Package, typeof(string));
+            info.AddValue("borderThickness", _borderThickness, typeof(float));
+            info.AddValue("height", _height, typeof(float));
+            info.AddValue("width", _width, typeof(float));
+            info.AddValue("position", _position, typeof(Point));
+
+            info.AddValue("Relations", Relations, typeof(Collection<Relation>));
+            info.AddValue("Fields", Fields, typeof(ObservableCollection<Field>));
+            info.AddValue("Methods", Methods, typeof(ObservableCollection<Method>));
+
+        }
+
+        // The special constructor is used to deserialize values. 
+        public Klass(SerializationInfo info, StreamingContext context)
+        {
+            // Reset the property value using the GetValue method.
+            Name = (string) info.GetValue("Name", typeof(string));
+            Package = (string)info.GetValue("Package", typeof(string));
+            _borderThickness = (float)info.GetValue("borderThickness", typeof(float));
+            _height = (float)info.GetValue("height", typeof(float));
+            _width = (float)info.GetValue("width", typeof(float));
+            _position = (Point)info.GetValue("position", typeof(Point));
+
+            Relations = (Collection<Relation>)info.GetValue("Relations", typeof(Collection<Relation>));
+            Fields = (ObservableCollection<Field>)info.GetValue("Fields", typeof(ObservableCollection<Field>));
+            Methods = (ObservableCollection<Method>)info.GetValue("Methods", typeof(ObservableCollection<Method>));
+
+            NewFieldCommand = new RelayCommand(AddField);
+            NewMethodCommand = new RelayCommand(AddMethod);
         }
 
         public float Width

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 using Diagram;
 using DiagramTool.Command;
 using GalaSoft.MvvmLight;
@@ -10,6 +12,9 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Effects;
 using ICommand = System.Windows.Input.ICommand;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.Runtime.Serialization.Formatters.Soap;
+using System.Runtime.Serialization;
 
 namespace DiagramTool.ViewModel
 {
@@ -41,6 +46,9 @@ namespace DiagramTool.ViewModel
         public ICommand CopyClassCommand { get; set; }
         public ICommand PasteClassCommand { get; set; }
         public ICommand CutClassCommand { get; set; }
+
+        public ICommand SaveCommand { get; set; }
+        public ICommand LoadCommand { get; set; }
 
         public ObservableCollection<Klass> Klasses { get; set; }
         public ObservableCollection<Relation> Relations { get; set; }
@@ -78,6 +86,48 @@ namespace DiagramTool.ViewModel
             PasteClassCommand = new RelayCommand(PasteKlass, CanPaste);
             CutClassCommand = new RelayCommand(CutKlass, HasSelection);
 
+            SaveCommand = new RelayCommand(Save);
+            LoadCommand = new RelayCommand(Load);
+
+
+        }
+
+        private void Save()
+        {
+            // Create an instance of the type and serialize it.
+            IFormatter formatter = new BinaryFormatter();
+
+            FileStream s = new FileStream(@"..\..\test.xml", FileMode.Create);
+            formatter.Serialize(s, Klasses);
+            s.Close();
+        }
+
+        private void Load()
+        {
+            // Load data from file
+            IFormatter formatter = new BinaryFormatter();
+            FileStream s = new FileStream(@"..\..\test.xml", FileMode.Open);
+            ObservableCollection<Klass> t = (ObservableCollection<Klass>)formatter.Deserialize(s);
+            
+            // Clear existing Klasses and Relations
+            Klasses.Clear();
+            Relations.Clear();
+
+            // Add loaded data
+            foreach (Klass k in t)
+            {
+                // Add Klass
+                Klasses.Add(k);
+
+                // Add Relations
+                foreach (Relation r in k.Relations)
+                {
+                    if (!Relations.Contains(r))
+                    {
+                        Relations.Add(r);
+                    }
+                }
+            }
         }
 
         private void AddRelation()
