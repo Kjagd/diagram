@@ -32,7 +32,7 @@
             </TextBox>
             <Grid HorizontalAlignment="Stretch">
                 <TextBlock HorizontalAlignment="Left" Text="Fields" FontWeight="DemiBold" Margin="5 0 0 0" />
-                <Image Source="images/add.png" Width="10" Height="10" HorizontalAlignment="Right" Margin="0 5 20 0">
+                <Image Source="images/add.png" Width="10" Height="10" HorizontalAlignment="Right" Margin="0 5 10 0">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="MouseDown">
                             <cmd:EventToCommand Command="{Binding DataContext.NewFieldCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" PassEventArgsToCommand="True"/>
@@ -46,8 +46,8 @@
                         <Grid HorizontalAlignment="Stretch" Margin="10 0 0 0">
                             <TextBlock Text="{Binding AccessModifier}"/>
 
-                            <TextBox Text="{Binding FieldName}" FontSize="12" Foreground="#424242" BorderThickness="0" MinWidth="20" MaxWidth="120" />
-                            <Image Source="images/delete.png" HorizontalAlignment="Right" Width="10" Height="10" Margin="0 5 20 0">
+                            <TextBox Text="{Binding FieldName}" Background="Transparent" FontSize="12" Foreground="#424242" BorderThickness="0" MinWidth="20" MaxWidth="100" />
+                            <Image Source="images/delete.png" HorizontalAlignment="Right" Width="10" Height="10" Margin="0 5 10 0">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="MouseDown">
                                         <cmd:EventToCommand Command="{Binding DataContext.DeleteFieldCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" PassEventArgsToCommand="True" />
@@ -60,7 +60,7 @@
             </ItemsControl>
             <Grid HorizontalAlignment="Stretch">
                 <TextBlock HorizontalAlignment="Left" Text="Methods" FontWeight="DemiBold" Margin="5 0 0 0" />
-                <Image Source="images/add.png" Width="10" Height="10" HorizontalAlignment="Right" Margin="10 5 20 0">
+                <Image Source="images/add.png" Width="10" Height="10" HorizontalAlignment="Right" Margin="10 5 10 0">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="MouseDown">
                             <cmd:EventToCommand Command="{Binding DataContext.NewMethodCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" PassEventArgsToCommand="True"/>
@@ -71,10 +71,10 @@
             <ItemsControl Name="MethodList" ItemsSource="{Binding Methods}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <Grid HorizontalAlignment="Stretch" Margin="10 0 0 0">
-                            <TextBlock Text="{Binding AccessModifier}"/>
-                            <TextBox Text="{Binding MethodName}" FontSize="12" Foreground="#424242" BorderThickness="0" MinWidth="20" MaxWidth="120" />
-                            <Image Source="images/delete.png" HorizontalAlignment="Right" Width="10" Height="10" Margin="0 5 20 0">
+                        <Grid HorizontalAlignment="Stretch" Margin="10 0 0 0" >
+                            <TextBlock Text="{Binding AccessModifier}" HorizontalAlignment="Left"/>
+                            <TextBox Text="{Binding MethodName}" Background="Transparent" FontSize="12" Foreground="#424242" BorderThickness="0" MinWidth="20" MaxWidth="100" />
+                            <Image Source="images/delete.png" HorizontalAlignment="Right" Width="10" Height="10" Margin="0 5 10 0">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="MouseDown">
                                         <cmd:EventToCommand Command="{Binding DataContext.DeleteFieldCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" PassEventArgsToCommand="True" />
