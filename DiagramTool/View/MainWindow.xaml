@@ -25,7 +25,7 @@
                     <RibbonApplicationMenuItem Header="Load" ImageSource="images/folder64.png" Command="{Binding LoadCommand}" />
                     <RibbonApplicationMenuItem Header="Save" ImageSource="images/save64.png" Command="{Binding SaveCommand}" />
                     <RibbonSeparator></RibbonSeparator>
-                    <RibbonApplicationMenuItem Header="Export PNG" ImageSource="images/save64.png" Command="{Binding ExportCommand}" />
+                    <RibbonApplicationMenuItem Header="Export PNG" ImageSource="images/export.png" CommandParameter="{Binding ElementName=Canvas}" Command="{Binding ExportCommand}" />
                 </RibbonApplicationMenu>
             </Ribbon.ApplicationMenu>
             <RibbonTab Header="Edit" KeyTip="E">
@@ -54,10 +54,10 @@
                 </RibbonGroup>
             </RibbonTab>
         </Ribbon>
-        <Grid>
+        <Canvas Name="Canvas">
             <ItemsControl ItemsSource="{Binding Relations}"/>
             <ItemsControl ItemsSource="{Binding Klasses}"/>
-        </Grid>
+        </Canvas>
         </StackPanel>
 </Window>
 
