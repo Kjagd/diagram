@@ -52,6 +52,7 @@ namespace DiagramTool.ViewModel
         public ICommand NewCommand { get; set; }
         public ICommand SaveCommand { get; set; }
         public ICommand LoadCommand { get; set; }
+        public ICommand ExportCommand { get; set; }
 
         public ObservableCollection<Klass> Klasses { get; set; }
         public ObservableCollection<Relation> Relations { get; set; }
@@ -95,6 +96,51 @@ namespace DiagramTool.ViewModel
             NewCommand = new RelayCommand(New);
             SaveCommand = new RelayCommand(Save);
             LoadCommand = new RelayCommand(Load);
+            ExportCommand = new RelayCommand<Canvas>(Export);
+
+
+        }
+
+        private void Export(Canvas canvas)
+        {
+            SaveFileDialog dialog = new SaveFileDialog();
+            dialog.Title = "Export Diagram";
+            dialog.Filter = "Portable Networks Graphics files (*.png)|*.png";
+            dialog.RestoreDirectory = true;
+            if ((bool) dialog.ShowDialog())
+            {
+                int width = (int)Math.Ceiling(canvas.ActualWidth);
+                int height = (int)Math.Ceiling(canvas.ActualHeight);
+                Console.WriteLine(canvas.MaxHeight);
+                Rect r = VisualTreeHelper.GetDescendantBounds(canvas);
+
+                var encoder = new PngBitmapEncoder();
+                RenderTargetBitmap rtbmp = new RenderTargetBitmap((int) r.Right, (int) r.Bottom, 96, 96, PixelFormats.Default);
+                Console.WriteLine(r.ToString());                
+                rtbmp.Render(ModifyToDrawingVisual(canvas));
+                BitmapFrame frame = BitmapFrame.Create(rtbmp);
+                encoder.Frames.Add(frame);
+
+                using (var stream = File.Create(dialog.FileName))
+                {
+                    encoder.Save(stream);
+                }
+
+            }
+        }
+
+        private DrawingVisual ModifyToDrawingVisual(Visual v)
+        {
+            /// new a drawing visual and get its context
+            DrawingVisual dv = new DrawingVisual();
+            DrawingContext dc = dv.RenderOpen();
+
+            /// generate a visual brush by input, and paint
+            VisualBrush vb = new VisualBrush(v);
+            dc.DrawRectangle(vb, null, VisualTreeHelper.GetDescendantBounds(v));
+            dc.Close();
+
+            return dv;
         }
 
 
