@@ -115,7 +115,7 @@ namespace DiagramTool.ViewModel
 
                 var encoder = new PngBitmapEncoder();
                 RenderTargetBitmap bitmap = new RenderTargetBitmap((int) r.Right, (int) r.Bottom, 96, 96, PixelFormats.Default);
-                bitmap.Render(ModifyToDrawingVisual(canvas));
+                bitmap.Render(ClipImageToBounds(canvas));
                 BitmapFrame frame = BitmapFrame.Create(bitmap);
                 encoder.Frames.Add(frame);
 
@@ -127,7 +127,7 @@ namespace DiagramTool.ViewModel
             }
         }
 
-        private DrawingVisual ModifyToDrawingVisual(Visual v)
+        private DrawingVisual ClipImageToBounds(Visual v)
         {
             DrawingVisual dv = new DrawingVisual();
             DrawingContext dc = dv.RenderOpen();
