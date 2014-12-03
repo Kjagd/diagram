@@ -11,6 +11,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Effects;
+using Microsoft.Win32;
 using ICommand = System.Windows.Input.ICommand;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Runtime.Serialization.Formatters.Soap;
@@ -94,37 +95,56 @@ namespace DiagramTool.ViewModel
 
         private void Save()
         {
-            // Create an instance of the type and serialize it.
-            IFormatter formatter = new BinaryFormatter();
+            SaveFileDialog dialog = new SaveFileDialog();
+            dialog.Title = "Save Diagram";
+            dialog.Filter = "Diagram files (*.dia)|*.dia";
+            dialog.RestoreDirectory = true;
 
-            FileStream s = new FileStream(@"..\..\test.xml", FileMode.Create);
-            formatter.Serialize(s, Klasses);
-            s.Close();
+            if((bool)dialog.ShowDialog())
+            {
+                // Create an instance of the type and serialize it.
+                IFormatter formatter = new BinaryFormatter();
+
+                FileStream s = new FileStream(dialog.FileName, FileMode.Create);
+                formatter.Serialize(s, Klasses);
+                s.Close();
+            }
+
+
+
         }
 
         private void Load()
         {
-            // Load data from file
-            IFormatter formatter = new BinaryFormatter();
-            FileStream s = new FileStream(@"..\..\test.xml", FileMode.Open);
-            ObservableCollection<Klass> t = (ObservableCollection<Klass>)formatter.Deserialize(s);
-            
-            // Clear existing Klasses and Relations
-            Klasses.Clear();
-            Relations.Clear();
+            OpenFileDialog dialog = new OpenFileDialog();
+            dialog.Title = "Open Diagram";
+            dialog.Filter = "Diagram files (*.dia)|*.dia";
+            dialog.RestoreDirectory = true;
 
-            // Add loaded data
-            foreach (Klass k in t)
+            if ((bool) dialog.ShowDialog())
             {
-                // Add Klass
-                Klasses.Add(k);
+                // Load data from file
+                IFormatter formatter = new BinaryFormatter();
+                FileStream s = new FileStream(dialog.FileName, FileMode.Open);
+                ObservableCollection<Klass> t = (ObservableCollection<Klass>) formatter.Deserialize(s);
 
-                // Add Relations
-                foreach (Relation r in k.Relations)
+                // Clear existing Klasses and Relations
+                Klasses.Clear();
+                Relations.Clear();
+
+                // Add loaded data
+                foreach (Klass k in t)
                 {
-                    if (!Relations.Contains(r))
+                    // Add Klass
+                    Klasses.Add(k);
+
+                    // Add Relations
+                    foreach (Relation r in k.Relations)
                     {
-                        Relations.Add(r);
+                        if (!Relations.Contains(r))
+                        {
+                            Relations.Add(r);
+                        }
                     }
                 }
             }
