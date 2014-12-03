@@ -19,7 +19,7 @@
         <KeyBinding Modifiers="Control" Key="S" Command="{Binding SaveCommand}" />
         <KeyBinding Modifiers="Control+Shift" Key="S" Command="{Binding SaveAsCommand}" />
         <KeyBinding Modifiers="Control" Key="O" Command="{Binding LoadCommand}" />
-        <KeyBinding Modifiers="Control" Key="E" Command="{Binding ExportCommand}" />
+        <KeyBinding Modifiers="Control" Key="E" CommandParameter="{Binding ElementName=Canvas}" Command="{Binding ExportCommand}" />
     </Window.InputBindings>
     <StackPanel>
         <Ribbon x:Name="RibbonWin"  SelectedIndex="0">
