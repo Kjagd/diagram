@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.Serialization;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using GalaSoft.MvvmLight;
 
@@ -14,42 +10,43 @@ namespace Diagram
     {
         public enum Type
         {
-            Inheritance, Reference, Composition
+            Inheritance,
+            Reference,
+            Composition
         };
-        public Klass From { get; set; }
-        public Klass To { get; set; }
+
+        private Point _center;
 
         private Point _from;
-        private Point _to;
 
         private Point _knack1;
         private Point _knack2;
-
-        public Type RelationType { get; set; }
-
-        private RelationMultiplicity Multiplicity { get; set; }
-
-
-        public void GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            // Use the AddValue method to specify serialized values.
-            info.AddValue("type", RelationType, typeof(Type));
-            info.AddValue("From", From, typeof(Klass));
-            info.AddValue("To", To, typeof(Klass));
-
-        }
+        private Point _to;
 
         // Empty constructor
-        public Relation(){}
+        public Relation()
+        {
+        }
 
         // The special constructor is used to deserialize values. 
         public Relation(SerializationInfo info, StreamingContext context)
         {
             // Reset the property value using the GetValue method.
-            RelationType = (Type)info.GetValue("type", typeof(Type));
-            From = (Klass)info.GetValue("From", typeof(Klass));
-            To = (Klass)info.GetValue("To", typeof(Klass));
+            RelationType = (Type) info.GetValue("type", typeof (Type));
+            From = (Klass) info.GetValue("From", typeof (Klass));
+            To = (Klass) info.GetValue("To", typeof (Klass));
         }
+
+        public Relation(Type type)
+        {
+            RelationType = type;
+        }
+
+        public Klass From { get; set; }
+        public Klass To { get; set; }
+        public Type RelationType { get; set; }
+
+        private RelationMultiplicity Multiplicity { get; set; }
 
         public Point FromPos
         {
@@ -62,13 +59,17 @@ namespace Diagram
                 float ty = To.Y;
 
                 _from.Y =
-                    IsSideways() ? fy + From.Height / 2 :
-                    ty < fy ? fy :
-                    fy + From.Height;
+                    IsSideways()
+                        ? fy + From.Height/2
+                        : ty < fy
+                            ? fy
+                            : fy + From.Height;
                 _from.X =
-                    !(IsSideways()) ? fx + From.Width / 2 :
-                    tx > fx ? fx + From.Width :
-                    fx;
+                    !(IsSideways())
+                        ? fx + From.Width/2
+                        : tx > fx
+                            ? fx + From.Width
+                            : fx;
                 return _from;
             }
         }
@@ -84,13 +85,17 @@ namespace Diagram
                 float ty = To.Y;
 
                 _to.Y =
-                    IsSideways() ? ty + To.Height / 2 :
-                    ty < fy ? ty + To.Height :
-                    ty;
+                    IsSideways()
+                        ? ty + To.Height/2
+                        : ty < fy
+                            ? ty + To.Height
+                            : ty;
                 _to.X =
-                    !(IsSideways()) ? tx + To.Width / 2 :
-                    tx > fx ? tx :
-                    tx + To.Width;
+                    !(IsSideways())
+                        ? tx + To.Width/2
+                        : tx > fx
+                            ? tx
+                            : tx + To.Width;
                 return _to;
             }
         }
@@ -132,25 +137,45 @@ namespace Diagram
             }
         }
 
+        public Point LineCenter
+        {
+            get
+            {
+                if (IsSideways())
+                {
+                    _center.X = _knack1.X - 5;
+                    _center.Y = _knack1.Y + (_knack2.Y - _knack1.Y)/2 - 5;
+                }
+                else
+                {
+                    _center.X = _knack1.X + (_knack2.X - _knack1.X) / 2 - 5;
+                    _center.Y = _knack1.Y - 5;
+                }
+                return _center;
+            }
+        }
+
+        public void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            // Use the AddValue method to specify serialized values.
+            info.AddValue("type", RelationType, typeof (Type));
+            info.AddValue("From", From, typeof (Klass));
+            info.AddValue("To", To, typeof (Klass));
+        }
+
         private Boolean IsSideways()
         {
-            var fy = From.Y;
-            var ty = To.Y;
+            float fy = From.Y;
+            float ty = To.Y;
 
             return ty + To.Height + 20 > fy && ty - 20 < fy + From.Height;
         }
 
 
-
-        public Relation(Type type)
-        {
-            RelationType = type;
-        }
-
         public void Set(Klass from, Klass to)
         {
-            this.From = from;
-            this.To = to;
+            From = from;
+            To = to;
 
             from.Relations.Add(this);
             to.Relations.Add(this);
@@ -162,6 +187,7 @@ namespace Diagram
             RaisePropertyChanged("ToPos");
             RaisePropertyChanged("Knack1");
             RaisePropertyChanged("Knack2");
+            RaisePropertyChanged("LineCenter");
         }
     }
 }

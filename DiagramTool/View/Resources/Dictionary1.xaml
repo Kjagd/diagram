@@ -6,57 +6,92 @@
                     xmlns:line="clr-namespace:LineCaps;assembly=LineCaps">
     <DataTemplate DataType="{x:Type model:Klass}">
         <Canvas>
-            <view:KlassUserControl/>
+            <view:KlassUserControl />
         </Canvas>
     </DataTemplate>
     <DataTemplate DataType="{x:Type model:Relation}">
         <Canvas>
-            
-            <line:CappedLine x:Name="Line" Stroke="Black" StrokeThickness="2" Fill="Black">
+
+            <line:CappedLine x:Name="RelationLine" Stroke="Black" StrokeThickness="2" Fill="Black">
                 <line:CappedLine.LinePath>
                     <PathGeometry>
                         <PathGeometry.Figures>
                             <PathFigure StartPoint="{Binding FromPos}">
                                 <PathFigure.Segments>
-                                    <LineSegment Point="{Binding Knack1}"/>
-                                    <LineSegment Point="{Binding Knack2}"/>
-                                    <LineSegment Point="{Binding ToPos}"/>
+                                    <LineSegment Point="{Binding Knack1}" />
+                                    <LineSegment Point="{Binding Knack2}" />
+                                    <LineSegment Point="{Binding ToPos}" />
                                 </PathFigure.Segments>
                             </PathFigure>
                         </PathGeometry.Figures>
                     </PathGeometry>
                 </line:CappedLine.LinePath>
+                <line:CappedLine.Style>
+                    <Style x:Name="MyStyle" TargetType="{x:Type line:CappedLine}">
+                        <Setter Property="Stroke" Value="Black"></Setter>
+                        <Style.Triggers>
+                            <Trigger Property="line:CappedLine.IsMouseOver" Value="True">
+                                <Setter Property="Stroke" Value="BlueViolet"/>
+                                <Setter Property="Fill" Value="Blue"></Setter>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </line:CappedLine.Style>
             </line:CappedLine>
-               
+            <Ellipse Fill="White" Stroke="Black" StrokeThickness="2" Visibility="Visible" Width="10" Height="10"
+                     Canvas.Left="{Binding LineCenter.X}" Canvas.Top="{Binding LineCenter.Y}">
+                <Ellipse.Style>
+                    <Style TargetType="{x:Type Ellipse}">
+                        <Style.Triggers>
+                            <!--<EventTrigger RoutedEvent="MouseEnter">
+                                <EventTrigger.Actions>
+                                <BeginStoryboard >
+                                    <Storyboard TargetProperty="Stroke">
+                                        <ColorAnimation To="BlueViolet" Duration="0:0:500"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                                </EventTrigger.Actions>
+                            </EventTrigger>-->
+                            <DataTrigger Binding="{Binding ElementName=RelationLine, Path=IsMouseOver}" Value="True">
+                                <Setter Property="Visibility" Value="Hidden" />
+                            </DataTrigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Visibility" Value="Hidden" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Ellipse.Style>
+            </Ellipse>
+
         </Canvas>
-        
+
         <DataTemplate.Triggers>
             <DataTrigger Binding="{Binding Path=RelationType}" Value="{x:Static model:Relation+Type.Inheritance}">
-                <Setter TargetName="Line" Property="Fill" Value="White"/>
-                <Setter TargetName="Line" Property="EndCap">
+                <Setter TargetName="RelationLine" Property="Fill" Value="White" />
+                <Setter TargetName="RelationLine" Property="EndCap">
                     <Setter.Value>
-                        <PathGeometry Figures="M 10,10 L 0,0 10,-10 Z"/>
+                        <PathGeometry Figures="M 10,10 L 0,0 10,-10 Z" />
                     </Setter.Value>
                 </Setter>
             </DataTrigger>
             <DataTrigger Binding="{Binding Path=RelationType}" Value="{x:Static model:Relation+Type.Reference}">
-                <Setter TargetName="Line" Property="Fill" Value="Black"/>
-                <Setter TargetName="Line" Property="EndCap">
+                <Setter TargetName="RelationLine" Property="Fill" Value="Black" />
+                <Setter TargetName="RelationLine" Property="EndCap">
                     <Setter.Value>
-                        <PathGeometry Figures="M 5,7 L 0,0 5,-7 Z"/>
+                        <PathGeometry Figures="M 5,7 L 0,0 5,-7 Z" />
                     </Setter.Value>
                 </Setter>
             </DataTrigger>
             <DataTrigger Binding="{Binding Path=RelationType}" Value="{x:Static model:Relation+Type.Composition}">
-                <Setter TargetName="Line" Property="Fill" Value="White"/>
-                <Setter TargetName="Line" Property="BeginCap">
+                <Setter TargetName="RelationLine" Property="Fill" Value="White" />
+                <Setter TargetName="RelationLine" Property="BeginCap">
                     <Setter.Value>
-                        <PathGeometry Figures="M 0,0 L 10,8 20,0 10,-8 Z"/>
+                        <PathGeometry Figures="M 0,0 L 10,8 20,0 10,-8 Z" />
                     </Setter.Value>
                 </Setter>
             </DataTrigger>
         </DataTemplate.Triggers>
-        
-        
+
+
     </DataTemplate>
 </ResourceDictionary>
