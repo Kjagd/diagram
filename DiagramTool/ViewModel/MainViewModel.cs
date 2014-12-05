@@ -420,12 +420,12 @@ namespace DiagramTool.ViewModel
                 Console.WriteLine("Relation");
                 if (_isDeletingRelation)
                 {
-                    Relations.Remove(frameworkElement.DataContext as Relation);
                     _isDeletingRelation = false;
                     foreach (var relation in Relations)
                     {
                         relation.ContextVisibility = Visibility.Hidden;
                     }
+                    _undoRedoController.AddAndExecute(new DeleteRelationCommand(Relations, frameworkElement.DataContext as Relation));
                 }
             }
         }
