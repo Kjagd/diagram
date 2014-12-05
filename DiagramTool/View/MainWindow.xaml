@@ -1,8 +1,12 @@
 ﻿<Window x:Class="DiagramTool.View.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+        xmlns:command="http://www.galasoft.ch/mvvmlight"
         Title="Diagram tool" Height="600" Width="800"
-        DataContext="{Binding Source={StaticResource vm}}">
+        DataContext="{Binding Source={StaticResource vm}}"
+        Focusable="true"
+        Name="win1">
     <Window.Resources>
         <ResourceDictionary Source="Resources/Dictionary1.xaml" />
     </Window.Resources>
@@ -60,11 +64,17 @@
                 </RibbonGroup>
             </RibbonTab>
         </Ribbon>
-        <Canvas Name="Canvas">
+        <Canvas Name="Canvas" Height="100">
             <ItemsControl ItemsSource="{Binding Relations}"/>
             <ItemsControl ItemsSource="{Binding Klasses}"/>
+
         </Canvas>
-        </StackPanel>
+        <i:Interaction.Triggers>
+            <i:EventTrigger EventName="MouseDown">
+                <command:EventToCommand Command="{Binding DataContext.MouseDownCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" PassEventArgsToCommand="True"/>
+            </i:EventTrigger>
+        </i:Interaction.Triggers>
+    </StackPanel>
 </Window>
 
     

@@ -364,9 +364,13 @@ namespace DiagramTool.ViewModel
 
         public void MouseDownClass(MouseButtonEventArgs e)
         {
-            Keyboard.ClearFocus();
+
             //Capture for drag if it's a klass
             var frameworkElement = (FrameworkElement) e.MouseDevice.Target;
+            // Focus clicked object
+            frameworkElement.Focus();
+
+
             //if (!(frameworkElement is StackPanel))
             //{
                 //frameworkElement = FindParentOfType<StackPanel>(frameworkElement);
