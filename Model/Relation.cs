@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 using System.Windows;
+using System.Windows.Input;
 using GalaSoft.MvvmLight;
 
 namespace Diagram
@@ -24,6 +25,8 @@ namespace Diagram
         private Point _to;
         private Point _fromLabelPoint;
         private Point _toLabelPoint;
+
+        private Visibility _contextVisibility = Visibility.Hidden;
 
         public Type RelationType { get; set; }
 
@@ -72,6 +75,16 @@ namespace Diagram
             }
         }
 
+
+        public Visibility ContextVisibility
+        {
+            get { return _contextVisibility; }
+            set
+            {
+                _contextVisibility = value;
+                RaisePropertyChanged();
+            }
+        }
 
         public Point FromPos
         {
@@ -160,13 +173,13 @@ namespace Diagram
             {
                 if (IsSideways())
                 {
-                    _center.X = _knack1.X - 5;
-                    _center.Y = _knack1.Y + (_knack2.Y - _knack1.Y)/2 - 5;
+                    _center.X = _knack1.X - 10;
+                    _center.Y = _knack1.Y + (_knack2.Y - _knack1.Y)/2 - 10;
                 }
                 else
                 {
-                    _center.X = _knack1.X + (_knack2.X - _knack1.X) / 2 - 5;
-                    _center.Y = _knack1.Y - 5;
+                    _center.X = _knack1.X + (_knack2.X - _knack1.X) / 2 - 10;
+                    _center.Y = _knack1.Y - 10;
                 }
                 return _center;
             }
@@ -193,7 +206,7 @@ namespace Diagram
         {
             From = from;
             To = to;
-
+            Console.WriteLine("Test");
             from.Relations.Add(this);
             to.Relations.Add(this);
         }

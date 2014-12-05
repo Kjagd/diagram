@@ -60,7 +60,7 @@
                         <RibbonButton LargeImageSource="images/diamond.png" Label="Composition" KeyTip="C" Command="{Binding AddCompositionRelationCommand}"></RibbonButton>
                     </RibbonControlGroup>
                     <RibbonButton LargeImageSource="images/deleterelation.png" Label="Delete relation" KeyTip="T" ToolTipTitle="Delete a relation"
-                                  Command="{Binding DeleteClassCommand}" />
+                                  Command="{Binding DeleteRelationCommand}" />
                 </RibbonGroup>
             </RibbonTab>
         </Ribbon>

@@ -74,6 +74,7 @@
     </ApplicationDefinition>
     <Compile Include="Command\AddRelationCommand.cs" />
     <Compile Include="Command\DeleteKlassCommand.cs" />
+    <Compile Include="Command\DeleteRelationCommand.cs" />
     <Compile Include="Command\NewDiagramCommand.cs" />
     <Compile Include="Command\NewKlassCommand.cs" />
     <Compile Include="Command\UndoRedoController.cs" />
@@ -82,16 +83,12 @@
     <Compile Include="Command\IUndoRedoCommand.cs" />
     <Compile Include="Command\MoveCommand.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
-    <Compile Include="View\InheritanceUserControl.xaml.cs">
-      <DependentUpon>InheritanceUserControl.xaml</DependentUpon>
-    </Compile>
     <Compile Include="View\KlassUserControl.xaml.cs">
       <DependentUpon>KlassUserControl.xaml</DependentUpon>
     </Compile>
-    <Page Include="View\InheritanceUserControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
+    <Compile Include="View\RelationUserControl.xaml.cs">
+      <DependentUpon>RelationUserControl.xaml</DependentUpon>
+    </Compile>
     <Page Include="View\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -105,6 +102,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="View\KlassUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\RelationUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

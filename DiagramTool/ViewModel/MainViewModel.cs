@@ -32,6 +32,7 @@ namespace DiagramTool.ViewModel
         private Relation.Type _relationType;
 
         private bool _isAddingRelation;
+        private bool _isDeletingRelation;
 
         private string _filepath;
 
@@ -49,6 +50,7 @@ namespace DiagramTool.ViewModel
         public ICommand AddInheritanceRelationCommand { get; set; }
         public ICommand AddCompositionRelationCommand { get; set; }
         public ICommand AddReferenceRelationCommand { get; set; }
+        public ICommand DeleteRelationCommand { get; set; }
 
         public ICommand CopyClassCommand { get; set; }
         public ICommand PasteClassCommand { get; set; }
@@ -96,6 +98,8 @@ namespace DiagramTool.ViewModel
             AddInheritanceRelationCommand = new RelayCommand(AddInheritance);
             AddReferenceRelationCommand = new RelayCommand(AddReference);
 
+            DeleteRelationCommand = new RelayCommand(DeleteRelation);
+
             CopyClassCommand = new RelayCommand(CopyKlass, HasSelection);
             PasteClassCommand = new RelayCommand(PasteKlass, CanPaste);
             CutClassCommand = new RelayCommand(CutKlass, HasSelection);
@@ -107,6 +111,20 @@ namespace DiagramTool.ViewModel
             ExportCommand = new RelayCommand<Canvas>(Export);
 
 
+        }
+
+        private void DeleteRelation()
+        {
+            _isDeletingRelation = true;
+            if (_selectedKlass != null)
+            {
+                _selectedKlass.IsSelected = false;
+                _selectedKlass = null;
+            }
+            foreach (var relation in Relations)
+            {
+                relation.ContextVisibility = Visibility.Visible;
+            }
         }
 
         private void Export(Canvas canvas)
@@ -174,14 +192,14 @@ namespace DiagramTool.ViewModel
 
         private void Serialize()
         {
-            // Create an instance of the type and serialize it.
-            IFormatter formatter = new BinaryFormatter();
+                // Create an instance of the type and serialize it.
+                IFormatter formatter = new BinaryFormatter();
 
-            FileStream s = new FileStream(_filepath, FileMode.Create);
-            formatter.Serialize(s, Klasses);
-            s.Close();
-        }
-
+                FileStream s = new FileStream(_filepath, FileMode.Create);
+                formatter.Serialize(s, Klasses);
+                s.Close();
+            }
+            
         private void SaveAs()
         {
             SaveFileDialog dialog = new SaveFileDialog();
@@ -397,7 +415,21 @@ namespace DiagramTool.ViewModel
                 _moveKlassStartPoint.Y = _selectedKlass.Y;
                 e.MouseDevice.Target.CaptureMouse();
             }
+            else if (frameworkElement.DataContext is Relation)
+            {
+                Console.WriteLine("Relation");
+                if (_isDeletingRelation)
+                {
+                    _isDeletingRelation = false;
+                    foreach (var relation in Relations)
+                    {
+                        relation.ContextVisibility = Visibility.Hidden;
+                    }
+                    _undoRedoController.AddAndExecute(new DeleteRelationCommand(Relations, frameworkElement.DataContext as Relation));
+                }
+            }
         }
+
         private static T FindParentOfType<T>(DependencyObject o) where T : class
         {
             DependencyObject parent = VisualTreeHelper.GetParent(o);
@@ -405,5 +437,4 @@ namespace DiagramTool.ViewModel
             return parent is T ? parent as T : FindParentOfType<T>(parent);
         }
     }
-
 }
