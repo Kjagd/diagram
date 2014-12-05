@@ -47,7 +47,7 @@
                         </DataTrigger>
                         <DataTrigger Binding="{Binding Path=RelationType}"
                                      Value="{x:Static model:Relation+Type.Composition}">
-                            <Setter Property="Fill" Value="White" />
+                            <Setter Property="Fill" Value="Black" />
                             <Setter Property="BeginCap">
                                 <Setter.Value>
                                     <PathGeometry Figures="M 0,0 L 10,8 20,0 10,-8 Z" />
