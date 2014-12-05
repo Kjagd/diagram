@@ -7,6 +7,6 @@
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
         <Line X1="{Binding From.CenterX}" X2="{Binding To.CenterX}" Y1="{Binding From.CenterY}" Y2="{Binding To.CenterY}" Stroke="Black" StrokeThickness="2" />
-            
+        <TextBox Text="Test"></TextBox>
     </Grid>
 </UserControl>

@@ -38,6 +38,8 @@
                     </Style>
                 </line:CappedLine.Style>
             </line:CappedLine>
+            <TextBox Text="" MinWidth="20" Background="AliceBlue" Canvas.Left="{Binding FromLabelPos.X}" Canvas.Top="{Binding FromLabelPos.Y}" BorderBrush="Transparent"></TextBox>
+            <TextBox Text="" MinWidth="20" Background="AliceBlue" Canvas.Left="{Binding ToLabelPos.X}" Canvas.Top="{Binding ToLabelPos.Y}" BorderBrush="Transparent"></TextBox>
             <Ellipse Fill="White" Stroke="Black" StrokeThickness="2" Visibility="Visible" Width="10" Height="10"
                      Canvas.Left="{Binding LineCenter.X}" Canvas.Top="{Binding LineCenter.Y}">
                 <Ellipse.Style>
