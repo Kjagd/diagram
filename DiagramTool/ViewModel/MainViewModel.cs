@@ -309,11 +309,12 @@ namespace DiagramTool.ViewModel
 
         private void PasteKlass()
         {
+            
             _undoRedoController.AddAndExecute(new NewKlassCommand(Klasses, _clipboard));
             _selectedKlass.IsSelected = false;
+            _selectedKlass = _clipboard;
             _clipboard.IsSelected = true;
-            // Clear clipboard
-            _clipboard = null;
+            CopyKlass();
         }
 
         private void CutKlass()

@@ -58,8 +58,8 @@
                 </Style>
             </line:CappedLine.Style>
         </line:CappedLine>
-        <TextBox Text="" MinWidth="20" Background="AliceBlue" Canvas.Left="{Binding FromLabelPos.X}" Canvas.Top="{Binding FromLabelPos.Y}" BorderBrush="Transparent"/>
-        <TextBox Text="" MinWidth="20" Background="AliceBlue" Canvas.Left="{Binding ToLabelPos.X}" Canvas.Top="{Binding ToLabelPos.Y}" BorderBrush="Transparent"/>
+        <TextBox Text="{Binding FromText}" MinWidth="20" Background="AliceBlue" Canvas.Left="{Binding FromLabelPos.X}" Canvas.Top="{Binding FromLabelPos.Y}" BorderBrush="Transparent"/>
+        <TextBox Text="{Binding ToText}" MinWidth="20" Background="AliceBlue" Canvas.Left="{Binding ToLabelPos.X}" Canvas.Top="{Binding ToLabelPos.Y}" BorderBrush="Transparent"/>
         <Ellipse Fill="White" Stroke="Black" StrokeThickness="2" Visibility="{Binding ContextVisibility}" Width="20"
                  Height="20"
                  Canvas.Left="{Binding LineCenter.X}" Canvas.Top="{Binding LineCenter.Y}"/>

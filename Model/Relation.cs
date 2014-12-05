@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Dynamic;
 using System.Runtime.Serialization;
 using System.Windows;
 using System.Windows.Input;
@@ -26,9 +27,12 @@ namespace Diagram
         private Point _fromLabelPoint;
         private Point _toLabelPoint;
 
+
+
         private Visibility _contextVisibility = Visibility.Hidden;
 
         public Type RelationType { get; set; }
+
 
 
         // The special constructor is used to deserialize values. 
@@ -38,12 +42,17 @@ namespace Diagram
             RelationType = (Type) info.GetValue("type", typeof (Type));
             From = (Klass) info.GetValue("From", typeof (Klass));
             To = (Klass) info.GetValue("To", typeof (Klass));
+            FromText = (string)info.GetValue("FromText", typeof(string));
+            ToText = (string)info.GetValue("ToText", typeof(string));
         }
 
         public Relation(Type type)
         {
             RelationType = type;
         }
+
+        public string ToText { get; set; }
+        public string FromText { get; set; }
 
         public Klass From { get; set; }
         public Klass To { get; set; }
@@ -191,6 +200,8 @@ namespace Diagram
             info.AddValue("type", RelationType, typeof (Type));
             info.AddValue("From", From, typeof (Klass));
             info.AddValue("To", To, typeof (Klass));
+            info.AddValue("ToText", ToText, typeof(string));
+            info.AddValue("FromText", FromText, typeof(string));
         }
 
         private Boolean IsSideways()
