@@ -362,13 +362,24 @@ namespace DiagramTool.ViewModel
             }
         }
 
+        private void clearSelection()
+        {
+            if (_selectedKlass != null)
+            {
+                _selectedKlass.IsSelected = false;
+                _selectedKlass = null;
+            }
+        }
+
         public void MouseDownClass(MouseButtonEventArgs e)
         {
 
             //Capture for drag if it's a klass
             var frameworkElement = (FrameworkElement) e.MouseDevice.Target;
+
             // Focus clicked object
             frameworkElement.Focus();
+            clearSelection();
 
 
             //if (!(frameworkElement is StackPanel))

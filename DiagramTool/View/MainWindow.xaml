@@ -25,7 +25,7 @@
         <KeyBinding Modifiers="Control" Key="O" Command="{Binding LoadCommand}" />
         <KeyBinding Modifiers="Control" Key="E" CommandParameter="{Binding ElementName=Canvas}" Command="{Binding ExportCommand}" />
     </Window.InputBindings>
-    <StackPanel>
+    <StackPanel Focusable="True" Background="Transparent">
         <Ribbon x:Name="RibbonWin"  SelectedIndex="0">
             <Ribbon.ApplicationMenu>
                 <RibbonApplicationMenu KeyTip="F" Label="File" LargeImageSource="images/folder32.png">
@@ -64,17 +64,17 @@
                 </RibbonGroup>
             </RibbonTab>
         </Ribbon>
-        <Canvas Name="Canvas" Height="100">
+        <Canvas>
             <ItemsControl ItemsSource="{Binding Relations}"/>
             <ItemsControl ItemsSource="{Binding Klasses}"/>
-
         </Canvas>
-        <i:Interaction.Triggers>
-            <i:EventTrigger EventName="MouseDown">
-                <command:EventToCommand Command="{Binding DataContext.MouseDownCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" PassEventArgsToCommand="True"/>
-            </i:EventTrigger>
-        </i:Interaction.Triggers>
+
     </StackPanel>
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="MouseDown">
+            <command:EventToCommand Command="{Binding DataContext.MouseDownCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" PassEventArgsToCommand="True"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
 </Window>
 
     
