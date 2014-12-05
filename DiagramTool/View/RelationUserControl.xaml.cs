@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace DiagramTool.View
 {
     /// <summary>
-    /// Interaction logic for InheritanceUserControl.xaml
+    /// Interaction logic for RelationUserControl.xaml
     /// </summary>
-    public partial class InheritanceUserControl : UserControl
+    public partial class RelationUserControl : UserControl
     {
-        public InheritanceUserControl()
+        public RelationUserControl()
         {
             InitializeComponent();
         }
