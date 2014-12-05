@@ -87,7 +87,7 @@ namespace DiagramTool.ViewModel
             AddInheritanceRelationCommand = new RelayCommand(AddInheritance);
             AddReferenceRelationCommand = new RelayCommand(AddReference);
 
-            DeleteRelationCommand = new RelayCommand(DeleteRelation);
+            DeleteRelationCommand = new RelayCommand(DeleteRelation, hasRelation);
 
             CopyClassCommand = new RelayCommand(CopyKlass, HasSelection);
             PasteClassCommand = new RelayCommand(PasteKlass, CanPaste);
@@ -98,6 +98,11 @@ namespace DiagramTool.ViewModel
             SaveAsCommand = new RelayCommand(SaveAs);
             LoadCommand = new RelayCommand(Load);
             ExportCommand = new RelayCommand<Canvas>(Export);
+        }
+
+        private bool hasRelation()
+        {
+            return Relations.Count > 0;
         }
 
         private void DeleteRelation()
@@ -114,7 +119,7 @@ namespace DiagramTool.ViewModel
             }
         }
 
-        private void Export(Canvas canvas)
+        private void Export(Visual visual)
         {
             var dialog = new SaveFileDialog
             {
@@ -124,11 +129,11 @@ namespace DiagramTool.ViewModel
             };
             if ((bool) dialog.ShowDialog())
             {
-                var r = VisualTreeHelper.GetDescendantBounds(canvas);
+                var r = VisualTreeHelper.GetDescendantBounds(visual);
 
                 var encoder = new PngBitmapEncoder();
                 var bitmap = new RenderTargetBitmap((int) r.Right, (int) r.Bottom, 96, 96, PixelFormats.Default);
-                bitmap.Render(ClipImageToBounds(canvas));
+                bitmap.Render(ClipImageToBounds(visual));
                 var frame = BitmapFrame.Create(bitmap);
                 encoder.Frames.Add(frame);
 
