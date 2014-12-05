@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Threading;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 using Diagram;
@@ -155,20 +156,30 @@ namespace DiagramTool.ViewModel
 
         private void Save()
         {
+            
+
+
             if (_filepath == null)
             {
                 SaveAs();
             }
             else
             {
-                // Create an instance of the type and serialize it.
-                IFormatter formatter = new BinaryFormatter();
+                Thread t = new Thread(new ThreadStart(Serialize));
+                t.Start();
 
-                FileStream s = new FileStream(_filepath, FileMode.Create);
-                formatter.Serialize(s, Klasses);
-                s.Close();
             }
             
+        }
+
+        private void Serialize()
+        {
+            // Create an instance of the type and serialize it.
+            IFormatter formatter = new BinaryFormatter();
+
+            FileStream s = new FileStream(_filepath, FileMode.Create);
+            formatter.Serialize(s, Klasses);
+            s.Close();
         }
 
         private void SaveAs()
@@ -353,9 +364,13 @@ namespace DiagramTool.ViewModel
 
         public void MouseDownClass(MouseButtonEventArgs e)
         {
-            Keyboard.ClearFocus();
+
             //Capture for drag if it's a klass
             var frameworkElement = (FrameworkElement) e.MouseDevice.Target;
+            // Focus clicked object
+            frameworkElement.Focus();
+
+
             //if (!(frameworkElement is StackPanel))
             //{
                 //frameworkElement = FindParentOfType<StackPanel>(frameworkElement);
