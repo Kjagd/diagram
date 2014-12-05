@@ -222,5 +222,15 @@ namespace Diagram
             RaisePropertyChanged("FromLabelPos");
             RaisePropertyChanged("ToLabelPos");
         }
+
+        // Throws NullPointer if called before Set
+        public void UnSet()
+        {
+            From.Relations.Remove(this);
+            To.Relations.Remove(this);
+
+            From = null;
+            To = null;
+        }
     }
 }
