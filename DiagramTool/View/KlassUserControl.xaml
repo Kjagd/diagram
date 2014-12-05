@@ -26,7 +26,7 @@
                 </DrawingBrush.Drawing>
             </DrawingBrush>
         </Border.BorderBrush>
-        <StackPanel Background="AliceBlue">
+        <StackPanel Background="AliceBlue" Focusable="True">
             <TextBox Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch" FontSize="14" FontWeight="Bold" Background="#424242" Foreground="#fff">
                 <i:Interaction.Triggers><i:EventTrigger EventName="TextChanged"><cmd:EventToCommand PassEventArgsToCommand="True" Command="{Binding DataContext.TitleTextChanged, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" ></cmd:EventToCommand></i:EventTrigger></i:Interaction.Triggers>
             </TextBox>

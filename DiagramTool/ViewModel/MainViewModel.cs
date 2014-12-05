@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Threading;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 using Diagram;
@@ -173,12 +174,24 @@ namespace DiagramTool.ViewModel
 
         private void Save()
         {
+            
+
+
             if (_filepath == null)
             {
                 SaveAs();
             }
             else
             {
+                Thread t = new Thread(new ThreadStart(Serialize));
+                t.Start();
+
+            }
+            
+        }
+
+        private void Serialize()
+        {
                 // Create an instance of the type and serialize it.
                 IFormatter formatter = new BinaryFormatter();
 
@@ -187,8 +200,6 @@ namespace DiagramTool.ViewModel
                 s.Close();
             }
             
-        }
-
         private void SaveAs()
         {
             SaveFileDialog dialog = new SaveFileDialog();
@@ -355,7 +366,7 @@ namespace DiagramTool.ViewModel
                 }
                 else
                 {
-                    _undoRedoController.AddAndExecute(new AddRelationCommand(Relations, _selectedKlass, klass, _relationType));
+                    _undoRedoController.AddAndExecute(new AddRelationCommand(Relations, _relation1Klass, klass, _relationType));
                     _relation1Klass = null;
                     _isAddingRelation = false;
                 }
@@ -369,12 +380,26 @@ namespace DiagramTool.ViewModel
             }
         }
 
+        private void clearSelection()
+        {
+            if (_selectedKlass != null)
+            {
+                _selectedKlass.IsSelected = false;
+                _selectedKlass = null;
+            }
+        }
+
         public void MouseDownClass(MouseButtonEventArgs e)
         {
-            Keyboard.ClearFocus();
+
             //Capture for drag if it's a klass
             var frameworkElement = (FrameworkElement) e.MouseDevice.Target;
-            
+
+            // Focus clicked object
+            frameworkElement.Focus();
+            clearSelection();
+
+
             if (frameworkElement.DataContext is Klass)
             {
                 frameworkElement.Effect = new DropShadowEffect {BlurRadius = 20, Opacity = 0.5};
