@@ -348,7 +348,7 @@ namespace DiagramTool.ViewModel
                 }
                 else
                 {
-                    _undoRedoController.AddAndExecute(new AddRelationCommand(Relations, _selectedKlass, klass, _relationType));
+                    _undoRedoController.AddAndExecute(new AddRelationCommand(Relations, _relation1Klass, klass, _relationType));
                     _relation1Klass = null;
                     _isAddingRelation = false;
                 }
@@ -382,10 +382,6 @@ namespace DiagramTool.ViewModel
             clearSelection();
 
 
-            //if (!(frameworkElement is StackPanel))
-            //{
-                //frameworkElement = FindParentOfType<StackPanel>(frameworkElement);
-            //}
             if (frameworkElement.DataContext is Klass)
             {
                 frameworkElement.Effect = new DropShadowEffect {BlurRadius = 20, Opacity = 0.5};
