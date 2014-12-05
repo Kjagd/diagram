@@ -87,7 +87,7 @@ namespace DiagramTool.ViewModel
             AddInheritanceRelationCommand = new RelayCommand(AddInheritance);
             AddReferenceRelationCommand = new RelayCommand(AddReference);
 
-            DeleteRelationCommand = new RelayCommand(DeleteRelation, hasRelation);
+            DeleteRelationCommand = new RelayCommand(DeleteRelation, HasRelation);
 
             CopyClassCommand = new RelayCommand(CopyKlass, HasSelection);
             PasteClassCommand = new RelayCommand(PasteKlass, CanPaste);
@@ -100,7 +100,7 @@ namespace DiagramTool.ViewModel
             ExportCommand = new RelayCommand<Canvas>(Export);
         }
 
-        private bool hasRelation()
+        private bool HasRelation()
         {
             return Relations.Count > 0;
         }
