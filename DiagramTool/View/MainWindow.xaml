@@ -31,7 +31,7 @@
                 <RibbonApplicationMenu KeyTip="F" Label="File" LargeImageSource="images/folder32.png">
                     <RibbonApplicationMenuItem Header="New Diagram" ImageSource="images/newdiagram.png" Command="{Binding NewCommand}" />
                     <RibbonSeparator></RibbonSeparator>
-                    <RibbonApplicationMenuItem Header="Load" ImageSource="images/folder64.png" Command="{Binding LoadCommand}" />
+                    <RibbonApplicationMenuItem Header="Open" ImageSource="images/folder64.png" Command="{Binding LoadCommand}" />
                     <RibbonApplicationMenuItem Header="Save" ImageSource="images/save64.png" Command="{Binding SaveCommand}" />
                     <RibbonApplicationMenuItem Header="Save As" ImageSource="images/save64.png" Command="{Binding SaveAsCommand}" />
                     <RibbonSeparator></RibbonSeparator>
@@ -64,7 +64,7 @@
                 </RibbonGroup>
             </RibbonTab>
         </Ribbon>
-        <Canvas>
+        <Canvas Name="Canvas">
             <ItemsControl ItemsSource="{Binding Relations}"/>
             <ItemsControl ItemsSource="{Binding Klasses}"/>
         </Canvas>
