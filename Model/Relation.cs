@@ -30,7 +30,6 @@ namespace Diagram
 
         public Type RelationType { get; set; }
 
-        private RelationMultiplicity Multiplicity { get; set; }
 
         // The special constructor is used to deserialize values. 
         public Relation(SerializationInfo info, StreamingContext context)

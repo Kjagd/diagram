@@ -70,17 +70,6 @@ namespace DiagramTool.ViewModel
         public MainViewModel()
         {
             Klasses = new ObservableCollection<Klass>();
-            var k = new Klass("Persons") {X = 200, Y = 200};
-
-            Klasses.Add(k);
-
-            k.AddField(new Field("Jonas", "+"));
-            k.AddField(new Field("Peter", "+"));
-            k.AddField(new Field("Kristian", "+"));
-
-            var c = new Klass("Stuff") { X = 400, Y = 350 };
-            Klasses.Add(c);
-
             Relations = new ObservableCollection<Relation>();
 
             MouseDownCommand = new RelayCommand<MouseButtonEventArgs>(MouseDownClass);
@@ -109,8 +98,6 @@ namespace DiagramTool.ViewModel
             SaveAsCommand = new RelayCommand(SaveAs);
             LoadCommand = new RelayCommand(Load);
             ExportCommand = new RelayCommand<Canvas>(Export);
-
-
         }
 
         private void DeleteRelation()
