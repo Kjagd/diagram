@@ -22,6 +22,8 @@ namespace Diagram
         private Point _knack1;
         private Point _knack2;
         private Point _to;
+        private Point _fromLabelPoint;
+        private Point _toLabelPoint;
 
         public Type RelationType { get; set; }
 
@@ -43,6 +45,34 @@ namespace Diagram
 
         public Klass From { get; set; }
         public Klass To { get; set; }
+
+        public Point FromLabelPos
+        {
+            get
+            {
+                _fromLabelPoint.X = IsSideways()
+                    ? (To.X > From.X ? FromPos.X + 5: FromPos.X - 30)
+                    : FromPos.X + 5;
+                _fromLabelPoint.Y = !IsSideways()
+                    ? (To.Y > From.Y ? FromPos.Y + 10 : FromPos.Y - 20)
+                    : FromPos.Y + 5;
+                    return _fromLabelPoint;
+            }
+        }
+        public Point ToLabelPos
+        {
+            get
+            {
+                _toLabelPoint.X = IsSideways()
+                    ? (To.X < From.X ? ToPos.X + 15: ToPos.X - 30)
+                    : ToPos.X + 5;
+                _toLabelPoint.Y = !IsSideways()
+                    ? (To.Y < From.Y ? ToPos.Y + 10 : ToPos.Y - 30)
+                    : ToPos.Y + 5;
+                    return _toLabelPoint;
+            }
+        }
+
 
         public Point FromPos
         {
@@ -176,6 +206,8 @@ namespace Diagram
             RaisePropertyChanged("Knack1");
             RaisePropertyChanged("Knack2");
             RaisePropertyChanged("LineCenter");
+            RaisePropertyChanged("FromLabelPos");
+            RaisePropertyChanged("ToLabelPos");
         }
     }
 }
