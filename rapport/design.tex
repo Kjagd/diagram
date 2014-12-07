@@ -1,0 +1,49 @@
+\section{Design and implementation}
+In this section the considerations for the design will be discussed. This
+includes the overall design for the application as well as the problems that the
+individual features posed. The section also details how the proposed solutions
+were carried out and implemented in the application.
+
+\subsection{Overall design}
+%Jonas
+Mvvm, wpf, data bindings
+Model assembly
+\subsection{User interface}
+Even though that user interface design was not a main scope of the project, some
+thought is required as it greatly impacts the user experience. 
+
+The overall decision to make it wether to whether to use an existing design
+framework, or to create a whole new layout with toolbars, menues etc. Since it
+is not in the scope of the project and the benefit would be minimal it was decided
+to go with an already tested and know interface. 
+
+The traditional Windows application is defined by its layered menus and
+toobars,
+which execls at more complicated programs where submenus are essential.
+
+The other viable alternative is the \textit{Ribbon}\footnote{http://msdn.microsoft.com/en-us/library/windows/desktop/dd316910(v=vs.85).aspx} framework which is know for
+its big toolbar with the most used functions ready for use.
+
+Based on the original program mockup as previously seen in figure \ref{mockup},
+it was clear that all the menu items could be in such a bar that the Ribbon
+interface offers without creating additional layers.
+
+It also seemed a good fit for a graphical editing tool, as the Ribbon interface
+has an emphasis on having a graphical display for each action. This makes the
+tool a lot easier to use for new users, as for example a relation could be
+accompanied by a graphical representation showing exactly how the relation will
+look like.
+
+\subsection{Klasses and relations}
+%Jonas
+Relations so extendable
+
+\subsection{Saving \& loading}
+%Peter
+Serialization, threading..
+
+\subsection{Undo / Redo}
+%Peter
+Commands, scope (what can we undo / redo)
+\subsection{Image export}
+Why png? Cropping
