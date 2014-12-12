@@ -8,6 +8,8 @@ were carried out and implemented in the application.
 %Jonas
 Mvvm, wpf, data bindings
 Model assembly
+
+
 \subsection{User interface}
 Even though that user interface design was not a main scope of the project, some
 thought is required as it greatly impacts the user experience. 
@@ -56,7 +58,7 @@ If we were to use the XmlSerializer class, we would have to change the structure
 \subsubsection{Runtime serialization}
 The classes in the runtime serialization namespace supports references to objects. When the serializer meets an object, which has already been serialized, the object is referenced and not re-serialized.
 
-ISerializable…
+%TODO: ISerializable… 
 
 The runtime serialization allows for two types of formatting: Binary and SOAP.
 
@@ -76,9 +78,31 @@ In our case, the saving process is handled by a thread, which allows the user to
 
 \subsection{Undo / Redo}
 %Peter
-Commands, scope (what can we undo / redo)
+All commands supporting the undo/redo functionality implments the IUndoRedoCommand interface, which extends ICommand. The singleton class UndoRedoController handles the undo- and redo-stacks, which keep track of the previous states of the application. All UndoRedoCommands are executed through the AddAndExecute methods, of this class.
+
+The applications enables undo/redo functionality on the following actions:
+
+
+\begin{itemize}
+	\item New class
+	\item Delete class
+	\item Add relation
+	\item Delete relation
+	\item Cut (virker ikke! skal undo relation delete)
+	\item Paste
+	\item Move class
+	\item New diagram (skal den gøre det?)
+\end{itemize}
+
 
 \subsection{Copy, cut \& paste}
 
+
+
+
 \subsection{Image export}
 Why png? Cropping
+
+
+
+

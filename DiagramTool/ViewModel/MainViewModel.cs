@@ -175,7 +175,7 @@ namespace DiagramTool.ViewModel
             }
             else
             {
-                Thread t = new Thread(new ThreadStart(Serialize));
+                Thread t = new Thread(Serialize);
                 t.Start();
 
             }
@@ -325,6 +325,7 @@ namespace DiagramTool.ViewModel
 
         private void DeleteKlass()
         {
+            // DeleteKlassCommand should be extended to undo delete relations as well
             _undoRedoController.AddAndExecute(new DeleteKlassCommand(Klasses, Relations, _selectedKlass));
         }
 
