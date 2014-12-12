@@ -40,10 +40,45 @@ Relations so extendable
 
 \subsection{Saving \& loading}
 %Peter
-Serialization, threading..
+The save and open functionality is based on the serialization process. Objects can be serialized to a sequence of bytes either as binary data or in an XML structure. The serialized data can be stored in a file, and loaded into the application later by deserializing the objects.
+
+For this project, two solutions were considered. Using the functionality in the \texttt{System.Runtime.Serialization} namespace, or using the XmlSerializer class from the \texttt{System.Xml.Serialization} namespace. The Runtime Serialization allows us to store the serialized objects as binary data or formatted as SOAP data.
+
+The three options all have their advantages and disadvantages. We have chosen runtime serialization with binary formatting, based on what we found as described in the following sections.
+
+\subsubsection{XML Serializer}
+The XmlSerializer class provides easy to use functionality to serialize and deserialize simple objects to an XML format. It is possible to define which objects are serializable, and which field of objects that should be serialized, and which should not.
+
+However, the XmlSerializer class, does not support references to objects. This means, that every time the serializer meets a serializable object, the object will be serialized - even though it may already have done so. This does not allow for cyclic references, which we have in our program. In our case, a Klass object references a list of Relations, which in turn references a To and From Klass.
+
+If we were to use the XmlSerializer class, we would have to change the structure of our program.
+
+\subsubsection{Runtime serialization}
+The classes in the runtime serialization namespace supports references to objects. When the serializer meets an object, which has already been serialized, the object is referenced and not re-serialized.
+
+ISerializable…
+
+The runtime serialization allows for two types of formatting: Binary and SOAP.
+
+\textbf{Binary formatting}\\
+Binary formatting serializes the objects to a sequence of bytes, which is unreadable to humans. It works, but it has the disadvantage, that it can be hard to verify, that the serializer does what it is meant to do.
+
+\textbf{SOAP formatting}\\
+SOAP is a protocol used to exchange information, and is often used in web services which provide data to other applications through an API. The resulting data when using SOAP formatting is an XML structure, similar to the structur of the XmlSerializer and iis more friendly to human interpretation than its binary counterpart.
+
+However, for some reason, the SOAP formatter attempted to serialize objects from our MVVM libray, even though it was not told to, which made the serialization fail.
+
+\subsubsection{Using threads}
+Serialization, deserialization and reading/writing to files are processes that might take some time for the computer to execute. Thus, threads can be used to improve the user experience by preventing the window from “freezing” while these processes are going on. Typically, the diagrams made in this program are relatively small and simple, and the user may not notice anything when saving and opening without threads. However, the difference may be noticeable if the users hard drive is really slow, or the diagram is really big.
+
+In our case, the saving process is handled by a thread, which allows the user to continue working while the objects are saved in the background. Opening files are not executed in a thread, since the user should wait for everything to be loaded anyway. It could easily be implemented, but the save functionality exemplifies the process quite well.
+
 
 \subsection{Undo / Redo}
 %Peter
 Commands, scope (what can we undo / redo)
+
+\subsection{Copy, cut \& paste}
+
 \subsection{Image export}
 Why png? Cropping
