@@ -88,7 +88,7 @@ The applications enables undo/redo functionality on the following actions:
 	\item Delete class
 	\item Add relation
 	\item Delete relation
-	\item Cut (virker ikke! skal undo relation delete)
+	\item Cut
 	\item Paste
 	\item Move class
 	\item New diagram (skal den gøre det?)
@@ -96,12 +96,51 @@ The applications enables undo/redo functionality on the following actions:
 
 
 \subsection{Copy, cut \& paste}
+A simple clipboard is implemented in the application to allow copying, cutting and pasting classes. When pasting a class from the clipboard, the class and its content (fields and methods) are copied, but not its relations. This behaviour is intended, as we believe that this is the typical use case for copy/paste.
 
+The clipboard functionality utilizes the existing commands for deleting and creating new classes, hence, it also supports the undo/redo functionality of those.
 
-
+%TODO: Noget om at copy paste på text ikke virker?
 
 \subsection{Image export}
 Why png? Cropping
+
+\subsection{Function list}
+\begin{table}[h]
+	\begin{tabular}{lll}
+		\textbf{Ribbon: File menu} &                                                                                     &                                                                                                     \\
+		New                        & Ctrl+Shift+N                                                                        & \begin{tabular}[c]{@{}l@{}}Create new project\\ Close/discard open project\end{tabular}             \\
+		Open                       & Ctrl+O                                                                              & Open existing project                                                                               \\
+		Save                       & Ctrl+S                                                                              & Save current project                                                                                \\
+		Save As                    & Ctrl+Alt+S                                                                          & Save current project as new file                                                                    \\
+		Print                      & Ctrl+P                                                                              & Print diagram                                                                                       \\
+		Export                     & Ctrl+E                                                                              & Export project to PNG                                                                               \\
+		&                                                                                     &                                                                                                     \\
+		\textbf{Ribbon: Edit}      &                                                                                     &                                                                                                     \\
+		Undo                       & Ctrl+Z                                                                              & Undo previous actions                                                                               \\
+		Redo                       & Ctrl+Shift+Z                                                                        & Redo actions                                                                                        \\
+		Paste                      & Ctrl+V                                                                              & Paste class from clipboard                                                                          \\
+		Cut                        & Ctrl+X                                                                              & Cut class                                                                                           \\
+		Copy                       & Ctrl+C                                                                              & Copy selected class                                                                                 \\
+		New Class                  & Ctrl+N                                                                              & Add class                                                                                           \\
+		Delete Class               & Delete                                                                              & Delete selected class                                                                               \\
+		Relations                  &                                                                                     & \begin{tabular}[c]{@{}l@{}}Add relation between classes\\ (enter add relation mode)\end{tabular}    \\
+		Delete relation            &                                                                                     & \begin{tabular}[c]{@{}l@{}}Delete relation\\ (show circle, enter delete relation mode)\end{tabular} \\
+		&                                                                                     &                                                                                                     \\
+		\textbf{Canvas functions}  &                                                                                     &                                                                                                     \\
+		Select class               & Click on class                                                                      &                                                                                                     \\
+		Drag class                 & Drag class with mouse                                                               &                                                                                                     \\
+		Add relation               & \begin{tabular}[c]{@{}l@{}}Click on class "from"\\ Click on class "to"\end{tabular} & (during add relation mode)                                                                          \\
+		Delete relation            & Click on relation (circle)                                                          & (during delete relation mode)                                                                       \\
+		Change class name          & Click on text field                                                                 &                                                                                                     \\
+		Add field / method         & Click +                                                                             &                                                                                                     \\
+		Remove field / method      & Click X                                                                             &                                                                                                     \\
+		Edit field/method text     & Click on text field                                                                 &                                                                                                     \\
+		Edit relation text         & Click on text field                                                                 &                                                                                                    
+	\end{tabular}
+\end{table}
+
+
 
 
 
