@@ -285,13 +285,17 @@ those.
 
 \subsubsection{Image export}
 
-Why png? Cropping
+To make it easier for the users to use the created diagram, an image export tool
+was implemented. Only support for \textit{png} was implemented as it it
+the most suited filetype for this kind of graphics. An important thing to consider
+is how to ensure that only the relevant part of the canvas it exported, so
+the users does't have to crop the image later.
 
-
-
-
-
-
-
-
+\texttt{Export} was implemented in the \texttt{MainViewModel}, by creating a
+\texttt{RelayCommand} that takes the canvas as argument.
+The \texttt{Export} method then finds all the  descendants bounds, which is 
+the minimum area that ensures that all relevant elements are exported. The
+default renderer however always renders from $(0,0)$, so an auxiliary method to
+cancel this offset was used. The standard Windows Save dialog was used toi
+select the image path.
 
