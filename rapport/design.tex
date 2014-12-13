@@ -255,6 +255,19 @@ such as inheritance, reference, composition, etc. The class uses an enum to know
 which type of relation it is. This eliminates the need to create a new subclass
 every time a new type of relation is introduced.
 
+The \texttt{Relation} class, is basically just a class that holds 2
+\texttt{Klass} classes. This makes it possible to draw a line between these 2
+classes.
+
+The relation is drawn using the 3rd party library called
+LineCaps\footnote{http://blogs.msdn.com/b/mrochon/archive/2011/01/10/custom-line-caps-in-wpf.aspx}.
+
+The library made it possible to easily add the shapes that represents different
+types of relations e.g. a diamond for the composition, to the ends of the line.
+DataTriggers was added to the style property of the view. These DataTriggers was
+then set to trigger on the type property of the \texttt{Relation}, making a new
+style for each type.
+
 \subsubsection{Saving \& loading}
 The save and open functionality is based on the serialization process. Objects
 can be serialized to a sequence of bytes either as binary data or in an XML
