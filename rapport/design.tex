@@ -286,8 +286,7 @@ described in the following sections.
 \paragraph{XML Serializer}
 
 The 
-\texttt{XmlSerializer}\footnote{
-http://msdn.microsoft.com/en-us/library/system.xml.serialization.xmlserializer}
+\texttt{XmlSerializer}\footnote{http://msdn.microsoft.com/en-us/library/system.xml.serialization.xmlserializer}
  class provides easy to use
 functionality to serialize and deserialize simple objects to an XML format. It
 is possible to define which objects are serializable, and which field of objects
@@ -311,8 +310,7 @@ which has already been serialized, the object is referenced and not
 re-serialized.
 
 The behaviour is defined by the interface 
-\texttt{ISerializable}\footnote{
-http://msdn.microsoft.com/en-us/library/system.runtime.serialization.iserializable}
+\texttt{ISerializable}\footnote{http://msdn.microsoft.com/en-us/library/system.runtime.serialization.iserializable}
  which contains the method \texttt{GetObjectData}. This method allows us to 
 define exactly which fields of an object that should be serialized and how to 
 serialize them. To deserialize an object, a special deserialization constructor 
@@ -336,6 +334,17 @@ interpretation than its binary counterpart.
 However, for some reason, the SOAP formatter attempted to serialize objects from
 our MVVM libray, even though it was not told to, which made the serialization
 fail.
+
+\paragraph{Save \& open dialogs}
+To allow the user to save and open diagram files, the standard save- and open 
+file dialog boxes are utilized. This functionality allows us to define which 
+files the user should see; in our case \emph{.dia} files.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\linewidth]{img/save_open.png}
+	\caption{Save and open dialog boxes \label{saveopen}}
+\end{figure}
 
 \subsubsection{Using threads}
 Serialization, deserialization and reading/writing
