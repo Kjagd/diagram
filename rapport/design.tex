@@ -1,32 +1,37 @@
-\section{Design and implementation}
-In this section the considerations for the design will be discussed. This
-includes the overall design for the application as well as the problems that the
-individual features posed. The section also details how the proposed solutions
-were carried out and implemented in the application.
+\section{Design and implementation} 
+
+In this section the considerations for the
+design will be discussed. This includes the overall design for the application
+as well as the problems that the individual features posed. The section also
+details how the proposed solutions were carried out and implemented in the
+application.
 
 \subsection{Overall design}
 %Jonas
-\subsubsection{Design patterns}
-Mvvm, wpf, data bindings
-Model assembly
+\subsubsection{Design patterns} 
 
+Mvvm, wpf, data bindings Model assembly
 
-\subsection{Graphichal User interface}
-\subsubsection{Design}
-Even though that user interface design was not a main scope of the project, some
-thought is required as it greatly impacts the user experience. 
+\subsection{Graphichal User interface} 
+
+\subsubsection{Design} 
+
+Even though that
+user interface design was not a main scope of the project, some thought is
+required as it greatly impacts the user experience. 
 
 The overall decision to make it wether to whether to use an existing design
 framework, or to create a whole new layout with toolbars, menues etc. Since it
-is not in the scope of the project and the benefit would be minimal it was decided
-to go with an already tested and know interface. 
+is not in the scope of the project and the benefit would be minimal it was
+decided to go with an already tested and know interface. 
 
-The traditional Windows application is defined by its layered menus and
-toobars,
+The traditional Windows application is defined by its layered menus and toobars,
 which execls at more complicated programs where submenus are essential.
 
-The other viable alternative is the \textit{Ribbon}\footnote{http://msdn.microsoft.com/en-us/library/windows/desktop/dd316910(v=vs.85).aspx} framework which is know for
-its big toolbar with the most used functions ready for use.
+The other viable alternative is the
+\textit{Ribbon}\footnote{http://msdn.microsoft.com/en-us/library/windows/desktop/dd316910(v=vs.85).aspx}
+framework which is know for its big toolbar with the most used functions ready
+for use.
 
 Based on the original program mockup as previously seen in figure \ref{mockup},
 it was clear that all the menu items could be in such a bar that the Ribbon
@@ -36,120 +41,190 @@ It also seemed a good fit for a graphical editing tool, as the Ribbon interface
 has an emphasis on having a graphical display for each action. This makes the
 tool a lot easier to use for new users, as for example a relation could be
 accompanied by a graphical representation showing exactly how the relation will
-look like.
-\subsubsection{Implementation}
-Menu, ribbon, user controls etc.
+look like.  \subsubsection{Implementation} Menu, ribbon, user controls etc.
 
 
-\subsection{Application}
+\subsection{Application} 
+
 \subsubsection{Klasses and relations}
 %Jonas
 Relations so extendable
 
 \subsubsection{Saving \& loading}
 %Peter
-The save and open functionality is based on the serialization process. Objects can be serialized to a sequence of bytes either as binary data or in an XML structure. The serialized data can be stored in a file, and loaded into the application later by deserializing the objects.
+The save and open functionality is based on the serialization process. Objects
+can be serialized to a sequence of bytes either as binary data or in an XML
+structure. The serialized data can be stored in a file, and loaded into the
+application later by deserializing the objects.
 
-For this project, two solutions were considered. Using the functionality in the \texttt{System.Runtime.Serialization} namespace, or using the XmlSerializer class from the \texttt{System.Xml.Serialization} namespace. The Runtime Serialization allows us to store the serialized objects as binary data or formatted as SOAP data.
+For this project, two solutions were considered. Using the functionality in the
+\texttt{System.Runtime.Serialization} namespace, or using the XmlSerializer
+class from the \texttt{System.Xml.Serialization} namespace. The Runtime
+Serialization allows us to store the serialized objects as binary data or
+formatted as SOAP data.
 
-The three options all have their advantages and disadvantages. We have chosen runtime serialization with binary formatting, based on what we found as described in the following sections.
+The three options all have their advantages and disadvantages. We have chosen
+runtime serialization with binary formatting, based on what we found as
+described in the following sections.
 
-\subsubsection{XML Serializer}
-The XmlSerializer class provides easy to use functionality to serialize and deserialize simple objects to an XML format. It is possible to define which objects are serializable, and which field of objects that should be serialized, and which should not.
+\subsubsection{XML Serializer} 
 
-However, the XmlSerializer class, does not support references to objects. This means, that every time the serializer meets a serializable object, the object will be serialized - even though it may already have done so. This does not allow for cyclic references, which we have in our program. In our case, a Klass object references a list of Relations, which in turn references a To and From Klass.
+The XmlSerializer class provides easy to use
+functionality to serialize and deserialize simple objects to an XML format. It
+is possible to define which objects are serializable, and which field of objects
+that should be serialized, and which should not.
 
-If we were to use the XmlSerializer class, we would have to change the structure of our program.
+However, the XmlSerializer class, does not support references to objects. This
+means, that every time the serializer meets a serializable object, the object
+will be serialized - even though it may already have done so. This does not
+allow for cyclic references, which we have in our program. In our case, a Klass
+object references a list of Relations, which in turn references a To and From
+Klass.
 
-\subsubsection{Runtime serialization}
-The classes in the runtime serialization namespace supports references to objects. When the serializer meets an object, which has already been serialized, the object is referenced and not re-serialized.
+If we were to use the XmlSerializer class, we would have to change the structure
+of our program.
+
+\subsubsection{Runtime serialization} 
+
+The classes in the runtime serialization
+namespace supports references to objects. When the serializer meets an object,
+which has already been serialized, the object is referenced and not
+re-serialized.
 
 %TODO: ISerializable… 
 
 The runtime serialization allows for two types of formatting: Binary and SOAP.
 
-\textbf{Binary formatting}\\
-Binary formatting serializes the objects to a sequence of bytes, which is unreadable to humans. It works, but it has the disadvantage, that it can be hard to verify, that the serializer does what it is meant to do.
+\textbf{Binary formatting}\\ Binary formatting serializes the objects to a
+sequence of bytes, which is unreadable to humans. It works, but it has the
+disadvantage, that it can be hard to verify, that the serializer does what it is
+meant to do.
 
-\textbf{SOAP formatting}\\
-SOAP is a protocol used to exchange information, and is often used in web services which provide data to other applications through an API. The resulting data when using SOAP formatting is an XML structure, similar to the structur of the XmlSerializer and iis more friendly to human interpretation than its binary counterpart.
+\textbf{SOAP formatting}\\ SOAP is a protocol used to exchange information, and
+is often used in web services which provide data to other applications through
+an API. The resulting data when using SOAP formatting is an XML structure,
+similar to the structur of the XmlSerializer and iis more friendly to human
+interpretation than its binary counterpart.
 
-However, for some reason, the SOAP formatter attempted to serialize objects from our MVVM libray, even though it was not told to, which made the serialization fail.
+However, for some reason, the SOAP formatter attempted to serialize objects from
+our MVVM libray, even though it was not told to, which made the serialization
+fail.
 
-\subsubsection{Using threads}
-Serialization, deserialization and reading/writing to files are processes that might take some time for the computer to execute. Thus, threads can be used to improve the user experience by preventing the window from “freezing” while these processes are going on. Typically, the diagrams made in this program are relatively small and simple, and the user may not notice anything when saving and opening without threads. However, the difference may be noticeable if the users hard drive is really slow, or the diagram is really big.
+\subsubsection{Using threads} 
 
-In our case, the saving process is handled by a thread, which allows the user to continue working while the objects are saved in the background. Opening files are not executed in a thread, since the user should wait for everything to be loaded anyway. It could easily be implemented, but the save functionality exemplifies the process quite well.
+Serialization, deserialization and reading/writing
+to files are processes that might take some time for the computer to execute.
+Thus, threads can be used to improve the user experience by preventing the
+window from “freezing” while these processes are going on. Typically, the
+diagrams made in this program are relatively small and simple, and the user may
+not notice anything when saving and opening without threads. However, the
+difference may be noticeable if the users hard drive is really slow, or the
+diagram is really big.
+
+In our case, the saving process is handled by a thread, which allows the user to
+continue working while the objects are saved in the background. Opening files
+are not executed in a thread, since the user should wait for everything to be
+loaded anyway. It could easily be implemented, but the save functionality
+exemplifies the process quite well.
 
 
 \subsubsection{Undo / Redo}
 %Peter
-All commands supporting the undo/redo functionality implments the IUndoRedoCommand interface, which extends ICommand. The singleton class UndoRedoController handles the undo- and redo-stacks, which keep track of the previous states of the application. All UndoRedoCommands are executed through the AddAndExecute methods, of this class.
+All commands supporting the undo/redo functionality implments the
+IUndoRedoCommand interface, which extends ICommand. The singleton class
+UndoRedoController handles the undo- and redo-stacks, which keep track of the
+previous states of the application. All UndoRedoCommands are executed through
+the AddAndExecute methods, of this class.
 
 The applications enables undo/redo functionality on the following actions:
 
 
-\begin{itemize}
-	\item New class
-	\item Delete class
-	\item Add relation
-	\item Delete relation
-	\item Cut
-	\item Paste
-	\item Move class
-	\item New diagram (skal den gøre det?)
+\begin{itemize} 
+	\item New class 
+	\item Delete class 
+	\item Add relation 
+	\item Delete relation 
+	\item Cut 
+	\item Paste 
+	\item Move class 
+	\item New diagram (skal den gøre det?) 
 \end{itemize}
 
 
-\subsubsection{Copy, cut \& paste}
-A simple clipboard is implemented in the application to allow copying, cutting and pasting classes. When pasting a class from the clipboard, the class and its content (fields and methods) are copied, but not its relations. This behaviour is intended, as we believe that this is the typical use case for copy/paste.
+\subsubsection{Copy, cut \& paste} 
 
-The clipboard functionality utilizes the existing commands for deleting and creating new classes, hence, it also supports the undo/redo functionality of those.
+A simple clipboard is implemented in the
+application to allow copying, cutting and pasting classes. When pasting a class
+from the clipboard, the class and its content (fields and methods) are copied,
+but not its relations. This behaviour is intended, as we believe that this is
+the typical use case for copy/paste.
+
+The clipboard functionality utilizes the existing commands for deleting and
+creating new classes, hence, it also supports the undo/redo functionality of
+those.
 
 %TODO: Noget om at copy paste på text ikke virker?
 
-\subsubsection{Image export}
+\subsubsection{Image export} 
+
 Why png? Cropping
 
-\begin{table}[h]
-	\begin{tabular}{lll}
-		\textbf{Ribbon: File menu} &                                                                                     &                                                                                                     \\
-		New                        & Ctrl+Shift+N                                                                        & \begin{tabular}[c]{@{}l@{}}Create new project\\ Close/discard open project\end{tabular}             \\
-		Open                       & Ctrl+O                                                                              & Open existing project                                                                               \\
-		Save                       & Ctrl+S                                                                              & Save current project                                                                                \\
-		Save As                    & Ctrl+Alt+S                                                                          & Save current project as new file                                                                    \\
-		Print                      & Ctrl+P                                                                              & Print diagram                                                                                       \\
-		Export                     & Ctrl+E                                                                              & Export project to PNG                                                                               \\
-		&                                                                                     &                                                                                                     \\
-		\textbf{Ribbon: Edit}      &                                                                                     &                                                                                                     \\
-		Undo                       & Ctrl+Z                                                                              & Undo previous actions                                                                               \\
-		Redo                       & Ctrl+Shift+Z                                                                        & Redo actions                                                                                        \\
-		Paste                      & Ctrl+V                                                                              & Paste class from clipboard                                                                          \\
-		Cut                        & Ctrl+X                                                                              & Cut class                                                                                           \\
-		Copy                       & Ctrl+C                                                                              & Copy selected class                                                                                 \\
-		New Class                  & Ctrl+N                                                                              & Add class                                                                                           \\
-		Delete Class               & Delete                                                                              & Delete selected class                                                                               \\
-		Relations                  &                                                                                     & \begin{tabular}[c]{@{}l@{}}Add relation between classes\\ (enter add relation mode)\end{tabular}    \\
-		Delete relation            &                                                                                     & \begin{tabular}[c]{@{}l@{}}Delete relation\\ (show circle, enter delete relation mode)\end{tabular} \\
-		&                                                                                     &                                                                                                     \\
-		\textbf{Canvas functions}  &                                                                                     &                                                                                                     \\
-		Select class               & Click on class                                                                      &                                                                                                     \\
-		Drag class                 & Drag class with mouse                                                               &                                                                                                     \\
-		Add relation               & \begin{tabular}[c]{@{}l@{}}Click on class "from"\\ Click on class "to"\end{tabular} & (during add relation mode)                                                                          \\
-		Delete relation            & Click on relation (circle)                                                          & (during delete relation mode)                                                                       \\
-		Change class name          & Click on text field                                                                 &                                                                                                     \\
-		Add field / method         & Click +                                                                             &                                                                                                     \\
-		Remove field / method      & Click X                                                                             &                                                                                                     \\
-		Edit field/method text     & Click on text field                                                                 &                                                                                                     \\
-		Edit relation text         & Click on text field                                                                 &                                                                                                    
-	\end{tabular}
-\end{table}
-
-
-
-
-
-
-
-
-
+\begin{table}[h] \begin{tabular}{lll} \textbf{Ribbon: File menu} &
+&
+\\ New                        & Ctrl+Shift+N
+& \begin{tabular}[c]{@{}l@{}}Create new project\\ Close/discard open
+project\end{tabular}             \\ Open                       & Ctrl+O
+& Open existing project
+\\ Save                       & Ctrl+S
+& Save current project
+\\ Save As                    & Ctrl+Alt+S
+& Save current project as new file
+\\ Print                      & Ctrl+P
+& Print diagram
+\\ Export                     & Ctrl+E
+& Export project to PNG
+\\ &
+&
+\\ \textbf{Ribbon: Edit}      &
+&
+\\ Undo                       & Ctrl+Z
+& Undo previous actions
+\\ Redo                       & Ctrl+Shift+Z
+& Redo actions
+\\ Paste                      & Ctrl+V
+& Paste class from clipboard
+\\ Cut                        & Ctrl+X
+& Cut class
+\\ Copy                       & Ctrl+C
+& Copy selected class
+\\ New Class                  & Ctrl+N
+& Add class
+\\ Delete Class               & Delete
+& Delete selected class
+\\ Relations                  &
+& \begin{tabular}[c]{@{}l@{}}Add relation between classes\\ (enter add relation
+mode)\end{tabular}    \\ Delete relation            &
+& \begin{tabular}[c]{@{}l@{}}Delete relation\\ (show circle, enter delete
+relation mode)\end{tabular} \\ &
+&
+\\ \textbf{Canvas functions}  &
+&
+\\ Select class               & Click on class
+&
+\\ Drag class                 & Drag class with mouse
+&
+\\ Add relation               & \begin{tabular}[c]{@{}l@{}}Click on class
+"from"\\ Click on class "to"\end{tabular} & (during add relation mode)
+\\ Delete relation            & Click on relation (circle)
+& (during delete relation mode)
+\\ Change class name          & Click on text field
+&
+\\ Add field / method         & Click +
+&
+\\ Remove field / method      & Click X
+&
+\\ Edit field/method text     & Click on text field
+&
+\\ Edit relation text         & Click on text field
+&
+\end{tabular} \end{table}
