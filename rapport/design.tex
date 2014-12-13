@@ -204,7 +204,10 @@ It also seemed a good fit for a graphical editing tool, as the Ribbon interface
 has an emphasis on having a graphical display for each action. This makes the
 tool a lot easier to use for new users, as for example a relation could be
 accompanied by a graphical representation showing exactly how the relation will
-look like.  \subsubsection{Implementation} Menu, ribbon, user controls etc.
+look like. 
+
+\subsubsection{Implementation}
+Menu, ribbon, user controls etc.
 
 
 \subsection{Application}
@@ -232,7 +235,9 @@ described in the following sections.
 
 \paragraph{XML Serializer}
 
-The XmlSerializer class provides easy to use
+The 
+\texttt{XmlSerializer}\footnote{http://msdn.microsoft.com/en-us/library/system.xml.serialization.xmlserializer}
+ class provides easy to use
 functionality to serialize and deserialize simple objects to an XML format. It
 is possible to define which objects are serializable, and which field of objects
 that should be serialized, and which should not.
@@ -254,7 +259,12 @@ namespace supports references to objects. When the serializer meets an object,
 which has already been serialized, the object is referenced and not
 re-serialized.
 
-%TODO: ISerializable… 
+The behaviour is defined by the interface 
+\texttt{ISerializable}\footnote{http://msdn.microsoft.com/en-us/library/system.runtime.serialization.iserializable}
+ which contains the method \texttt{GetObjectData}. This method allows us to 
+define exactly which fields of an object that should be serialized and how to 
+serialize them. To deserialize an object, a special deserialization constructor 
+must be defined, which tells the serializer how to interpret the saved data.
 
 The runtime serialization allows for two types of formatting: Binary and SOAP.
 
@@ -295,8 +305,10 @@ exemplifies the process quite well.
 \subsubsection{Undo / Redo}
 %Peter
 All commands supporting the undo/redo functionality implments the
-IUndoRedoCommand interface, which extends ICommand. The singleton class
-UndoRedoController handles the undo- and redo-stacks, which keep track of the
+\texttt{IUndoRedoCommand} interface, which extends \texttt{ICommand}. The 
+singleton class
+\texttt{UndoRedoController} handles the undo- and redo-stacks, which keep track 
+of the
 previous states of the application. All UndoRedoCommands are executed through
 the AddAndExecute methods, of this class.
 
@@ -323,10 +335,11 @@ but not its relations. This behaviour is intended, as we believe that this is
 the typical use case for copy/paste.
 
 The clipboard functionality utilizes the existing commands for deleting and
-creating new classes, hence, it also supports the undo/redo functionality of
+creating new classes, hence, it supports the undo/redo functionality of
 those.
 
-%TODO: Noget om at copy paste på text ikke virker?
+This implementation only supports copy paste of class objects, which means that 
+copy/pasting text from text fields is not possible.
 
 \subsubsection{Image export}
 
