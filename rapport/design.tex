@@ -13,7 +13,9 @@ application.
 Mvvm, wpf, data bindings Model assembly
 
 \subsubsection{Function list}
-\begin{table}[H]
+
+
+\begin{table}[h]
 	\begin{tabular}{lll}
 		\hline
 		\textbf{Ribbon: File menu} 
@@ -171,9 +173,16 @@ Mvvm, wpf, data bindings Model assembly
 		                     &
 		 Click on text 
 		field                                                                 \\
+		Edit multiplicity text     
+		&                                                                       
+		                     &
+		 Click on text 
+		field                                                                 \\
 		 \hline
 	\end{tabular}
 \end{table}
+
+
 
 \subsection{Graphichal User interface}
 
@@ -223,7 +232,37 @@ In this part the application part of the program is discussed.
 
 \subsubsection{Klasses and relations}
 %Jonas
-Relations so extendable
+The \texttt{Klass} and \texttt{Relation} classes are the backbone of the model.
+So they were put in their own \texttt{dll}. This ensures reusability, and makes
+the program more flexible, in that it does not consist of 1 giant exe file.
+
+\paragraph{Klass}
+The \texttt{Klass} class is the representation of a class in any object oriented
+language. The class contains almost all the info a class should have. Some of
+the missing stuff is interfaces and abstract classes, but these can be added in
+future iterations.
+
+The class also contains some of the info needed to render it properly, such as
+an $(x, y)$ coordinate as well as such things as height, width, and some color
+properties. Some of this probably belongs in a viewmodel class but we found it
+easier to just implement it directly in this class instead.
+
+The consequence of having viewmodel properties in the model, was that
+\texttt{Klass} also had to have a list of all the relations that was hooked up
+to it. This was to be able to notify any relation whenever a \texttt{Klass} is
+moved in the GUI. 
+
+What became easier from having the viewmodel properties in the model, was the
+serialization, and how to handle the relation between \texttt{Klass} and
+\texttt{Relation}. Having a relation between the 2 models, and 2 viewmodels
+would make it hard to maintain the right state.
+
+\paragraph{Relation}
+The \texttt{Relation} class is used to represent the relation in a UML diagram.
+This class has to be flexible to allow for many different types of relations,
+such as inheritance, reference, composition, etc. The class uses an enum to know
+which type of relation it is. This eliminates the need to create a new subclass
+every time a new type of relation is introduced.
 
 \subsubsection{Saving \& loading}
 The save and open functionality is based on the serialization process. Objects

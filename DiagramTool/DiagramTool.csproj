@@ -75,7 +75,6 @@
     <Compile Include="Command\AddRelationCommand.cs" />
     <Compile Include="Command\DeleteKlassCommand.cs" />
     <Compile Include="Command\DeleteRelationCommand.cs" />
-    <Compile Include="Command\NewDiagramCommand.cs" />
     <Compile Include="Command\NewKlassCommand.cs" />
     <Compile Include="Command\UndoRedoController.cs" />
     <Compile Include="Command\ICommand.cs" />

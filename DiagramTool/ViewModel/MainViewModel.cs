@@ -161,7 +161,17 @@ namespace DiagramTool.ViewModel
 
         private void New()
         {
-            _undoRedoController.AddAndExecute(new NewDiagramCommand(Klasses,Relations));
+            string messageBoxText = "Existing diagram will be overwritten";
+            string caption = "New Diagram";
+            MessageBoxButton button = MessageBoxButton.OKCancel;
+            MessageBoxImage icon = MessageBoxImage.Warning;
+
+            MessageBoxResult result = MessageBox.Show(messageBoxText, caption, button, icon);
+            if (result == MessageBoxResult.OK)
+            {
+                Klasses.Clear();
+                Relations.Clear();
+            }
         }
 
         private void Save()
@@ -303,7 +313,8 @@ namespace DiagramTool.ViewModel
         {
             
             _undoRedoController.AddAndExecute(new NewKlassCommand(Klasses, _clipboard));
-            _selectedKlass.IsSelected = false;
+            if(_selectedKlass != null)
+                _selectedKlass.IsSelected = false;
             _selectedKlass = _clipboard;
             _clipboard.IsSelected = true;
             CopyKlass();
