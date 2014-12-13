@@ -6,11 +6,13 @@ were carried out and implemented in the application.
 
 \subsection{Overall design}
 %Jonas
+\subsubsection{Design patterns}
 Mvvm, wpf, data bindings
 Model assembly
 
 
-\subsection{User interface}
+\subsection{Graphichal User interface}
+\subsubsection{Design}
 Even though that user interface design was not a main scope of the project, some
 thought is required as it greatly impacts the user experience. 
 
@@ -35,12 +37,16 @@ has an emphasis on having a graphical display for each action. This makes the
 tool a lot easier to use for new users, as for example a relation could be
 accompanied by a graphical representation showing exactly how the relation will
 look like.
+\subsubsection{Implementation}
+Menu, ribbon, user controls etc.
 
-\subsection{Klasses and relations}
+
+\subsection{Application}
+\subsubsection{Klasses and relations}
 %Jonas
 Relations so extendable
 
-\subsection{Saving \& loading}
+\subsubsection{Saving \& loading}
 %Peter
 The save and open functionality is based on the serialization process. Objects can be serialized to a sequence of bytes either as binary data or in an XML structure. The serialized data can be stored in a file, and loaded into the application later by deserializing the objects.
 
@@ -76,7 +82,7 @@ Serialization, deserialization and reading/writing to files are processes that m
 In our case, the saving process is handled by a thread, which allows the user to continue working while the objects are saved in the background. Opening files are not executed in a thread, since the user should wait for everything to be loaded anyway. It could easily be implemented, but the save functionality exemplifies the process quite well.
 
 
-\subsection{Undo / Redo}
+\subsubsection{Undo / Redo}
 %Peter
 All commands supporting the undo/redo functionality implments the IUndoRedoCommand interface, which extends ICommand. The singleton class UndoRedoController handles the undo- and redo-stacks, which keep track of the previous states of the application. All UndoRedoCommands are executed through the AddAndExecute methods, of this class.
 
@@ -95,17 +101,16 @@ The applications enables undo/redo functionality on the following actions:
 \end{itemize}
 
 
-\subsection{Copy, cut \& paste}
+\subsubsection{Copy, cut \& paste}
 A simple clipboard is implemented in the application to allow copying, cutting and pasting classes. When pasting a class from the clipboard, the class and its content (fields and methods) are copied, but not its relations. This behaviour is intended, as we believe that this is the typical use case for copy/paste.
 
 The clipboard functionality utilizes the existing commands for deleting and creating new classes, hence, it also supports the undo/redo functionality of those.
 
 %TODO: Noget om at copy paste på text ikke virker?
 
-\subsection{Image export}
+\subsubsection{Image export}
 Why png? Cropping
 
-\subsection{Function list}
 \begin{table}[h]
 	\begin{tabular}{lll}
 		\textbf{Ribbon: File menu} &                                                                                     &                                                                                                     \\
@@ -139,6 +144,9 @@ Why png? Cropping
 		Edit relation text         & Click on text field                                                                 &                                                                                                    
 	\end{tabular}
 \end{table}
+
+
+
 
 
 
