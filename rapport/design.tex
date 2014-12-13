@@ -223,7 +223,6 @@ In this part the application part of the program is discussed.
 Relations so extendable
 
 \subsubsection{Saving \& loading}
-%Peter
 The save and open functionality is based on the serialization process. Objects
 can be serialized to a sequence of bytes either as binary data or in an XML
 structure. The serialized data can be stored in a file, and loaded into the
@@ -239,7 +238,7 @@ The three options all have their advantages and disadvantages. We have chosen
 runtime serialization with binary formatting, based on what we found as
 described in the following sections.
 
-\subsubsection{XML Serializer}
+\paragraph{XML Serializer}
 
 The XmlSerializer class provides easy to use
 functionality to serialize and deserialize simple objects to an XML format. It
@@ -256,7 +255,7 @@ Klass.
 If we were to use the XmlSerializer class, we would have to change the structure
 of our program.
 
-\subsubsection{Runtime serialization}
+\paragraph{Runtime serialization}
 
 The classes in the runtime serialization
 namespace supports references to objects. When the serializer meets an object,
@@ -267,12 +266,14 @@ re-serialized.
 
 The runtime serialization allows for two types of formatting: Binary and SOAP.
 
-\textbf{Binary formatting}\\ Binary formatting serializes the objects to a
+\textbf{Binary formatting}\\
+Binary formatting serializes the objects to a
 sequence of bytes, which is unreadable to humans. It works, but it has the
 disadvantage, that it can be hard to verify, that the serializer does what it is
 meant to do.
 
-\textbf{SOAP formatting}\\ SOAP is a protocol used to exchange information, and
+\textbf{SOAP formatting}\\
+SOAP is a protocol used to exchange information, and
 is often used in web services which provide data to other applications through
 an API. The resulting data when using SOAP formatting is an XML structure,
 similar to the structur of the XmlSerializer and iis more friendly to human
@@ -283,7 +284,6 @@ our MVVM libray, even though it was not told to, which made the serialization
 fail.
 
 \subsubsection{Using threads}
-
 Serialization, deserialization and reading/writing
 to files are processes that might take some time for the computer to execute.
 Thus, threads can be used to improve the user experience by preventing the
