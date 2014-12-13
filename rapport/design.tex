@@ -13,6 +13,11 @@ application.
 Mvvm, wpf, data bindings Model assembly
 
 \subsubsection{Function list}
+Based on the requirements and the definition of UML class 
+diagrams\footnote{http://en.wikipedia.org/wiki/Class\_diagram} 
+\footnote{http://www.digilife.be/quickreferences/qrc/uml quick reference 
+card.pdf}, a function list is produced.
+
 \begin{table}[H]
 	\begin{tabular}{lll}
 		\hline
@@ -324,6 +329,17 @@ However, for some reason, the SOAP formatter attempted to serialize objects from
 our MVVM libray, even though it was not told to, which made the serialization
 fail.
 
+\paragraph{Save \& open dialogs}
+To allow the user to save and open diagram files, the standard save- and open 
+file dialog boxes are utilized. This functionality allows us to define which 
+files the user should see; in our case \emph{.dia} files.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\linewidth]{img/save_open.png}
+	\caption{Save and open dialog boxes \label{saveopen}}
+\end{figure}
+
 \subsubsection{Using threads}
 Serialization, deserialization and reading/writing
 to files are processes that might take some time for the computer to execute.
@@ -376,6 +392,10 @@ creating new classes, hence, it also supports the undo/redo functionality of
 those.
 
 %TODO: Noget om at copy paste på text ikke virker?
+This solution only supports copy paste of class objects. If it made sense, this 
+could be extended to support additional objects. The implementation does not 
+overwrite the built in clipboard of Windows. Thus, the user can still 
+copy/paste text from and to text fields within the application.
 
 \subsubsection{Image export}
 
