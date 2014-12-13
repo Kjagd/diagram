@@ -28,6 +28,8 @@ utilizes the command pattern.
 The observer pattern is used with MVVMLight to notify GUI components when they
 rely on each other, as well as for button clicks.
 
+singleton class
+
 \subsubsection{Function list}
 Based on the requirements and the definition of UML class 
 diagrams\footnote{http://en.wikipedia.org/wiki/Class\_diagram} 
@@ -459,7 +461,6 @@ The clipboard functionality utilizes the existing commands for deleting and
 creating new classes, hence, it supports the undo/redo functionality of
 those.
 
-%TODO: Noget om at copy paste på text ikke virker?
 This solution only supports copy paste of class objects. If it made sense, this 
 could be extended to support additional objects. The implementation does not 
 overwrite the built in clipboard of Windows. Thus, the user can still 
