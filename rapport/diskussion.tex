@@ -4,10 +4,36 @@ which features and changes could be relevant in the future if further
 development was needed.
 
 \subsection{Problems and bugs}
-Input / focus
-Linecaps / VS / git
+A problem we had for a long time was how focus was handled. For example if the
+user is attempting to drag a class by clicking on a textfield it can cause some
+havoc since it is unclear if the user wants to drag the class or edit the text. 
+
+Another problem focus gave us, was how to loose focus again when for example the
+user clicks on the background. This was sounds easy, but it turned out that a
+workaround had to be used, where the entire canvas is wrapped in a
+\texttt{StackPanel} with transparent background before it could be made
+focusable.
+
+Another problem we had was providing undo/redo functionality for all functions,
+primarily since it was time consuming to create this for all actions. This meant
+that we at some point had some bugs with deleting classes, as the redo function
+would not correctly add the relations back. This was later fixed, but more
+undo/redo functions such as editing text would be more desireble. 
 
 \subsection{Futher development}
-Easy to add relations / other diagram types
-Better canvas zoom / panning
-copy paste text
+Even though the program is largely useable, more features could always be added.
+If we had more time, some of our next features/improvements would be:
+
+\begin{itemize}
+		\item More relations\\As it it very easy to add more relations this
+				could be done very fast, and enable the program to be used to
+				create a wider range of diagrams.
+
+		\item Better canvas controls\\Right now the canvas is very static, but
+				for larger diagrams it would be nice to be able to pan around
+				and zoom in on parts of the diagram.
+
+		\item Strict UML\\As it is now only a subset of the UML syntax is
+				supported. Support for field visibility, abstract classes etc
+				would be required to create more formal diagrams.
+\end{itemize}
