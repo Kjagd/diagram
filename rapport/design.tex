@@ -265,9 +265,40 @@ here.
 \subsection{Application}
 In this part the application part of the program is discussed.
 
-\subsubsection{Klasses and relations}
+\subsubsection{Classes and relations}
 %Jonas
-Relations so extendable
+The \texttt{Klass} and \texttt{Relation} classes are the backbone of the model.
+So they were put in their own \texttt{dll}. This ensures reusability, and makes
+the program more flexible, in that it does not consist of 1 giant exe file.
+
+\paragraph{Klass}
+The \texttt{Klass} class is the representation of a class in any object oriented
+language. The class contains almost all the info a class should have. Some of
+the missing stuff is interfaces and abstract classes, but these can be added in
+future iterations.
+
+The class also contains some of the info needed to render it properly, such as
+an $(x, y)$ coordinate as well as such things as height, width, and some color
+properties. Some of this probably belongs in a viewmodel class but we found it
+easier to just implement it directly in this class instead.
+
+The consequence of having viewmodel properties in the model, was that
+\texttt{Klass} also had to have a list of all the relations that was hooked up
+to it. This was to be able to notify any relation whenever a \texttt{Klass} is
+moved in the GUI. 
+
+What became easier from having the viewmodel properties in the model, was the
+serialization, and how to handle the relation between \texttt{Klass} and
+\texttt{Relation}. Having a relation between the 2 models, and 2 viewmodels
+would make it hard to maintain the right state.
+
+\paragraph{Relation}
+The \texttt{Relation} class is used to represent the relation in a UML diagram.
+This class has to be flexible to allow for many different types of relations,
+such as inheritance, reference, composition, etc. The class uses an enum to
+know
+which type of relation it is. This eliminates the need to create a new subclass
+every time a new type of relation is introduced.
 
 The \texttt{Relation} class, is basically just a class that holds 2
 \texttt{Klass} classes. This makes it possible to draw a line between these 2
@@ -300,7 +331,9 @@ described in the following sections.
 
 \paragraph{XML Serializer}
 
-The XmlSerializer class provides easy to use
+The \texttt{XmlSerializer}
+\footnote{http://msdn.microsoft.com/en-us/library/system.xml.serialization.xmlserializer} 
+class provides easy to use
 functionality to serialize and deserialize simple objects to an XML format. It
 is possible to define which objects are serializable, and which field of objects
 that should be serialized, and which should not.
@@ -322,7 +355,12 @@ namespace supports references to objects. When the serializer meets an object,
 which has already been serialized, the object is referenced and not
 re-serialized.
 
-%TODO: ISerializable… 
+The behaviour is defined by the interface \texttt{ISerializable}
+\footnote{http://msdn.microsoft.com/en-us/library/system.runtime.serialization.iserializable}
+which contains the method \texttt{GetObjectData}. This method allows us to 
+define exactly which fields of an object that should be serialized and how to 
+serialize them. To deserialize an object, a special deserialization constructor 
+must be defined, which tells the serializer how to interpret the saved data.
 
 The runtime serialization allows for two types of formatting: Binary and SOAP.
 
@@ -374,10 +412,10 @@ exemplifies the process quite well.
 \subsubsection{Undo / Redo}
 %Peter
 All commands supporting the undo/redo functionality implments the
-IUndoRedoCommand interface, which extends ICommand. The singleton class
-UndoRedoController handles the undo- and redo-stacks, which keep track of the
+\texttt{IUndoRedoCommand} interface, which extends \texttt{ICommand}. The singleton class
+\texttt{UndoRedoController} handles the undo- and redo-stacks, which keep track of the
 previous states of the application. All UndoRedoCommands are executed through
-the AddAndExecute methods, of this class.
+the \texttt{AddAndExecute} methods, of this class.
 
 The applications enables undo/redo functionality on the following actions:
 
@@ -402,7 +440,7 @@ but not its relations. This behaviour is intended, as we believe that this is
 the typical use case for copy/paste.
 
 The clipboard functionality utilizes the existing commands for deleting and
-creating new classes, hence, it also supports the undo/redo functionality of
+creating new classes, hence, it supports the undo/redo functionality of
 those.
 
 %TODO: Noget om at copy paste på text ikke virker?
