@@ -1,4 +1,4 @@
-\section{Design and implementation} 
+\section{Design and implementation}
 
 In this section the considerations for the
 design will be discussed. This includes the overall design for the application
@@ -8,13 +8,176 @@ application.
 
 \subsection{Overall design}
 %Jonas
-\subsubsection{Design patterns} 
+\subsubsection{Design patterns}
 
 Mvvm, wpf, data bindings Model assembly
 
-\subsection{Graphichal User interface} 
+\subsubsection{Function list}
+\begin{table}[H]
+	\begin{tabular}{lll}
+		\hline
+		\textbf{Ribbon: File menu} 
+		&                                                                       
+		                     &
+		                                                                        
+		             \\ \hline
+		New                        & \begin{tabular}[c]{@{}l@{}}Create new 
+		project\\ Close/discard open project\end{tabular}    & 
+		Ctrl+Shift+N                                                            
+		            \\
+		Open                       & Open existing 
+		project                                                                 
+		     &
+		 
+		Ctrl+O                                                                  
+		            \\
+		Save                       & Save current 
+		project                                                                 
+		      &
+		 
+		Ctrl+S                                                                  
+		            \\
+		Save As                    & Save current project as new 
+		file                                                           & 
+		Ctrl+Alt+S                                                              
+		            \\
+		Print                      & Print 
+		diagram                                                                 
+		             &
+		 
+		Ctrl+P                                                                  
+		            \\
+		Export                     & Export project to 
+		PNG                                                                     
+		 &
+		 
+		Ctrl+E                                                                  
+		            \\
+		 \hline
+		&                                                                       
+		                     
+		&                                                                       
+		              \\
+		 \hline
+		\textbf{Ribbon: Edit}      
+		&                                                                       
+		                     &
+		                                                                        
+		             \\ \hline
+		Undo                       & Undo previous 
+		actions                                                                 
+		     &
+		 
+		Ctrl+Z                                                                  
+		            \\
+		Redo                       & Redo 
+		actions                                                                 
+		              &
+		 
+		Ctrl+Shift+Z                                                            
+		            \\
+		Paste                      & Paste class from 
+		clipboard                                                               
+		  &
+		 
+		Ctrl+V                                                                  
+		            \\
+		Cut                        & Cut 
+		class                                                                   
+		               &
+		 
+		Ctrl+X                                                                  
+		            \\
+		Copy                       & Copy selected 
+		class                                                                   
+		     &
+		 
+		Ctrl+C                                                                  
+		            \\
+		New Class                  & Add 
+		class                                                                   
+		               &
+		 
+		Ctrl+N                                                                  
+		            \\
+		Delete Class               & Delete selected 
+		class                                                                   
+		   &
+		 
+		Delete                                                                  
+		            \\
+		Relations                  & \begin{tabular}[c]{@{}l@{}}Add relation 
+		between classes\\ (enter add mode)\end{tabular}    
+		&                                                                       
+		              \\
+		Delete relation            & \begin{tabular}[c]{@{}l@{}}Delete 
+		relation\\ (show circle, enter delete mode)\end{tabular} 
+		&                                                                       
+		              \\
+		 \hline
+		&                                                                       
+		                     
+		&                                                                       
+		              \\
+		 \hline
+		\textbf{Canvas functions}  
+		&                                                                       
+		                     &
+		                                                                        
+		             \\ \hline
+		Select class               
+		&                                                                       
+		                     &
+		 Click on 
+		class                                                                   
+		   \\
+		Drag class                 
+		&                                                                       
+		                     &
+		 Drag class with 
+		mouse                                                               \\
+		Add relation               & (during add relation 
+		mode)                                                                 & 
+		\begin{tabular}[c]{@{}l@{}}Click on class "from"\\ Click on class 
+		"to"\end{tabular} \\
+		Delete relation            & (during delete relation 
+		mode)                                                              & 
+		\begin{tabular}[c]{@{}l@{}}Click on relation\\ 
+		(circle)\end{tabular}                \\
+		Change class name          
+		&                                                                       
+		                     &
+		 Click on text 
+		field                                                                 \\
+		Add field / method         
+		&                                                                       
+		                     &
+		 Click 
+		+                                                                       
+		      \\
+		Remove field / method      
+		&                                                                       
+		                     &
+		 Click 
+		X                                                                       
+		      \\
+		Edit field/method text     
+		&                                                                       
+		                     &
+		 Click on text 
+		field                                                                 \\
+		Edit relation text         
+		&                                                                       
+		                     &
+		 Click on text 
+		field                                                                 \\
+		 \hline
+	\end{tabular}
+\end{table}
 
-\subsubsection{Design} 
+\subsection{Graphichal User interface}
+
+\subsubsection{Design}
 
 Even though that
 user interface design was not a main scope of the project, some thought is
@@ -44,7 +207,8 @@ accompanied by a graphical representation showing exactly how the relation will
 look like.  \subsubsection{Implementation} Menu, ribbon, user controls etc.
 
 
-\subsection{Application} 
+\subsection{Application}
+In this part the application part of the program is discussed.
 
 \subsubsection{Klasses and relations}
 %Jonas
@@ -66,7 +230,6 @@ which type of relation it is. This eliminates the need to create a new subclass
 every time a new type of relation is introduced.
 
 \subsubsection{Saving \& loading}
-%Peter
 The save and open functionality is based on the serialization process. Objects
 can be serialized to a sequence of bytes either as binary data or in an XML
 structure. The serialized data can be stored in a file, and loaded into the
@@ -82,7 +245,7 @@ The three options all have their advantages and disadvantages. We have chosen
 runtime serialization with binary formatting, based on what we found as
 described in the following sections.
 
-\subsubsection{XML Serializer} 
+\paragraph{XML Serializer}
 
 The XmlSerializer class provides easy to use
 functionality to serialize and deserialize simple objects to an XML format. It
@@ -99,7 +262,7 @@ Klass.
 If we were to use the XmlSerializer class, we would have to change the structure
 of our program.
 
-\subsubsection{Runtime serialization} 
+\paragraph{Runtime serialization}
 
 The classes in the runtime serialization
 namespace supports references to objects. When the serializer meets an object,
@@ -110,12 +273,14 @@ re-serialized.
 
 The runtime serialization allows for two types of formatting: Binary and SOAP.
 
-\textbf{Binary formatting}\\ Binary formatting serializes the objects to a
+\textbf{Binary formatting}\\
+Binary formatting serializes the objects to a
 sequence of bytes, which is unreadable to humans. It works, but it has the
 disadvantage, that it can be hard to verify, that the serializer does what it is
 meant to do.
 
-\textbf{SOAP formatting}\\ SOAP is a protocol used to exchange information, and
+\textbf{SOAP formatting}\\
+SOAP is a protocol used to exchange information, and
 is often used in web services which provide data to other applications through
 an API. The resulting data when using SOAP formatting is an XML structure,
 similar to the structur of the XmlSerializer and iis more friendly to human
@@ -125,8 +290,7 @@ However, for some reason, the SOAP formatter attempted to serialize objects from
 our MVVM libray, even though it was not told to, which made the serialization
 fail.
 
-\subsubsection{Using threads} 
-
+\subsubsection{Using threads}
 Serialization, deserialization and reading/writing
 to files are processes that might take some time for the computer to execute.
 Thus, threads can be used to improve the user experience by preventing the
@@ -154,19 +318,18 @@ the AddAndExecute methods, of this class.
 The applications enables undo/redo functionality on the following actions:
 
 
-\begin{itemize} 
-	\item New class 
-	\item Delete class 
-	\item Add relation 
-	\item Delete relation 
-	\item Cut 
-	\item Paste 
-	\item Move class 
-	\item New diagram (skal den gøre det?) 
+\begin{itemize}
+	\item New class
+	\item Delete class
+	\item Add relation
+	\item Delete relation
+	\item Cut
+	\item Paste
+	\item Move class
 \end{itemize}
 
 
-\subsubsection{Copy, cut \& paste} 
+\subsubsection{Copy, cut \& paste}
 
 A simple clipboard is implemented in the
 application to allow copying, cutting and pasting classes. When pasting a class
@@ -180,66 +343,19 @@ those.
 
 %TODO: Noget om at copy paste på text ikke virker?
 
-\subsubsection{Image export} 
+\subsubsection{Image export}
 
-Why png? Cropping
+To make it easier for the users to use the created diagram, an image export tool
+was implemented. Only support for \textit{png} was implemented as it it
+the most suited filetype for this kind of graphics. An important thing to consider
+is how to ensure that only the relevant part of the canvas it exported, so
+the users does't have to crop the image later.
 
-\begin{table}[h] \begin{tabular}{lll} \textbf{Ribbon: File menu} &
-&
-\\ New                        & Ctrl+Shift+N
-& \begin{tabular}[c]{@{}l@{}}Create new project\\ Close/discard open
-project\end{tabular}             \\ Open                       & Ctrl+O
-& Open existing project
-\\ Save                       & Ctrl+S
-& Save current project
-\\ Save As                    & Ctrl+Alt+S
-& Save current project as new file
-\\ Print                      & Ctrl+P
-& Print diagram
-\\ Export                     & Ctrl+E
-& Export project to PNG
-\\ &
-&
-\\ \textbf{Ribbon: Edit}      &
-&
-\\ Undo                       & Ctrl+Z
-& Undo previous actions
-\\ Redo                       & Ctrl+Shift+Z
-& Redo actions
-\\ Paste                      & Ctrl+V
-& Paste class from clipboard
-\\ Cut                        & Ctrl+X
-& Cut class
-\\ Copy                       & Ctrl+C
-& Copy selected class
-\\ New Class                  & Ctrl+N
-& Add class
-\\ Delete Class               & Delete
-& Delete selected class
-\\ Relations                  &
-& \begin{tabular}[c]{@{}l@{}}Add relation between classes\\ (enter add relation
-mode)\end{tabular}    \\ Delete relation            &
-& \begin{tabular}[c]{@{}l@{}}Delete relation\\ (show circle, enter delete
-relation mode)\end{tabular} \\ &
-&
-\\ \textbf{Canvas functions}  &
-&
-\\ Select class               & Click on class
-&
-\\ Drag class                 & Drag class with mouse
-&
-\\ Add relation               & \begin{tabular}[c]{@{}l@{}}Click on class
-"from"\\ Click on class "to"\end{tabular} & (during add relation mode)
-\\ Delete relation            & Click on relation (circle)
-& (during delete relation mode)
-\\ Change class name          & Click on text field
-&
-\\ Add field / method         & Click +
-&
-\\ Remove field / method      & Click X
-&
-\\ Edit field/method text     & Click on text field
-&
-\\ Edit relation text         & Click on text field
-&
-\end{tabular} \end{table}
+\texttt{Export} was implemented in the \texttt{MainViewModel}, by creating a
+\texttt{RelayCommand} that takes the canvas as argument.
+The \texttt{Export} method then finds all the  descendants bounds, which is 
+the minimum area that ensures that all relevant elements are exported. The
+default renderer however always renders from $(0,0)$, so an auxiliary method to
+cancel this offset was used. The standard Windows Save dialog was used toi
+select the image path.
+
