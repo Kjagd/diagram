@@ -8,9 +8,25 @@ application.
 
 \subsection{Overall design}
 %Jonas
+The overall design of the program, is setup from the use of MVVMLight.
+
 \subsubsection{Design patterns}
 
-Mvvm, wpf, data bindings Model assembly
+The program uses the MVVM design pattern. In this case, there is only one
+viewmodel, namely the MainViewModel. This takes care of all the actions/commands
+the user can do in the UI.
+
+The view consists of a ribbon, and then it draws the UserControls specified by
+the objects in the viewmodel and the dictionary that is referenced.
+
+The model is put into its own \texttt{dll}.
+
+
+Furthermore is the singleton pattern used for the undoredo controller, which
+utilizes the command pattern.
+
+The observer pattern is used with MVVMLight to notify GUI components when they
+rely on each other, as well as for button clicks.
 
 \subsubsection{Function list}
 Based on the requirements and the definition of UML class 
