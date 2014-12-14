@@ -475,6 +475,13 @@ could be extended to support additional objects. The implementation does not
 overwrite the built in clipboard of Windows. Thus, the user can still 
 copy/paste text from and to text fields within the application.
 
+When copying a class, the selected class is cloned using the 
+\texttt{ICloneable} 
+interface\footnote{http://msdn.microsoft.com/en-us/library/system.icloneable}. 
+Cloning the class performs a \emph{deep copy} on 
+the object, which results in an entierly new object to ensure that the new 
+object has no references to the fields of the original object.
+
 \subsubsection{Image export}
 
 To make it easier for the users to use the created diagram, an image export tool
