@@ -87,7 +87,7 @@ namespace DiagramTool.ViewModel
             AddInheritanceRelationCommand = new RelayCommand(AddInheritance);
             AddReferenceRelationCommand = new RelayCommand(AddReference);
 
-            DeleteRelationCommand = new RelayCommand(DeleteRelation, hasRelation);
+            DeleteRelationCommand = new RelayCommand(DeleteRelation, HasRelation);
 
             CopyClassCommand = new RelayCommand(CopyKlass, HasSelection);
             PasteClassCommand = new RelayCommand(PasteKlass, CanPaste);
@@ -100,7 +100,7 @@ namespace DiagramTool.ViewModel
             ExportCommand = new RelayCommand<Canvas>(Export);
         }
 
-        private bool hasRelation()
+        private bool HasRelation()
         {
             return Relations.Count > 0;
         }
@@ -161,7 +161,17 @@ namespace DiagramTool.ViewModel
 
         private void New()
         {
-            _undoRedoController.AddAndExecute(new NewDiagramCommand(Klasses,Relations));
+            string messageBoxText = "Existing diagram will be overwritten";
+            string caption = "New Diagram";
+            MessageBoxButton button = MessageBoxButton.OKCancel;
+            MessageBoxImage icon = MessageBoxImage.Warning;
+
+            MessageBoxResult result = MessageBox.Show(messageBoxText, caption, button, icon);
+            if (result == MessageBoxResult.OK)
+            {
+                Klasses.Clear();
+                Relations.Clear();
+            }
         }
 
         private void Save()
@@ -175,7 +185,7 @@ namespace DiagramTool.ViewModel
             }
             else
             {
-                Thread t = new Thread(new ThreadStart(Serialize));
+                Thread t = new Thread(Serialize);
                 t.Start();
 
             }
@@ -301,11 +311,13 @@ namespace DiagramTool.ViewModel
 
         private void PasteKlass()
         {
+            
             _undoRedoController.AddAndExecute(new NewKlassCommand(Klasses, _clipboard));
-            _selectedKlass.IsSelected = false;
+            if(_selectedKlass != null)
+                _selectedKlass.IsSelected = false;
+            _selectedKlass = _clipboard;
             _clipboard.IsSelected = true;
-            // Clear clipboard
-            _clipboard = null;
+            CopyKlass();
         }
 
         private void CutKlass()
@@ -324,6 +336,7 @@ namespace DiagramTool.ViewModel
 
         private void DeleteKlass()
         {
+            // DeleteKlassCommand should be extended to undo delete relations as well
             _undoRedoController.AddAndExecute(new DeleteKlassCommand(Klasses, Relations, _selectedKlass));
         }
 

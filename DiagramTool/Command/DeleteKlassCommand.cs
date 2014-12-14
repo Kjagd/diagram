@@ -13,6 +13,7 @@ namespace DiagramTool.Command
         private readonly ObservableCollection<Klass> _klassList;
         private readonly Collection<Relation> _relations; 
         private readonly Klass _classToDelete;
+        private readonly Collection<Relation> _deletedRelations = new Collection<Relation>();
 
         public DeleteKlassCommand(ObservableCollection<Klass> klassList, Collection<Relation> relations, Klass klassToDelete)
         {
@@ -24,6 +25,11 @@ namespace DiagramTool.Command
         public void Undo()
         {
             _klassList.Add(_classToDelete);
+            foreach (Relation r in _deletedRelations)
+            {
+                _relations.Add(r);
+            }
+            
         }
 
         public void Execute()
@@ -31,6 +37,7 @@ namespace DiagramTool.Command
             _klassList.Remove(_classToDelete);
             foreach (Relation r in _classToDelete.Relations)
             {
+                _deletedRelations.Add(r);
                 _relations.Remove(r);
             }
         }

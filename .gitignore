@@ -161,3 +161,6 @@ $RECYCLE.BIN/
 *.pdf
 *.log
 *.out
+*.swp
+*.fls
+*.fdb_latexmk
