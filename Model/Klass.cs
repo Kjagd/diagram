@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using System;
@@ -223,6 +224,12 @@ namespace Diagram
             {
                 r.Notify();
             }
+        }
+
+        public override bool Equals(object obj)
+        {
+            var k = obj as Klass;
+            return k != null && k.Name.Equals(Name) && Fields.SequenceEqual(k.Fields) && Methods.SequenceEqual(k.Methods);
         }
     }
 }

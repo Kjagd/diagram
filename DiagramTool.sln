@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Model", "Model\Model.csproj
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LineCaps", "LineCaps\LineCaps.csproj", "{3E45331E-FEF4-43F2-B6EB-B55E3E501B03}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTest", "UnitTest\UnitTest.csproj", "{E2E13EAD-E8CA-4623-B4BA-027F44EF58D5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -49,6 +51,16 @@ Global
 		{3E45331E-FEF4-43F2-B6EB-B55E3E501B03}.Release|Mixed Platforms.Build.0 = Release|x86
 		{3E45331E-FEF4-43F2-B6EB-B55E3E501B03}.Release|x86.ActiveCfg = Release|x86
 		{3E45331E-FEF4-43F2-B6EB-B55E3E501B03}.Release|x86.Build.0 = Release|x86
+		{E2E13EAD-E8CA-4623-B4BA-027F44EF58D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E2E13EAD-E8CA-4623-B4BA-027F44EF58D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E2E13EAD-E8CA-4623-B4BA-027F44EF58D5}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{E2E13EAD-E8CA-4623-B4BA-027F44EF58D5}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{E2E13EAD-E8CA-4623-B4BA-027F44EF58D5}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{E2E13EAD-E8CA-4623-B4BA-027F44EF58D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E2E13EAD-E8CA-4623-B4BA-027F44EF58D5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E2E13EAD-E8CA-4623-B4BA-027F44EF58D5}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{E2E13EAD-E8CA-4623-B4BA-027F44EF58D5}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{E2E13EAD-E8CA-4623-B4BA-027F44EF58D5}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

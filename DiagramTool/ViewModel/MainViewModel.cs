@@ -372,6 +372,16 @@ namespace DiagramTool.ViewModel
             }
         }
 
+        public void SelectKlass(Klass klass)
+        {
+            clearSelection();
+            _selectedKlass = klass;
+            if (_selectedKlass != null)
+            {
+                _selectedKlass.IsSelected = true;
+            }
+        }
+
         private void clearSelection()
         {
             if (_selectedKlass != null)
