@@ -13,8 +13,11 @@ Framework.
 
 \subsubsection{Design patterns}
 
-The program uses the MVVM design pattern. In this case, there is only one
-viewmodel, namely the MainViewModel. This takes care of all the actions/commands
+The program uses the MVVM design pattern. The idea here is that the program is
+seperated into three entities, the \textit{Model}, the \textit{View} and the
+\textit{ViewModel} which allows the model and the view to interact.
+In this case, there is only one
+viewmodel, namely the \texttt{MainViewModel}. This takes care of all the actions/commands
 the user can do in the UI.
 
 The view consists of a ribbon, and then it draws the UserControls specified by
@@ -22,20 +25,17 @@ the objects in the viewmodel and the dictionary that is referenced.
 
 The model is put into its own \texttt{dll}.
 
+Furthermore is the observer pattern is used with MVVMLight to notify GUI components 
+when they rely on each other, as well as for button clicks.
 
-Furthermore is the singleton pattern used for the undoredo controller, which
+Lastly is the singleton pattern used for the undo/redo controller, which
 utilizes the command pattern.
-
-The observer pattern is used with MVVMLight to notify GUI components when they
-rely on each other, as well as for button clicks.
-
-singleton class
 
 \subsubsection{Function list}
 Based on the requirements and the definition of UML class 
 diagrams\footnote{http://en.wikipedia.org/wiki/Class\_diagram} 
 \footnote{http://www.digilife.be/quickreferences/qrc/uml quick reference 
-card.pdf}, a function list is produced. This list, covers all functionality of 
+card.pdf}, a function list is produced. This list covers all functionality of 
 the application and describes how to perform the different actions.
 
 \begin{table}[H]
@@ -208,8 +208,9 @@ Even though that
 user interface design was not a main scope of the project, some thought is
 required as it greatly impacts the user experience. 
 
-The overall decision to make it wether to whether to use an existing design
-framework, or to create a whole new layout with toolbars, menues etc. Since it
+The overall decision whether to use an existing design
+framework or to create a whole new layout with toolbars, menues etc first had to
+be decided. Since creating a whole lot of custom toolbars
 is not in the scope of the project and the benefit would be minimal it was
 decided to go with an already tested and know interface. 
 
@@ -246,6 +247,9 @@ The relations consist of a line between two classes, and an "arrowhead" which
 denotes the type of relation. Although not shown in the sceenshot all relations
 also has a textfield which can be used to show multiplicity.
 
+To make the diagram easier to comprehend, it was decided to use the staight line
+look where a knack is used to connect classes with offset.
+
 An example with three classes and some relations can be seen in figure
 \ref{classes}. This also shows how the program is composed of a canvas and a
 toolbar.
@@ -264,6 +268,8 @@ structured into \textit{Clipboard \& history}, \textit{Classes},
 \textit{Relations}. As a feature of the ribbon toolbar, each action can also be
 reached by using a hotkey, which can be seen when holding the ALT key.
 
+The toolbar is also designed to be context aware. This means that if a certain action
+can't be taken, it is greyed out to minimize user confusion.
 \begin{figure}[H]
 \centering
 \includegraphics[width=\linewidth]{"img/edit menu"}
@@ -287,34 +293,36 @@ In this part the application part of the program is discussed.
 \subsubsection{Classes and relations}
 %Jonas
 The \texttt{Klass} and \texttt{Relation} classes are the backbone of the model.
-So they were put in their own \texttt{dll}. This ensures reusability, and makes
-the program more flexible, in that it does not consist of 1 giant exe file.
+Along with the rest of the model they were put in their own \texttt{dll}. This ensures reusability, and makes
+the program more flexible, as the loose coupling between the model and the view
+ensures that a new interface could be developed without changing the model at
+all.
 
 \paragraph{Klass}
 The \texttt{Klass} class is the representation of a class in any object oriented
 language. The class contains almost all the info a class should have. Some of
-the missing stuff is interfaces and abstract classes, but these can be added in
-future iterations.
+the missing infomation that a class could have is interfaces and abstract classes,
+but these can be added in future iterations.
 
-The class also contains some of the info needed to render it properly, such as
+The class also contains some of the infomation needed to render it properly, such as
 an $(x, y)$ coordinate as well as such things as height, width, and some color
-properties. Some of this probably belongs in a viewmodel class but we found it
-easier to just implement it directly in this class instead.
+properties. Some of this probably belongs in a \texttt{ViewModel} class but in 
+this case it was found easier to just implement it directly in this class instead.
 
-The consequence of having viewmodel properties in the model, was that
+The consequence of having ViewModel properties in the model, was that
 \texttt{Klass} also had to have a list of all the relations that was hooked up
 to it. This was to be able to notify any relation whenever a \texttt{Klass} is
 moved in the GUI. 
 
-What became easier from having the viewmodel properties in the model, was the
+What became easier from having the ViewModel properties in the model, was the
 serialization, and how to handle the relation between \texttt{Klass} and
-\texttt{Relation}. Having a relation between the 2 models, and 2 viewmodels
+\texttt{Relation}. Having a relation between the 2 models, and 2 ViewModels
 would make it hard to maintain the right state.
 
 \paragraph{Relation}
 The \texttt{Relation} class is used to represent the relation in a UML diagram.
 This class has to be flexible to allow for many different types of relations,
-such as inheritance, reference, composition, etc. The class uses an enum to
+such as inheritance, reference, composition etc. The class uses an \texttt{enum} to
 know
 which type of relation it is. This eliminates the need to create a new subclass
 every time a new type of relation is introduced.
@@ -324,7 +332,7 @@ The \texttt{Relation} class, is basically just a class that holds 2
 classes.
 
 The relation is drawn using the 3rd party library called
-LineCaps\footnote{http://blogs.msdn.com/b/mrochon/archive/2011/01/10/custom-line-caps-in-wpf.aspx}.
+\textit{LineCaps}\footnote{http://blogs.msdn.com/b/mrochon/archive/2011/01/10/custom-line-caps-in-wpf.aspx}.
 
 The library made it possible to easily add the shapes that represents different
 types of relations e.g. a diamond for the composition, to the ends of the line.
@@ -357,7 +365,7 @@ functionality to serialize and deserialize simple objects to an XML format. It
 is possible to define which objects are serializable, and which field of objects
 that should be serialized, and which should not.
 
-However, the XmlSerializer class, does not support references to objects. This
+However the XmlSerializer class does not support references to objects. This
 means, that every time the serializer meets a serializable object, the object
 will be serialized - even though it may already have done so. This does not
 allow for cyclic references, which we have in our program. In our case, a Klass
@@ -393,7 +401,7 @@ meant to do.
 SOAP is a protocol used to exchange information, and
 is often used in web services which provide data to other applications through
 an API. The resulting data when using SOAP formatting is an XML structure,
-similar to the structur of the XmlSerializer and iis more friendly to human
+similar to the structur of the XmlSerializer and is more friendly to human
 interpretation than its binary counterpart.
 
 However, for some reason, the SOAP formatter attempted to serialize objects from
@@ -430,7 +438,7 @@ exemplifies the process quite well.
 
 \subsubsection{Undo / Redo}
 %Peter
-All commands supporting the undo/redo functionality implments the
+All commands supporting the undo/redo functionality implements the
 \texttt{IUndoRedoCommand} interface, which extends \texttt{ICommand}. The singleton class
 \texttt{UndoRedoController} handles the undo- and redo-stacks, which keep track of the
 previous states of the application. All UndoRedoCommands are executed through
@@ -480,6 +488,6 @@ the users does't have to crop the image later.
 The \texttt{Export} method then finds all the  descendants bounds, which is 
 the minimum area that ensures that all relevant elements are exported. The
 default renderer however always renders from $(0,0)$, so an auxiliary method to
-cancel this offset was used. The standard Windows Save dialog was used toi
+cancel this offset was used. The standard Windows Save dialog was used to
 select the image path.
 
