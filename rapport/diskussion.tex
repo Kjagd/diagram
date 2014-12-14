@@ -21,6 +21,12 @@ that we at some point had some bugs with deleting classes, as the redo function
 would not correctly add the relations back. This was later fixed, but more
 undo/redo functions such as editing text would be more desireble. 
 
+Deleting a relation proved to be difficult as well. The first idea to delete a
+relation, was to let the user be able to right click on the line, and a context
+menu with the delete option should appear. However, it was not possible through
+wpf to catch the mouseclick on the line, even though a lot of different methods
+were used.
+
 \subsection{Futher development}
 Even though the program is largely useable, more features could always be added.
 If we had more time, some of our next features/improvements would be:
