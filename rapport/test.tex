@@ -1,12 +1,12 @@
 \section{Tests}
 
 The tests made for this project is primarily done with unit
-tests. The program user interface has been tested by hand.
+tests. The graphical user interface has been tested by hand.
 
 \subsection{Unit Test 1 - Add new class}
 
 The user may want to add a new class to the model. By pressing the button, it is
-possible to observe that a new class indeed appears. The test tests to see if a
+possible to observe that a new class indeed appears. The test ensures that a
 new \texttt{Klass} instance has been added to the \texttt{MainViewModel}'s
 collection.
 
@@ -26,7 +26,7 @@ This would also make it possible to warn the user if necessary.
 
 \subsection{Unit Test 3 - Copy/Paste class}
 
-This test is to make sure that the copy pasted class is added to the viewmodel,
+This test is to make sure that a copy/pasted class is added to the ViewModel,
 and that it is a deep copy.
 
 This functionality also relies on a selected class, so it is also tested that
@@ -39,11 +39,11 @@ without having to reselect a class.
 
 \subsection{Unit Test 4 - Setting a relation}
 
-The user should be able to add a relation between 2 models. It is crucial for
-the model, that a relation has a reference to each class, and that each class has
-a reference to each relation.
+The user should be able to add a relation between 2 classes. It is crucial for
+the model, that a relation has a reference to each class, and that each class 
+has a reference to each relation.
 
-The test makes sure that it happens.
+The test ensures that the above requirements are satisfied.
 
 \subsection{Unit Test 5 - Unsetting a relation}
 
@@ -52,16 +52,17 @@ multiple places when set, they all have to be reverted when unset.
 
 
 \subsection{Code coverage}
+The tests cover approximately $30\%$ of all the code. Achieving $100\%$ would
+likely take as long time as making the project itself, so only the most
+important parts, primarily the model, was tested. Testing the model ensures 
+that the \emph{machinery} works. Testing the GUI is easier done by hand.
 
-\begin{figure}
+It would also be difficult to test the GUI part of the program, and since e.g.
+AddRelation relies on mouse clicks, it would be hard to make unit test for.
+
+\begin{figure}[H]
 \centering
 \includegraphics[width=0.85\linewidth]{img/coverage}
 \caption{Screenshot of the Visual Studio code coverage tools result.}
 \end{figure}
 
-The tests cover approximately $30\%$ of all the code. Achieving $100\%$ would
-likely take as long time as making the project itself, so only the most
-important, and most likely to break stuff, was tested.
-
-It would also be difficult to test the GUI part of the program, and since e.g.
-AddRelation relies on mouse clicks, it would be hard to make unit test for.
