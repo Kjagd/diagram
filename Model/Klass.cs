@@ -18,7 +18,80 @@ namespace Diagram
         private float _height;        
         private float _width;
         private Point _position;
-        // View properties
+
+        public float Width
+        {
+            get { return _width; }
+            set
+            {
+                _width = value;
+                NotifyRelations();
+            }
+        }
+
+        public float Height
+        {
+            get { return _height; }
+            set
+            {
+                _height = value;
+                RaisePropertyChanged();
+                NotifyRelations();
+            }
+        }
+
+        public bool IsSelected
+        {
+            get { return _isSelected; }
+            set
+            {
+                _isSelected = value;
+                BorderThickness = _isSelected ? 1 : 0;
+            }
+        }
+
+        public float BorderThickness
+        {
+            get { return _borderThickness; }
+            set
+            {
+                _borderThickness = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        public float X
+        {
+            get { return (float)_position.X; }
+            set
+            {
+                _position.X = value >= 0 ? value : 0;
+                RaisePropertyChanged();
+                NotifyRelations();
+            }
+        }
+
+        public float Y
+        {
+            get { return (float)_position.Y; }
+            set
+            {
+                _position.Y = value >= 0 ? value : 0;
+                RaisePropertyChanged();
+                NotifyRelations();
+            }
+        }
+
+        public float CenterX
+        {
+            get { return X + Width / 2; }
+        }
+
+        public float CenterY
+        {
+            get { return Y + Height / 2; }
+        }
+
         public Collection<Relation> Relations { get; private set; }
 
         public string Package { get; set; }
@@ -50,22 +123,6 @@ namespace Diagram
 
         }
 
-        public void GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            // Use the AddValue method to specify serialized values.
-            info.AddValue("Name", Name, typeof(string));
-            info.AddValue("Package", Package, typeof(string));
-            info.AddValue("borderThickness", _borderThickness, typeof(float));
-            info.AddValue("height", _height, typeof(float));
-            info.AddValue("width", _width, typeof(float));
-            info.AddValue("position", _position, typeof(Point));
-
-            info.AddValue("Relations", Relations, typeof(Collection<Relation>));
-            info.AddValue("Fields", Fields, typeof(ObservableCollection<Field>));
-            info.AddValue("Methods", Methods, typeof(ObservableCollection<Method>));
-
-        }
-
         // The special constructor is used to deserialize values. 
         public Klass(SerializationInfo info, StreamingContext context)
         {
@@ -86,6 +143,22 @@ namespace Diagram
             DeleteFieldCommand = new RelayCommand<MouseButtonEventArgs>(DeleteField);
         }
 
+        public void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            // Use the AddValue method to specify serialized values.
+            info.AddValue("Name", Name, typeof(string));
+            info.AddValue("Package", Package, typeof(string));
+            info.AddValue("borderThickness", _borderThickness, typeof(float));
+            info.AddValue("height", _height, typeof(float));
+            info.AddValue("width", _width, typeof(float));
+            info.AddValue("position", _position, typeof(Point));
+
+            info.AddValue("Relations", Relations, typeof(Collection<Relation>));
+            info.AddValue("Fields", Fields, typeof(ObservableCollection<Field>));
+            info.AddValue("Methods", Methods, typeof(ObservableCollection<Method>));
+
+        }
+
         private void DeleteField(MouseButtonEventArgs e)
         {
             var frameworkElement = (FrameworkElement) e.MouseDevice.Target;
@@ -103,84 +176,12 @@ namespace Diagram
             }
         }
 
-        public float Width
-        {
-            get { return _width; }
-            set
-            {
-                _width = value;
-                NotifyRelations();
-            }
-        }
-
-        public float Height
-        {
-            get { return _height; }
-            set
-            {
-                _height = value; 
-                RaisePropertyChanged();
-                NotifyRelations();
-            }
-        }
-
-        public bool IsSelected
-        {
-            get { return _isSelected; }
-            set 
-            { 
-                _isSelected = value;
-                BorderThickness = _isSelected ? 1 : 0;  
-            }
-        }
-
-        public float BorderThickness
-        {
-            get { return _borderThickness; }
-            set 
-            { 
-                _borderThickness = value; 
-                RaisePropertyChanged();
-            }
-        }
-
-        public float X
-        {
-            get { return (float) _position.X; }
-            set
-            {
-                _position.X = value >= 0 ? value : 0;
-                RaisePropertyChanged();
-                NotifyRelations();
-            }
-        }
-
-        public float Y
-        {
-            get { return (float) _position.Y; }
-            set
-            {
-                _position.Y = value >= 0 ? value : 0;
-                RaisePropertyChanged();
-                NotifyRelations();
-            }
-        }
-
-        public float CenterX
-        {
-            get { return X + Width / 2; }
-        }
-
-        public float CenterY
-        {
-            get { return Y + Height / 2; }
-        }
-
         private void AddMethod()
         {
             Methods.Add(new Method("", "+"));
             Height += 15;
         }
+
         private void AddField()
         {
             Fields.Add(new Field("", "+"));
@@ -218,6 +219,7 @@ namespace Diagram
 
             return k;
         }
+
         private void NotifyRelations()
         {
             foreach (Relation r in Relations)

@@ -18,14 +18,6 @@ namespace Diagram
             FieldName = fieldName;
             AccessModifier = accessModifier;
         }
-
-        public void GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            // Use the AddValue method to specify serialized values.
-            info.AddValue("fieldname", FieldName, typeof(string));
-            info.AddValue("accessmodifier", AccessModifier, typeof(string));
-
-        }
         
         // The special constructor is used to deserialize values. 
         public Field(SerializationInfo info, StreamingContext context)
@@ -33,6 +25,14 @@ namespace Diagram
             // Reset the property value using the GetValue method.
             FieldName = (string)info.GetValue("fieldname", typeof(string));
             AccessModifier = (string)info.GetValue("accessmodifier", typeof(string));
+        }
+
+        public void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            // Use the AddValue method to specify serialized values.
+            info.AddValue("fieldname", FieldName, typeof(string));
+            info.AddValue("accessmodifier", AccessModifier, typeof(string));
+
         }
 
         public object Clone()

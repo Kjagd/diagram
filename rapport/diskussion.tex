@@ -8,7 +8,7 @@ A problem we had for a long time was how focus was handled. For example if the
 user is attempting to drag a class by clicking on a textfield it can cause some
 havoc since it is unclear if the user wants to drag the class or edit the text. 
 
-Another problem focus gave us, was how to losse focus again when, for example, 
+Another problem focus gave us, was how to lose focus again when, for example, 
 the
 user clicks on the background. This sounds easy, but it turned out that a
 workaround had to be used, where the entire canvas is wrapped in a
@@ -19,9 +19,15 @@ Another problem we had was providing undo/redo functionality for all functions,
 primarily since it was time consuming to create this for all actions. This meant
 that we at some point had some bugs with deleting classes, as the redo function
 would not correctly add the relations back. This was later fixed, but more
-undo/redo functions such as editing text would be more desireble. 
+undo/redo functions such as editing text would be more desirable. 
 
-\subsection{Futher development}
+Deleting a relation proved to be difficult as well. The first idea to delete a
+relation, was to let the user be able to right click on the line, and a context
+menu with the delete option should appear. However, it was not possible through
+wpf to catch the mouse click on the line, even though a lot of different methods
+were used.
+
+\subsection{Further development}
 Even though the program is largely useable, more features could always be added.
 If we had more time, some of our next features/improvements would be:
 

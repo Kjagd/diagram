@@ -14,7 +14,7 @@ Framework.
 \subsubsection{Design patterns}
 
 The program uses the MVVM design pattern. The idea here is that the program is
-seperated into three entities, the \textit{Model}, the \textit{View} and the
+separated into three entities, the \textit{Model}, the \textit{View} and the
 \textit{ViewModel} which allows the model and the view to interact.
 In this case, there is only one
 viewmodel, namely the \texttt{MainViewModel}. This takes care of all the actions/commands
@@ -200,7 +200,7 @@ the application and describes how to perform the different actions.
 	\end{tabular}
 \end{table}
 
-\subsection{Graphichal User interface}
+\subsection{Graphical User interface}
 
 \subsubsection{Design}
 
@@ -215,11 +215,11 @@ is not in the scope of the project and the benefit would be minimal it was
 decided to go with an already tested and know interface. 
 
 The traditional Windows application is defined by its layered menus and toobars,
-which execls at more complicated programs where submenus are essential.
+which excels at more complicated programs where submenus are essential.
 
 The other viable alternative is the
 \textit{Ribbon}\footnote{http://msdn.microsoft.com/en-us/library/windows/desktop/dd316910(v=vs.85).aspx}
-framework which is know for its big toolbar with the most used functions ready
+framework which is known for its big toolbar with the most used functions ready
 for use.
 
 Based on the original program mockup as previously seen in figure \ref{mockup},
@@ -244,10 +244,10 @@ methods. The
 amount is controlled by the green plus sign and the red delete sign.
 
 The relations consist of a line between two classes, and an "arrowhead" which
-denotes the type of relation. Although not shown in the sceenshot all relations
+denotes the type of relation. Although not shown in the srceenshot all relations
 also has a textfield which can be used to show multiplicity.
 
-To make the diagram easier to comprehend, it was decided to use the staight line
+To make the diagram easier to comprehend, it was decided to use the straight line
 look where a knack is used to connect classes with offset.
 
 An example with three classes and some relations can be seen in figure
@@ -301,10 +301,10 @@ all.
 \paragraph{Klass}
 The \texttt{Klass} class is the representation of a class in any object oriented
 language. The class contains almost all the info a class should have. Some of
-the missing infomation that a class could have is interfaces and abstract classes,
+the missing information that a class could have is interfaces and abstract classes,
 but these can be added in future iterations.
 
-The class also contains some of the infomation needed to render it properly, such as
+The class also contains some of the information needed to render it properly, such as
 an $(x, y)$ coordinate as well as such things as height, width, and some color
 properties. Some of this probably belongs in a \texttt{ViewModel} class but in 
 this case it was found easier to just implement it directly in this class instead.
@@ -333,6 +333,8 @@ classes.
 
 The relation is drawn using the 3rd party library called
 \textit{LineCaps}\footnote{http://blogs.msdn.com/b/mrochon/archive/2011/01/10/custom-line-caps-in-wpf.aspx}.
+The fill color for the linecaps was to begin with hardcoded, so we manually 
+added a fill property that could be set from WPF.
 
 The library made it possible to easily add the shapes that represents different
 types of relations e.g. a diamond for the composition, to the ends of the line.
@@ -347,10 +349,10 @@ structure. The serialized data can be stored in a file, and loaded into the
 application later by deserializing the objects.
 
 For this project, two solutions were considered. Using the functionality in the
-\texttt{System.Runtime.Serialization} namespace, or using the XmlSerializer
-class from the \texttt{System.Xml.Serialization} namespace. The Runtime
-Serialization allows us to store the serialized objects as binary data or
-formatted as SOAP data.
+\texttt{System.Runtime.Serialization} namespace, or using the 
+\texttt{XmlSerializer} class from the \texttt{System.Xml.Serialization} 
+namespace. The Runtime Serialization allows us to store the serialized objects 
+as binary data or formatted as SOAP data.
 
 The three options all have their advantages and disadvantages. We have chosen
 runtime serialization with binary formatting, based on what we found as
@@ -405,7 +407,7 @@ similar to the structur of the XmlSerializer and is more friendly to human
 interpretation than its binary counterpart.
 
 However, for some reason, the SOAP formatter attempted to serialize objects from
-our MVVM libray, even though it was not told to, which made the serialization
+our MVVM library, even though it was not told to, which made the serialization
 fail.
 
 \paragraph{Save \& open dialogs}
@@ -479,7 +481,7 @@ When copying a class, the selected class is cloned using the
 \texttt{ICloneable} 
 interface\footnote{http://msdn.microsoft.com/en-us/library/system.icloneable}. 
 Cloning the class performs a \emph{deep copy} on 
-the object, which results in an entierly new object to ensure that the new 
+the object, which results in an entirely new object to ensure that the new 
 object has no references to the fields of the original object.
 
 \subsubsection{Image export}
@@ -488,7 +490,7 @@ To make it easier for the users to use the created diagram, an image export tool
 was implemented. Only support for \textit{png} was implemented as it it
 the most suited filetype for this kind of graphics. An important thing to consider
 is how to ensure that only the relevant part of the canvas it exported, so
-the users does't have to crop the image later.
+the users doesn't have to crop the image later.
 
 \texttt{Export} was implemented in the \texttt{MainViewModel}, by creating a
 \texttt{RelayCommand} that takes the canvas as argument.
