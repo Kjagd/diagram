@@ -19,12 +19,11 @@ namespace DiagramTool.Command
         private readonly Stack<IUndoRedoCommand> redoStack = new Stack<IUndoRedoCommand>();
 
         // Part of singleton pattern.
-        public UndoRedoController() { }
+        private UndoRedoController() { }
 
         // Part of singleton pattern.
         public static UndoRedoController GetInstance() { return controller; }
 
-        // Bruges til at tilføje commander.
         public void AddAndExecute(IUndoRedoCommand command)
         {
             undoStack.Push(command);
@@ -32,13 +31,11 @@ namespace DiagramTool.Command
             command.Execute();
         }
 
-        // Sørger for at undo kun kan kaldes når der er kommandoer i undo stacken.
         public bool CanUndo()
         {
             return undoStack.Any();
         }
 
-        // Udfører undo hvis det kan lade sig gøre.
         public void Undo()
         {
             if (undoStack.Count() <= 0) throw new InvalidOperationException();
@@ -47,13 +44,11 @@ namespace DiagramTool.Command
             command.Undo();
         }
 
-        // Sørger for at redo kun kan kaldes når der er kommandoer i redo stacken.
         public bool CanRedo()
         {
             return redoStack.Any();
         }
 
-        // Udfører redo hvis det kan lade sig gøre.
         public void Redo()
         {
             if (redoStack.Count() <= 0) throw new InvalidOperationException();

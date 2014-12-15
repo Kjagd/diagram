@@ -27,30 +27,9 @@ namespace Diagram
         private Point _fromLabelPoint;
         private Point _toLabelPoint;
 
-
-
         private Visibility _contextVisibility = Visibility.Hidden;
 
         public Type RelationType { get; set; }
-
-
-
-        // The special constructor is used to deserialize values. 
-        public Relation(SerializationInfo info, StreamingContext context)
-        {
-            // Reset the property value using the GetValue method.
-            RelationType = (Type) info.GetValue("type", typeof (Type));
-            From = (Klass) info.GetValue("From", typeof (Klass));
-            To = (Klass) info.GetValue("To", typeof (Klass));
-            FromText = (string)info.GetValue("FromText", typeof(string));
-            ToText = (string)info.GetValue("ToText", typeof(string));
-        }
-
-        public Relation(Type type)
-        {
-            RelationType = type;
-        }
-
         public string ToText { get; set; }
         public string FromText { get; set; }
 
@@ -62,12 +41,12 @@ namespace Diagram
             get
             {
                 _fromLabelPoint.X = IsSideways()
-                    ? (To.X > From.X ? FromPos.X + 5: FromPos.X - 30)
+                    ? (To.X > From.X ? FromPos.X + 5 : FromPos.X - 30)
                     : FromPos.X + 5;
                 _fromLabelPoint.Y = !IsSideways()
                     ? (To.Y > From.Y ? FromPos.Y + 10 : FromPos.Y - 20)
                     : FromPos.Y + 5;
-                    return _fromLabelPoint;
+                return _fromLabelPoint;
             }
         }
         public Point ToLabelPos
@@ -75,12 +54,12 @@ namespace Diagram
             get
             {
                 _toLabelPoint.X = IsSideways()
-                    ? (To.X < From.X ? ToPos.X + 15: ToPos.X - 30)
+                    ? (To.X < From.X ? ToPos.X + 15 : ToPos.X - 30)
                     : ToPos.X + 5;
                 _toLabelPoint.Y = !IsSideways()
                     ? (To.Y < From.Y ? ToPos.Y + 10 : ToPos.Y - 30)
                     : ToPos.Y + 5;
-                    return _toLabelPoint;
+                return _toLabelPoint;
             }
         }
 
@@ -145,12 +124,12 @@ namespace Diagram
             {
                 if (IsSideways())
                 {
-                    _knack1.X = FromPos.X + (ToPos.X - FromPos.X)/2;
+                    _knack1.X = FromPos.X + (ToPos.X - FromPos.X) / 2;
                     _knack1.Y = FromPos.Y;
                 }
                 else
                 {
-                    _knack1.Y = FromPos.Y + (ToPos.Y - FromPos.Y)/2;
+                    _knack1.Y = FromPos.Y + (ToPos.Y - FromPos.Y) / 2;
                     _knack1.X = FromPos.X;
                 }
                 return _knack1;
@@ -163,13 +142,13 @@ namespace Diagram
             {
                 if (IsSideways())
                 {
-                    _knack2.X = FromPos.X + (ToPos.X - FromPos.X)/2;
+                    _knack2.X = FromPos.X + (ToPos.X - FromPos.X) / 2;
                     _knack2.Y = ToPos.Y;
                 }
                 else
                 {
                     _knack2.X = ToPos.X;
-                    _knack2.Y = FromPos.Y + (ToPos.Y - FromPos.Y)/2;
+                    _knack2.Y = FromPos.Y + (ToPos.Y - FromPos.Y) / 2;
                 }
 
                 return _knack2;
@@ -183,7 +162,7 @@ namespace Diagram
                 if (IsSideways())
                 {
                     _center.X = _knack1.X - 10;
-                    _center.Y = _knack1.Y + (_knack2.Y - _knack1.Y)/2 - 10;
+                    _center.Y = _knack1.Y + (_knack2.Y - _knack1.Y) / 2 - 10;
                 }
                 else
                 {
@@ -193,6 +172,24 @@ namespace Diagram
                 return _center;
             }
         }
+
+        // The special constructor is used to deserialize values. 
+        public Relation(SerializationInfo info, StreamingContext context)
+        {
+            // Reset the property value using the GetValue method.
+            RelationType = (Type) info.GetValue("type", typeof (Type));
+            From = (Klass) info.GetValue("From", typeof (Klass));
+            To = (Klass) info.GetValue("To", typeof (Klass));
+            FromText = (string)info.GetValue("FromText", typeof(string));
+            ToText = (string)info.GetValue("ToText", typeof(string));
+        }
+
+        public Relation(Type type)
+        {
+            RelationType = type;
+        }
+
+        
 
         public void GetObjectData(SerializationInfo info, StreamingContext context)
         {

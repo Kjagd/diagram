@@ -19,19 +19,19 @@ namespace Diagram
             AccessModifier = accessModifier;
         }
 
-        public void GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            // Use the AddValue method to specify serialized values.
-            info.AddValue("methodname", MethodName, typeof(String));
-            info.AddValue("accessmodifier", AccessModifier, typeof(String));
-        }
-
         // The special constructor is used to deserialize values. 
         public Method(SerializationInfo info, StreamingContext context)
         {
             // Reset the property value using the GetValue method.
             MethodName = (string)info.GetValue("methodname", typeof(string));
             AccessModifier = (string)info.GetValue("accessmodifier", typeof(string));
+        }
+
+        public void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            // Use the AddValue method to specify serialized values.
+            info.AddValue("methodname", MethodName, typeof(String));
+            info.AddValue("accessmodifier", AccessModifier, typeof(String));
         }
 
         public object Clone()
