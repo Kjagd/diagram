@@ -333,6 +333,8 @@ classes.
 
 The relation is drawn using the 3rd party library called
 \textit{LineCaps}\footnote{http://blogs.msdn.com/b/mrochon/archive/2011/01/10/custom-line-caps-in-wpf.aspx}.
+The fill color for the linecaps was to begin with hardcoded, so we manually 
+added a fill property that could be set from WPF.
 
 The library made it possible to easily add the shapes that represents different
 types of relations e.g. a diamond for the composition, to the ends of the line.
@@ -347,10 +349,10 @@ structure. The serialized data can be stored in a file, and loaded into the
 application later by deserializing the objects.
 
 For this project, two solutions were considered. Using the functionality in the
-\texttt{System.Runtime.Serialization} namespace, or using the XmlSerializer
-class from the \texttt{System.Xml.Serialization} namespace. The Runtime
-Serialization allows us to store the serialized objects as binary data or
-formatted as SOAP data.
+\texttt{System.Runtime.Serialization} namespace, or using the 
+\texttt{XmlSerializer} class from the \texttt{System.Xml.Serialization} 
+namespace. The Runtime Serialization allows us to store the serialized objects 
+as binary data or formatted as SOAP data.
 
 The three options all have their advantages and disadvantages. We have chosen
 runtime serialization with binary formatting, based on what we found as
